@@ -60,7 +60,7 @@ function play(){cancelAnimationFrame(raf);t0=performance.now();
  if(reduce.matches){const step=t=>{frame(t,true);if(t-t0<Math.max(DUR[am].a,DUR[am].b)+100)raf=requestAnimationFrame(step)};raf=requestAnimationFrame(step)}
  else raf=requestAnimationFrame(loop)}
 function init(){if(reduce.matches){t0=0;staticView()}else play()}
-document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{am=b.dataset.m;document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));reduce.matches?staticView():play()});
+document.querySelectorAll('#animSeg button').forEach(b=>b.onclick=()=>{am=b.dataset.m;document.querySelectorAll('#animSeg button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));reduce.matches?staticView():play()});
 $('replayBtn').onclick=play;reduce.addEventListener?.('change',init);init();
 window.__anim={get mode(){return am},DUR};
 
@@ -79,7 +79,7 @@ function open(r){cur=r;left=r.min*60;$('sTitle').textContent=`${r.min}분 ${r.na
 function close(){stopT();$('sheet').classList.add('hide')}
 $('goBtn').onclick=()=>{if(running){stopT();clock();return}if(left<=0)left=cur.min*60;running=true;$('goBtn').textContent='잠시 멈춤';vib(60);clock();
  rIv=setInterval(()=>{left--;clock();if(left<=0){stopT();vib([80,80,80]);$('goBtn').textContent='다시 시작'}},1000)};
-$('doneBtn').onclick=()=>{const a=load(EK);a.push({id:uid(),ts:Date.now(),routine:cur.id,min:cur.min});save(EK,a);$('savedMsg').classList.remove('hide');$('doneBtn').disabled=true;stopT();exDone()};
+$('doneBtn').onclick=()=>{const a=load(EK);a.push({id:uid(),ts:Date.now(),routine:cur.id,min:cur.min});save(EK,a);$('savedMsg').classList.remove('hide');$('doneBtn').disabled=true;stopT();exDone();dispatchEvent(new Event('hc:exercise'))};
 $('closeBtn').onclick=close;$('sheet').addEventListener('click',e=>{if(e.target.id==='sheet')close()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('sheet').classList.contains('hide'))close()});
 function exDone(){const s=new Date();s.setHours(0,0,0,0);const n=load(EK).filter(x=>x.ts>=s.getTime()).length;$('exDone').textContent=n?`오늘 ${n}번 완료했어요.`:''}

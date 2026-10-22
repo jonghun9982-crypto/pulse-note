@@ -68,3 +68,31 @@ footer{text-align:center;font-size:13px;color:var(--sub);margin:18px 0 6px}foote
 .field{margin-bottom:14px}.field .lbl{display:block;font-size:14px;color:var(--sub);margin-bottom:4px}
 #tabMe input[type=number]{font-size:18px}
 .bmi{font-size:28px;font-weight:700}
+.tabbar{gap:2px;padding-left:calc(4px + env(safe-area-inset-left));padding-right:calc(4px + env(safe-area-inset-right))}
+.tabbar button{font-size:14px;padding:4px 2px;min-width:44px;line-height:1.2;word-break:keep-all}
+.sl-state{font-size:34px;font-weight:700;margin:0;text-align:center}
+#slSince{text-align:center;min-height:21px}
+.bigtoggle{display:block;width:100%;min-height:120px;margin:14px 0 6px;border-radius:20px;border:2px solid var(--accent);background:var(--chip);color:var(--accent);font-size:44px;font-weight:700;letter-spacing:4px}
+.bigtoggle.on{background:var(--accent);color:var(--bg)}
+.stack{display:flex;flex-direction:column;gap:8px}
+.pbtn{min-height:48px;width:100%;border-radius:14px;border:1px solid var(--border);background:var(--chip);color:var(--accent);font-weight:600;font-size:16px}
+.pbtn:disabled{color:var(--sub);opacity:.6;cursor:default}
+.card.disabled{opacity:.5;filter:grayscale(1)}
+.info{font-size:15px;margin:6px 0}
+
+.ref summary{min-height:44px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-size:16px;font-weight:600;color:var(--sub);list-style:none}
+.ref summary::-webkit-details-marker{display:none}
+.ref summary::after{content:"열기";color:var(--accent);font-size:15px;padding-left:12px}
+.ref[open] summary::after{content:"닫기"}
+.reft{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums;table-layout:fixed}
+.reft caption{caption-side:bottom;text-align:left;font-size:13px;color:var(--sub);padding-top:6px}
+.reft th,.reft td{padding:8px 4px;border-top:1px solid var(--border);text-align:left}
+.reft th{color:var(--sub);font-weight:600;font-size:13px}
+.reft th:nth-child(2),.reft td:nth-child(2){width:15%}.reft th:nth-child(3),.reft td:nth-child(3){width:17%}
+.srcs{margin:0;padding-left:18px;font-size:14px;line-height:1.5}.srcs li{margin:6px 0}
+.srcs a{color:var(--accent);display:inline-block;min-height:24px}
+.reft.wide{table-layout:auto}.reft.wide td:first-child{width:auto;white-space:nowrap;padding-right:10px}.reft.wide td:nth-child(2),.reft.wide th:nth-child(2){width:auto}
+.srcs.plain{list-style:disc}.srcs.plain li{color:var(--text)}
+.sum{color:var(--text);font-size:18px;margin-left:6px}
+.stats{display:flex;gap:8px;margin-bottom:12px}.stats div{flex:1;background:var(--chip);border:1px solid var(--border);border-radius:12px;padding:8px 10px}
+.stats span{display:block;font-size:13px;color:var(--sub)}.stats b{font-size:17px;font-variant-numeric:tabular-nums}
