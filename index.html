@@ -7,22 +7,43 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="맥박 노트">
 <title>맥박 노트</title>
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=16">
-<link rel="icon" href="favicon.svg?v=16" type="image/svg+xml">
-<link rel="icon" href="favicon-32.png?v=16" sizes="32x32" type="image/png">
-<link rel="manifest" href="manifest.webmanifest?v=16">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=18">
+<link rel="icon" href="favicon.svg?v=18" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png?v=18" sizes="32x32" type="image/png">
+<link rel="manifest" href="manifest.webmanifest?v=18">
 <script>/* 화면 테마: 페인트 전에 html[data-theme] 적용 (hc.ui.v1.theme: auto|light|dark) */
 (function(){var d=document.documentElement,p='auto';try{var u=JSON.parse(localStorage.getItem('hc.ui.v1'));if(u&&/^(light|dark)$/.test(u.theme))p=u.theme}catch(e){}
 var m=window.matchMedia&&matchMedia('(prefers-color-scheme: light)');
 window.hcTheme=function(pref){if(pref)p=pref;var t=p==='auto'?(m&&m.matches?'light':'dark'):p;d.setAttribute('data-theme',t);d.setAttribute('data-theme-pref',p);d.style.colorScheme=t;
  var tc=document.querySelectorAll('meta[name=theme-color]');for(var i=0;i<tc.length;i++){tc[i].removeAttribute('media');tc[i].setAttribute('content',t==='light'?'#e9eef0':'#0f1417')}return t};
 window.hcTheme();if(m){var f=function(){if(p==='auto')window.hcTheme()};m.addEventListener?m.addEventListener('change',f):m.addListener&&m.addListener(f)}})();</script>
-<link rel="stylesheet" href="css/app.css?v=16">
+<link rel="stylesheet" href="css/app.css?v=18">
 </head><body>
+<script>/* 첫 화면: 로그인 선택 전이면 로그인 화면 (hc.login.v1) */
+(function(){var c=null;try{c=JSON.parse(localStorage.getItem('hc.login.v1'))}catch(e){}if(!c||!c.mode)document.documentElement.classList.add('gate')})();</script>
+<div class="login" id="login" role="region" aria-labelledby="lgTitle">
+ <div class="lgbox">
+  <span class="appmark"><img class="appic" src="img/icon-mark.svg" alt="맥박 노트 아이콘"></span>
+  <h1 id="lgTitle">맥박 노트</h1>
+  <p class="lgsub">맥박·운동·수면을 기록해요.</p>
+  <button type="button" class="gsi" id="lgGsi" data-gc="login-screen-google"><svg class="gmark" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg><span>Google로 로그인</span><span class="soon hide">준비 중이에요</span></button>
+  <button type="button" class="guest" id="lgGuest" data-gc="login-guest">로그인 없이 시작하기</button>
+  <p class="meta lgmsg" id="lgMsg" aria-live="polite"></p>
+  <p class="lgnote">로그인하지 않아도 모든 기능을 쓸 수 있어요. 기록은 이 기기에 저장돼요.</p>
+ </div>
+</div>
 <main class="wrap">
 <button type="button" class="thbtn" id="thBtn" data-gc="theme-toggle" aria-label="화면 테마 바꾸기"><span id="thIco" aria-hidden="true"></span><span id="thLbl">자동</span></button>
 <div id="tabMe" class="hide" role="tabpanel" aria-labelledby="tb-profile">
-<header><h1>기본 정보·데이터</h1></header>
+<header><h1>프로필</h1></header>
+<section class="card pfc" aria-labelledby="h-pf">
+ <h2 id="h-pf" class="vh">프로필 사진과 계정</h2>
+ <div class="avwrap"><label class="avbig" id="avPick" for="avFile" data-gc="avatar-pick"><img id="avImg" class="hide" alt="내 프로필 사진"><span class="avph" id="avPh" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="9" r="4"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg></span><span class="avcam" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></span></label>
+ <input type="file" id="avFile" accept="image/*" class="vh" tabindex="-1">
+ <div class="avbtns"><label class="pbtn lbtn" for="avFile" id="avSet" data-gc="avatar-set">사진 고르기</label><button type="button" class="tbtn sub hide" id="avDel" data-gc="avatar-remove">사진 지우기</button></div>
+ <p class="meta" id="avMsg" aria-live="polite">사진은 이 휴대폰에만 저장돼요.</p></div>
+ <div class="pfrow"><span class="lbl">계정</span><span class="pfem" id="pfEm">로그인하지 않았어요</span></div>
+</section>
 <section class="card" aria-labelledby="h-me">
  <h2 id="h-me">기본 정보</h2>
  <div class="field"><label for="age">나이</label><input id="age" type="number" inputmode="numeric" pattern="[0-9]*" min="1" max="120" placeholder="예: 45"></div>
@@ -34,37 +55,14 @@ window.hcTheme();if(m){var f=function(){if(p==='auto')window.hcTheme()};m.addEve
  <div class="field"><label for="wt">몸무게 (kg)</label><input id="wt" type="number" inputmode="decimal" min="10" max="300" step="0.1" placeholder="예: 65"></div>
  <button class="tbtn big" id="pfSave" data-gc="profile-save">저장</button>
  <p class="meta" id="pfMsg" aria-live="polite"></p>
- <p class="meta">이 정보는 이 휴대폰에만 저장돼요.</p>
+ <p class="meta">이 정보는 이 휴대폰에만 저장돼요. 동기화되지 않아요.</p>
 </section>
 <section class="card hide" id="bmiCard" aria-labelledby="h-bmi">
  <h2 id="h-bmi">BMI</h2>
  <div class="bmi" id="bmiVal"></div>
  <p class="meta">건강 상태를 판단하는 값이 아니에요.</p>
 </section>
-<section class="card dm" aria-labelledby="h-dm">
- <details class="ref fold" id="dmCard" data-k="dm">
-  <summary id="h-dm"><span class="sm"><span class="st">데이터 관리</span><span class="hint">화면 테마 · 내보내기 · 불러오기</span></span></summary>
-  <h3 id="thL">화면 테마</h3>
-  <div class="seg" id="thSeg" role="group" aria-labelledby="thL">
-   <button type="button" aria-pressed="false" data-v="auto">자동(시스템)</button><button type="button" aria-pressed="false" data-v="light">라이트</button><button type="button" aria-pressed="false" data-v="dark">다크</button>
-  </div>
-  <h3>기록 백업</h3>
-  <p class="meta">맥박·운동·수면 기록과 기본 정보를 JSON 파일 하나로 저장하거나, 저장한 파일에서 다시 불러올 수 있어요.</p>
-  <div class="btns2">
-   <button type="button" class="obtn" id="expBtn" data-gc="data-export">내보내기 (파일 저장)</button>
-   <button type="button" class="obtn hide" id="shareBtn" data-gc="data-share">공유로 보내기</button>
-   <button type="button" class="obtn" id="impBtn" data-gc="data-import">불러오기</button>
-  </div>
-  <input type="file" id="impFile" accept="application/json,.json" class="hide">
-  <p class="meta" id="dmMsg" aria-live="polite"></p>
-  <p class="meta">불러오면 지금 이 기기에 있는 기록이 파일 내용으로 바뀌어요.</p>
- </details>
-</section>
-<footer class="notice">
- <p>이 앱은 의료 진단이 아니에요. 일반적인 건강 관리와 교육용으로만 써 주세요.</p>
- <p>모든 기록은 이 기기에만 저장되고 다른 곳에 공유되지 않아요.</p>
- <p>방문과 버튼 누름 횟수만 세고(GoatCounter) 기록 내용은 보내지 않아요.</p>
-</footer>
+<div class="pfmark"><span class="appmark"><img class="appic" src="img/icon-mark.svg" alt="맥박 노트 아이콘"></span><span class="app">맥박 노트</span></div>
 </div>
 <div id="tabHome" class="hide" role="tabpanel" aria-labelledby="tb-pulse">
 <header><h1>맥박</h1><p class="note">참고·교육용이에요. 의료 진단을 대신하지 않아요.</p></header>
@@ -260,9 +258,49 @@ window.hcTheme();if(m){var f=function(){if(p==='auto')window.hcTheme()};m.addEve
  </details>
 </section>
 </div>
+<div id="tabSet" class="hide" role="tabpanel" aria-labelledby="tb-settings">
+<header><h1>설정</h1></header>
+<section class="card acct st-cfg" id="acctCard" aria-labelledby="h-acct">
+ <div class="acct-head"><h2 id="h-acct">Google 동기화</h2><span class="spill" id="syncPill" role="status"><i class="sd" aria-hidden="true"></i><span class="stx" id="syncTx">준비 중</span></span></div>
+ <div class="prof hide" id="acctProf"><span class="av" id="acctAv" aria-hidden="true"></span><span class="pt"><span class="nm" id="acctNm"></span><span class="em" id="acctEm"></span></span></div>
+ <p class="em setem" id="setEm">로그인하지 않았어요</p>
+ <p class="subt" id="acctSub">로그인하면 휴대폰을 바꿔도 기록을 이어서 볼 수 있어요.</p>
+ <button type="button" class="gsi" id="gsiBtn" data-gc="login"><svg class="gmark" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg><span>Google로 로그인</span><span class="soon hide">준비 중이에요</span></button>
+ <div class="acct-act hide" id="acctAct"><button type="button" class="pbtn" id="syncNow" data-gc="sync-now">지금 동기화</button></div>
+ <p class="meta" id="acctMsg" aria-live="polite"></p>
+ <p class="snote">맥박·운동·수면 기록만 동기화돼요. 기본 정보(나이·성별·키·몸무게), 프로필 사진, 화면 설정은 이 기기에만 남아요. 로그인하지 않아도 모든 기능을 쓸 수 있어요.</p>
+ <button type="button" class="signout hide" id="signOutBtn" data-gc="sign-out">로그아웃</button>
+<button type="button" class="signout tologin hide" id="toLoginBtn" data-gc="to-login">로그인 화면으로 돌아가기</button>
+ <p class="outnote hide" id="signOutNote">로그아웃해도 이 기기의 기록은 지워지지 않아요.</p>
+</section>
+<section class="card dm" aria-labelledby="h-dm">
+ <h2 id="h-dm">데이터 내보내기·불러오기</h2>
+ <p class="meta">맥박·운동·수면 기록, 기본 정보, 프로필 사진을 JSON 파일 하나로 저장하거나, 저장한 파일에서 다시 불러올 수 있어요.</p>
+ <div class="btns2">
+  <button type="button" class="obtn" id="expBtn" data-gc="data-export">내보내기 (파일 저장)</button>
+  <button type="button" class="obtn hide" id="shareBtn" data-gc="data-share">공유로 보내기</button>
+  <button type="button" class="obtn" id="impBtn" data-gc="data-import">불러오기</button>
+ </div>
+ <input type="file" id="impFile" accept="application/json,.json" class="hide">
+ <p class="meta" id="dmMsg" aria-live="polite"></p>
+ <p class="meta">불러오면 지금 이 기기에 있는 기록이 파일 내용으로 바뀌어요.</p>
+</section>
+<button type="button" class="fb-row" id="fbBtn" data-gc="feedback"><span class="fb-icw" aria-hidden="true"><svg class="fb-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.6A8 8 0 1 1 21 12z"/></svg></span><span class="fb-t"><b>앱 의견 보내기</b><small id="fbSub">불편한 점이나 아이디어를 알려 주세요</small></span><span class="fb-ext" id="fbExt" role="img" aria-label="새 탭에서 열림"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg></span></button>
+<p class="meta fbnote" id="fbMsg" aria-live="polite"></p>
+<p class="fbnote">의견은 Google 폼으로 받아 앱 개선에만 쓰고, 다른 곳에 공유하지 않아요.</p>
+<section class="card gcn" aria-labelledby="h-gc">
+ <h2 id="h-gc">사용 통계</h2>
+ <p class="meta">방문 수와 어떤 버튼을 눌렀는지만 GoatCounter로 세요. 쿠키는 쓰지 않아요. 맥박·운동·수면 기록, 기본 정보, 프로필 사진은 보내지 않아요.</p>
+</section>
+<footer class="notice">
+ <p>이 앱은 의료 진단이 아니에요. 일반적인 건강 관리와 교육용으로만 써 주세요.</p>
+ <p>기록은 먼저 이 기기에 저장돼요. Google로 로그인하면 맥박·운동·수면 기록이 내 계정 공간에만 백업되고, 다른 곳에 공유되지 않아요.</p>
+</footer>
+</div>
 </main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 <nav class="tabbar" role="tablist" aria-label="화면 이동">
- <button role="tab" id="tb-exercise" aria-selected="true" aria-controls="tabEx" data-t="tabEx" data-gc="tab-exercise">운동</button><button role="tab" id="tb-sleep" aria-selected="false" aria-controls="tabSleep" data-t="tabSleep" data-gc="tab-sleep">수면</button><button role="tab" id="tb-pulse" aria-selected="false" aria-controls="tabHome" data-t="tabHome" data-gc="tab-pulse">맥박</button><button role="tab" id="tb-profile" aria-selected="false" aria-controls="tabMe" data-t="tabMe" data-gc="tab-profile">기본 정보·데이터</button>
+ <button role="tab" id="tb-profile" aria-selected="false" aria-controls="tabMe" data-t="tabMe" data-gc="tab-profile">프로필</button><button role="tab" id="tb-exercise" aria-selected="true" aria-controls="tabEx" data-t="tabEx" data-gc="tab-exercise">운동</button><button role="tab" id="tb-sleep" aria-selected="false" aria-controls="tabSleep" data-t="tabSleep" data-gc="tab-sleep">수면</button><button role="tab" id="tb-pulse" aria-selected="false" aria-controls="tabHome" data-t="tabHome" data-gc="tab-pulse">맥박</button><button role="tab" id="tb-settings" aria-selected="false" aria-controls="tabSet" data-t="tabSet" data-gc="tab-settings">설정</button>
 </nav>
 <div class="sheet hide" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sTitle">
  <div class="card sheet-card">
@@ -276,12 +314,13 @@ window.hcTheme();if(m){var f=function(){if(p==='auto')window.hcTheme()};m.addEve
 </div>
 
 
-<script src="js/app.js?v=16"></script>
-<script src="js/profile.js?v=16"></script>
-<script src="js/es.js?v=16"></script>
-<script src="js/ui.js?v=16"></script>
-<script src="js/ref.js?v=16"></script>
-<script src="js/data.js?v=16"></script>
-<script src="js/gc.js?v=16"></script>
+<script src="js/app.js?v=18"></script>
+<script src="js/profile.js?v=18"></script>
+<script src="js/es.js?v=18"></script>
+<script src="js/ui.js?v=18"></script>
+<script src="js/ref.js?v=18"></script>
+<script src="js/data.js?v=18"></script>
+<script src="js/account.js?v=18"></script>
+<script src="js/gc.js?v=18"></script>
 <script data-goatcounter="https://jonghun-apps.goatcounter.com/count" data-goatcounter-settings='{"no_onload":true}' async src="//gc.zgo.at/count.js"></script>
 </body></html>

@@ -1,8 +1,12 @@
 (()=>{'use strict';
 const $=id=>document.getElementById(id),K='hc.profile.v1';
 const tabs=[...document.querySelectorAll('.tabbar [role=tab]')];
-const show=id=>{tabs.forEach(b=>{const on=b.dataset.t===id;b.setAttribute('aria-selected',on);$(b.dataset.t).classList.toggle('hide',!on)});scrollTo(0,0)};
+const UK='hc.ui.v1',ui=()=>{try{const v=JSON.parse(localStorage.getItem(UK));return v&&typeof v==='object'&&!Array.isArray(v)?v:{}}catch(e){return{}}};
+const show=(id,keep)=>{if(!tabs.some(b=>b.dataset.t===id))id=tabs[0].dataset.t;tabs.forEach(b=>{const on=b.dataset.t===id;b.setAttribute('aria-selected',on);$(b.dataset.t).classList.toggle('hide',!on)});scrollTo(0,0);
+ if(keep!==false){const v=ui();v.tab=id;try{localStorage.setItem(UK,JSON.stringify(v))}catch(e){}}};
 tabs.forEach(b=>b.onclick=()=>show(b.dataset.t));
+/* 처음 열면 첫 탭(프로필), 그다음부터는 마지막에 본 탭 (hc.ui.v1.tab) */
+show(ui().tab||tabs[0].dataset.t,false);
 const seg=[...$('sexSeg').querySelectorAll('button')];let sex='';
 const setSex=v=>{sex=v||'';seg.forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===sex))};
 seg.forEach(b=>b.onclick=()=>setSex(b.dataset.v));
@@ -13,4 +17,18 @@ if(p&&typeof p==='object'){if(p.age!=null)$('age').value=p.age;if(p.heightCm!=nu
 bmi(p);
 $('pfSave').onclick=()=>{const d={age:num($('age'),1,120),sex:sex||null,heightCm:num($('ht'),50,250),weightKg:num($('wt'),10,300),savedAt:Date.now()};
  try{localStorage.setItem(K,JSON.stringify(d));$('pfMsg').textContent='저장했어요.'}catch(e){$('pfMsg').textContent='저장하지 못했어요.'}bmi(d)};
+/* ---- 프로필 사진 (hc.avatar.v1 = {dataUrl, savedAt}) — 이 기기에만, 동기화 안 해요 ---- */
+const AK='hc.avatar.v1',S=256;
+const avGet=()=>{try{const v=JSON.parse(localStorage.getItem(AK));return v&&typeof v.dataUrl==='string'&&/^data:image\//.test(v.dataUrl)?v:null}catch(e){return null}};
+function avShow(){const v=avGet(),i=$('avImg');if(v){i.src=v.dataUrl;i.classList.remove('hide');$('avPh').classList.add('hide')}else{i.removeAttribute('src');i.classList.add('hide');$('avPh').classList.remove('hide')}
+ $('avDel').classList.toggle('hide',!v);$('avSet').textContent=v?'사진 바꾸기':'사진 고르기'}
+function loadImg(f){return new Promise((ok,no)=>{const u=URL.createObjectURL(f),i=new Image();i.onload=()=>{ok(i);setTimeout(()=>URL.revokeObjectURL(u),1000)};i.onerror=()=>{URL.revokeObjectURL(u);no()};i.src=u})}
+$('avFile').onchange=async()=>{const f=$('avFile').files[0];$('avFile').value='';if(!f)return;const m=$('avMsg');
+ try{const i=await loadImg(f),w=i.naturalWidth,h=i.naturalHeight,z=Math.min(w,h);if(!z)throw 0;
+  const c=document.createElement('canvas');c.width=c.height=S;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,S,S);
+  x.drawImage(i,(w-z)/2,(h-z)/2,z,z,0,0,S,S);let d=c.toDataURL('image/jpeg',.85);if(d.length>120000)d=c.toDataURL('image/jpeg',.7);
+  localStorage.setItem(AK,JSON.stringify({dataUrl:d,savedAt:Date.now()}));avShow();m.textContent='사진을 저장했어요. 이 휴대폰에만 저장돼요.'}
+ catch(e){m.textContent='사진을 열지 못했어요. 다른 사진을 골라 주세요.'}};
+$('avDel').onclick=()=>{if(!confirm('프로필 사진을 지울까요?'))return;localStorage.removeItem(AK);avShow();$('avMsg').textContent='사진을 지웠어요.'};
+avShow();window.hcAvatar=avShow;
 })();
