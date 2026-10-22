@@ -7,17 +7,20 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="맥박 노트">
 <title>맥박 노트</title>
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=18">
-<link rel="icon" href="favicon.svg?v=18" type="image/svg+xml">
-<link rel="icon" href="favicon-32.png?v=18" sizes="32x32" type="image/png">
-<link rel="manifest" href="manifest.webmanifest?v=18">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=19">
+<link rel="icon" href="favicon.svg?v=19" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png?v=19" sizes="32x32" type="image/png">
+<link rel="manifest" href="manifest.webmanifest?v=19">
 <script>/* 화면 테마: 페인트 전에 html[data-theme] 적용 (hc.ui.v1.theme: auto|light|dark) */
-(function(){var d=document.documentElement,p='auto';try{var u=JSON.parse(localStorage.getItem('hc.ui.v1'));if(u&&/^(light|dark)$/.test(u.theme))p=u.theme}catch(e){}
+(function(){var d=document.documentElement,p='auto',sl=false,ov=false;try{var u=JSON.parse(localStorage.getItem('hc.ui.v1'));if(u&&/^(light|dark)$/.test(u.theme))p=u.theme}catch(e){}
+/* 자는 중(hc.sleep.v1에 end 없는 기록)이면 다크 강제 — 저장된 선택은 그대로, 헤더 버튼을 누르면 해제 */
+try{var sa=JSON.parse(localStorage.getItem('hc.sleep.v1'));if(Array.isArray(sa))for(var i=0;i<sa.length;i++)if(sa[i]&&isFinite(sa[i].start)&&!sa[i].end)sl=ov=true}catch(e){}
 var m=window.matchMedia&&matchMedia('(prefers-color-scheme: light)');
-window.hcTheme=function(pref){if(pref)p=pref;var t=p==='auto'?(m&&m.matches?'light':'dark'):p;d.setAttribute('data-theme',t);d.setAttribute('data-theme-pref',p);d.style.colorScheme=t;
+window.hcTheme=function(pref){if(pref){p=pref;ov=false}var t=ov?'dark':p==='auto'?(m&&m.matches?'light':'dark'):p;d.setAttribute('data-theme',t);d.setAttribute('data-theme-pref',p);d.style.colorScheme=t;
  var tc=document.querySelectorAll('meta[name=theme-color]');for(var i=0;i<tc.length;i++){tc[i].removeAttribute('media');tc[i].setAttribute('content',t==='light'?'#e9eef0':'#0f1417')}return t};
-window.hcTheme();if(m){var f=function(){if(p==='auto')window.hcTheme()};m.addEventListener?m.addEventListener('change',f):m.addListener&&m.addListener(f)}})();</script>
-<link rel="stylesheet" href="css/app.css?v=18">
+window.hcSleep=function(on){on=!!on;if(on===sl)return;sl=ov=on;window.hcTheme()};
+window.hcTheme();if(m){var f=function(){if(p==='auto'&&!ov)window.hcTheme()};m.addEventListener?m.addEventListener('change',f):m.addListener&&m.addListener(f)}})();</script>
+<link rel="stylesheet" href="css/app.css?v=19">
 </head><body>
 <script>/* 첫 화면: 로그인 선택 전이면 로그인 화면 (hc.login.v1) */
 (function(){var c=null;try{c=JSON.parse(localStorage.getItem('hc.login.v1'))}catch(e){}if(!c||!c.mode)document.documentElement.classList.add('gate')})();</script>
@@ -154,7 +157,7 @@ window.hcTheme();if(m){var f=function(){if(p==='auto')window.hcTheme()};m.addEve
 <div id="tabEx" class="" role="tabpanel" aria-labelledby="tb-exercise">
 <header><h1>운동</h1><p class="note">참고·교육용이에요. 의료 진단을 대신하지 않아요.</p></header>
 <section class="card" aria-labelledby="h-ex">
- <h2 id="h-ex">운동 루틴</h2>
+ <h2 id="h-ex">3·6·9 운동 루틴</h2>
  <div class="chips" id="chips"></div>
  <p class="meta" id="exDone"></p>
 </section>
@@ -314,13 +317,13 @@ window.hcTheme();if(m){var f=function(){if(p==='auto')window.hcTheme()};m.addEve
 </div>
 
 
-<script src="js/app.js?v=18"></script>
-<script src="js/profile.js?v=18"></script>
-<script src="js/es.js?v=18"></script>
-<script src="js/ui.js?v=18"></script>
-<script src="js/ref.js?v=18"></script>
-<script src="js/data.js?v=18"></script>
-<script src="js/account.js?v=18"></script>
-<script src="js/gc.js?v=18"></script>
+<script src="js/app.js?v=19"></script>
+<script src="js/profile.js?v=19"></script>
+<script src="js/es.js?v=19"></script>
+<script src="js/ui.js?v=19"></script>
+<script src="js/ref.js?v=19"></script>
+<script src="js/data.js?v=19"></script>
+<script src="js/account.js?v=19"></script>
+<script src="js/gc.js?v=19"></script>
 <script data-goatcounter="https://jonghun-apps.goatcounter.com/count" data-goatcounter-settings='{"no_onload":true}' async src="//gc.zgo.at/count.js"></script>
 </body></html>

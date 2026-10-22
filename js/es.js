@@ -92,6 +92,7 @@ function slRender(){const a=load(SK).filter(r=>r&&isFinite(r.start)).sort((x,y)=
  a.slice(0,20).forEach(r=>{const li=document.createElement('li');
   li.innerHTML=r.end?`<div><b>${dur(r.end-r.start)}</b> <span>${fmt(r.start)} ~ ${fmt(r.end)}</span></div>`:`<div><b>자는 중</b> <span>${fmt(r.start)}부터</span></div>`;
   li.appendChild(delBtn(fmt(r.start)+' 수면 기록',()=>{save(SK,load(SK).filter(x=>x.id!==r.id));slRender()}));ul.appendChild(li)});
+ window.hcSleep&&window.hcSleep(!!op);
  slCard(a);clearInterval(tick);if(op)tick=setInterval(slRender,60000)}
 $('slToggle').onclick=()=>{const a=load(SK),op=a.find(r=>!r.end),now=Date.now();
  if(op)op.end=Math.max(now,op.start);else a.push({id:uid(),start:now,end:null});save(SK,a);slRender()};
