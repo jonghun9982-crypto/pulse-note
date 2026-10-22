@@ -83,7 +83,7 @@ function slCard(a){const p=prof(),age=p&&p.age!=null&&isFinite(p.age)?+p.age:nul
  for(let h=0;h<=max/60;h+=3)g+=`<span class="ax" style="left:${P(h*60,max)}">${h}${h*60>max-180?'h':''}</span>`;
  $('slvBar').innerHTML=g;$('slvKeyBand').textContent=`권장 ${lo}~${hi}시간 (NSF, ${lab})`;$('slvKeyKr').textContent=krl;
  const krt=`${krl} ${hm(kr)}`;
- $('slvMine').innerHTML=(avg!=null?`<span class="dotk"></span>내 평균 <b>${hm(avg)}</b> · 권장 ${lo}~${hi}시간<br><span class="sub">${krt}</span>`:`<span class="rempty">수면과 기상을 기록하면 평균이 여기에 표시돼요</span><br><span class="sub">권장 ${lo}~${hi}시간 · ${krt}</span>`)+(lab==='성인 기준'?'<br><span class="sub">성인 기준 (기본 정보에 나이를 넣으면 연령에 맞춰 보여 드려요)</span>':'')}
+ $('slvMine').innerHTML=(avg!=null?`<span class="dotk"></span>내 평균 <b>${hm(avg)}</b> · 권장 ${lo}~${hi}시간<br><span class="sub">${krt}</span>`:`<span class="rempty">수면과 기상을 기록하면 평균이 여기에 표시돼요</span><br><span class="sub">권장 ${lo}~${hi}시간 · ${krt}</span>`)+(lab==='성인 기준'?'<br><span class="sub">성인 기준 (기본 정보·데이터 탭에 나이를 넣으면 연령에 맞춰 보여 드려요)</span>':'')}
 function slRender(){const a=load(SK).filter(r=>r&&isFinite(r.start)).sort((x,y)=>y.start-x.start),op=a.find(r=>!r.end);
  $('slToggle').textContent=op?'기상':'수면';$('slToggle').classList.toggle('on',!!op);$('slToggle').setAttribute('aria-label',op?'기상 기록하기':'수면 기록하기');
  $('slIcon').classList.toggle('on',!!op);$('slIcon').setAttribute('aria-label',op?'자는 중':'깨어 있음');

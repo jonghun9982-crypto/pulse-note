@@ -7,15 +7,22 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="맥박 노트">
 <title>맥박 노트</title>
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=14">
-<link rel="icon" href="favicon.svg?v=14" type="image/svg+xml">
-<link rel="icon" href="favicon-32.png?v=14" sizes="32x32" type="image/png">
-<link rel="manifest" href="manifest.webmanifest?v=14">
-<link rel="stylesheet" href="css/app.css?v=14">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=15">
+<link rel="icon" href="favicon.svg?v=15" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png?v=15" sizes="32x32" type="image/png">
+<link rel="manifest" href="manifest.webmanifest?v=15">
+<script>/* 화면 테마: 페인트 전에 html[data-theme] 적용 (hc.ui.v1.theme: auto|light|dark) */
+(function(){var d=document.documentElement,p='auto';try{var u=JSON.parse(localStorage.getItem('hc.ui.v1'));if(u&&/^(light|dark)$/.test(u.theme))p=u.theme}catch(e){}
+var m=window.matchMedia&&matchMedia('(prefers-color-scheme: light)');
+window.hcTheme=function(pref){if(pref)p=pref;var t=p==='auto'?(m&&m.matches?'light':'dark'):p;d.setAttribute('data-theme',t);d.setAttribute('data-theme-pref',p);d.style.colorScheme=t;
+ var tc=document.querySelectorAll('meta[name=theme-color]');for(var i=0;i<tc.length;i++){tc[i].removeAttribute('media');tc[i].setAttribute('content',t==='light'?'#e9eef0':'#0f1417')}return t};
+window.hcTheme();if(m){var f=function(){if(p==='auto')window.hcTheme()};m.addEventListener?m.addEventListener('change',f):m.addListener&&m.addListener(f)}})();</script>
+<link rel="stylesheet" href="css/app.css?v=15">
 </head><body>
 <main class="wrap">
-<div id="tabMe" class="" role="tabpanel" aria-labelledby="tb-profile">
-<header><h1>기본 정보</h1></header>
+<button type="button" class="thbtn" id="thBtn" data-gc="theme-toggle" aria-label="화면 테마 바꾸기"><span id="thIco" aria-hidden="true"></span><span id="thLbl">자동</span></button>
+<div id="tabMe" class="hide" role="tabpanel" aria-labelledby="tb-profile">
+<header><h1>기본 정보·데이터</h1></header>
 <section class="card" aria-labelledby="h-me">
  <h2 id="h-me">기본 정보</h2>
  <div class="field"><label for="age">나이</label><input id="age" type="number" inputmode="numeric" pattern="[0-9]*" min="1" max="120" placeholder="예: 45"></div>
@@ -34,6 +41,25 @@
  <div class="bmi" id="bmiVal"></div>
  <p class="meta">건강 상태를 판단하는 값이 아니에요.</p>
 </section>
+<section class="card dm" aria-labelledby="h-dm">
+ <details class="ref fold" id="dmCard" data-k="dm">
+  <summary id="h-dm"><span class="sm"><span class="st">데이터 관리</span><span class="hint">화면 테마 · 내보내기 · 불러오기</span></span></summary>
+  <h3 id="thL">화면 테마</h3>
+  <div class="seg" id="thSeg" role="group" aria-labelledby="thL">
+   <button type="button" aria-pressed="false" data-v="auto">자동(시스템)</button><button type="button" aria-pressed="false" data-v="light">라이트</button><button type="button" aria-pressed="false" data-v="dark">다크</button>
+  </div>
+  <h3>기록 백업</h3>
+  <p class="meta">맥박·운동·수면 기록과 기본 정보를 JSON 파일 하나로 저장하거나, 저장한 파일에서 다시 불러올 수 있어요.</p>
+  <div class="btns2">
+   <button type="button" class="obtn" id="expBtn" data-gc="data-export">내보내기 (파일 저장)</button>
+   <button type="button" class="obtn hide" id="shareBtn" data-gc="data-share">공유로 보내기</button>
+   <button type="button" class="obtn" id="impBtn" data-gc="data-import">불러오기</button>
+  </div>
+  <input type="file" id="impFile" accept="application/json,.json" class="hide">
+  <p class="meta" id="dmMsg" aria-live="polite"></p>
+  <p class="meta">불러오면 지금 이 기기에 있는 기록이 파일 내용으로 바뀌어요.</p>
+ </details>
+</section>
 <footer class="notice">
  <p>이 앱은 의료 진단이 아니에요. 일반적인 건강 관리와 교육용으로만 써 주세요.</p>
  <p>모든 기록은 이 기기에만 저장되고 다른 곳에 공유되지 않아요.</p>
@@ -41,7 +67,7 @@
 </footer>
 </div>
 <div id="tabHome" class="hide" role="tabpanel" aria-labelledby="tb-pulse">
-<header><h1>맥박 카드</h1><p class="note">참고·교육용이에요. 의료 진단을 대신하지 않아요.</p></header>
+<header><h1>맥박</h1><p class="note">참고·교육용이에요. 의료 진단을 대신하지 않아요.</p></header>
 <section class="card" id="pulse" aria-labelledby="h-pulse">
  <h2 id="h-pulse">맥박 세기</h2>
  <div id="pView">
@@ -127,7 +153,7 @@
 </section>
 
 </div>
-<div id="tabEx" class="hide" role="tabpanel" aria-labelledby="tb-exercise">
+<div id="tabEx" class="" role="tabpanel" aria-labelledby="tb-exercise">
 <header><h1>운동</h1><p class="note">참고·교육용이에요. 의료 진단을 대신하지 않아요.</p></header>
 <section class="card" aria-labelledby="h-ex">
  <h2 id="h-ex">운동 루틴</h2>
@@ -236,7 +262,7 @@
 </div>
 </main>
 <nav class="tabbar" role="tablist" aria-label="화면 이동">
- <button role="tab" id="tb-profile" aria-selected="true" aria-controls="tabMe" data-t="tabMe" data-gc="tab-profile">기본 정보</button><button role="tab" id="tb-pulse" aria-selected="false" aria-controls="tabHome" data-t="tabHome" data-gc="tab-pulse">맥박 카드</button><button role="tab" id="tb-exercise" aria-selected="false" aria-controls="tabEx" data-t="tabEx" data-gc="tab-exercise">운동</button><button role="tab" id="tb-sleep" aria-selected="false" aria-controls="tabSleep" data-t="tabSleep" data-gc="tab-sleep">수면</button>
+ <button role="tab" id="tb-exercise" aria-selected="true" aria-controls="tabEx" data-t="tabEx" data-gc="tab-exercise">운동</button><button role="tab" id="tb-sleep" aria-selected="false" aria-controls="tabSleep" data-t="tabSleep" data-gc="tab-sleep">수면</button><button role="tab" id="tb-pulse" aria-selected="false" aria-controls="tabHome" data-t="tabHome" data-gc="tab-pulse">맥박</button><button role="tab" id="tb-profile" aria-selected="false" aria-controls="tabMe" data-t="tabMe" data-gc="tab-profile">기본 정보·데이터</button>
 </nav>
 <div class="sheet hide" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sTitle">
  <div class="card sheet-card">
@@ -250,11 +276,12 @@
 </div>
 
 
-<script src="js/app.js?v=14"></script>
-<script src="js/profile.js?v=14"></script>
-<script src="js/es.js?v=14"></script>
-<script src="js/ui.js?v=14"></script>
-<script src="js/ref.js?v=14"></script>
-<script src="js/gc.js?v=14"></script>
+<script src="js/app.js?v=15"></script>
+<script src="js/profile.js?v=15"></script>
+<script src="js/es.js?v=15"></script>
+<script src="js/ui.js?v=15"></script>
+<script src="js/ref.js?v=15"></script>
+<script src="js/data.js?v=15"></script>
+<script src="js/gc.js?v=15"></script>
 <script data-goatcounter="https://jonghun-apps.goatcounter.com/count" data-goatcounter-settings='{"no_onload":true}' async src="//gc.zgo.at/count.js"></script>
 </body></html>

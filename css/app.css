@@ -1,5 +1,5 @@
 :root{--bg:#0f1417;--text:#eef3f4;--sub:#a9b6ba;--card:rgba(255,255,255,.07);--border:rgba(255,255,255,.14);--accent:#4cc3b8;--orange:#f0a14c;--chip:rgba(255,255,255,.06);--track:rgba(255,255,255,.16);--scrim:rgba(0,0,0,.55);--sheet:rgba(24,31,35,.92)}
-@media (prefers-color-scheme: light){:root{--bg:#e9eef0;--text:#132024;--sub:#43545a;--card:rgba(255,255,255,.62);--border:rgba(19,32,36,.12);--accent:#16706a;--orange:#9a5208;--chip:rgba(19,32,36,.05);--track:rgba(19,32,36,.14);--scrim:rgba(19,32,36,.35);--sheet:rgba(244,247,248,.94)}}
+html[data-theme=light]{--bg:#e9eef0;--text:#132024;--sub:#43545a;--card:rgba(255,255,255,.62);--border:rgba(19,32,36,.12);--accent:#16706a;--orange:#9a5208;--chip:rgba(19,32,36,.05);--track:rgba(19,32,36,.14);--scrim:rgba(19,32,36,.35);--sheet:rgba(244,247,248,.94)}
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--text)}
 body{font-family:system-ui,-apple-system,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",sans-serif;min-height:100dvh;font-variant-numeric:tabular-nums;line-height:1.5;-webkit-text-size-adjust:100%}
@@ -134,7 +134,7 @@ footer{text-align:center;font-size:13px;color:var(--sub);margin:18px 0 6px}foote
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 @keyframes zz{0%{opacity:0;transform:translate(0,8px) scale(.8)}25%,65%{opacity:1}100%{opacity:0;transform:translate(5px,-10px) scale(1.05)}}
 @media (prefers-reduced-motion: reduce){.slicon .face,.slicon .eyes,.slicon.on .zz{animation:none}.slicon .mask{transition:none}.slicon.on .zz{opacity:1}}
-@media (prefers-color-scheme: light){.slicon .zz{fill:#8e76c4}}
+html[data-theme=light] .slicon .zz{fill:#8e76c4}
 .hbar{position:relative;height:74px;margin:30px 8px 4px}
 .hbar .tr{position:absolute;left:0;right:0;top:22px;height:14px;border-radius:7px;background:var(--track)}
 .hbar .bd{position:absolute;top:12px;height:34px;background:var(--chip);border-left:1px dashed var(--sub);border-right:1px dashed var(--sub);border-radius:4px}
@@ -154,3 +154,12 @@ input[type=text],input[type=date]{width:100%;box-sizing:border-box;font:inherit;
 .tag{display:inline-block;font-size:12px!important;font-weight:600;padding:1px 7px;border-radius:9px;border:1px solid var(--border);margin-right:6px;vertical-align:2px}
 .tag.tg-s{color:var(--orange)!important}.tag.tg-c{color:var(--accent)!important}.tag.tg-r{color:var(--sub)!important}
 .list li>div{min-width:0;padding:6px 0}
+/* 테마 버튼 · 데이터 관리 (v15) */
+.wrap{position:relative}
+.thbtn{position:absolute;top:calc(12px + env(safe-area-inset-top));right:calc(12px + env(safe-area-inset-right));z-index:5;display:flex;align-items:center;gap:6px;min-height:44px;padding:6px 12px;border-radius:22px;border:1px solid var(--border);background:var(--card);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);color:var(--text);font-size:14px;font-weight:600}
+.thbtn svg{width:18px;height:18px;flex:none}
+.wrap>div>header:first-child{padding-right:110px}
+#thSeg{margin:6px 0 4px}
+.dm .btns2{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.dm .obtn{min-height:48px;border-radius:14px;border:1px solid var(--border);background:var(--chip);color:var(--accent);font-weight:600;font-size:16px}
+.dm h3{margin-top:14px}
