@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0f1417" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#e9eef0" media="(prefers-color-scheme: light)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="맥박 노트">
+<title>맥박 노트</title>
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=4">
+<link rel="icon" href="favicon.svg?v=4" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png?v=4" sizes="32x32" type="image/png">
+<link rel="manifest" href="manifest.webmanifest?v=4">
+<link rel="stylesheet" href="css/app.css?v=4">
+</head><body>
+<main class="wrap">
+<header><h1>맥박 노트</h1><p class="note">참고·교육용이에요. 의료 진단을 대신하지 않아요.</p></header>
+
+<section class="card" id="pulse" aria-labelledby="h-pulse">
+ <h2 id="h-pulse">맥박 기록</h2>
+ <div id="pView">
+  <div><span class="bpm" id="bpm">--</span><span class="unit">회/분</span></div>
+  <div class="meta" id="date"></div>
+ </div>
+ <p class="empty hide" id="pEmpty">아직 기록이 없어요. 15초만 세어 볼까요?</p>
+ <div class="timer hide" id="pTimer">
+  <div class="ring" role="timer" aria-live="off" aria-label="남은 시간">
+   <svg width="160" height="160" viewBox="0 0 160 160" aria-hidden="true"><circle cx="80" cy="80" r="70" stroke="var(--track)" stroke-width="10" fill="none"/>
+   <circle id="arc" cx="80" cy="80" r="70" stroke="var(--accent)" stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="439.8" stroke-dashoffset="0"/></svg>
+   <div class="t"><span id="sec">15</span><small>초</small></div>
+  </div>
+  <div class="meta" id="tMsg">손목 안쪽에 두 손가락을 대고 세어 보세요</div>
+  <button class="tbtn" id="cancelBtn">그만하기</button>
+ </div>
+ <div class="hide" id="pInput">
+  <label for="cnt">15초 동안 센 횟수</label>
+  <input id="cnt" type="number" inputmode="numeric" pattern="[0-9]*" min="1" max="60" placeholder="예: 18">
+  <div class="result" id="res" aria-live="polite">횟수를 입력해 주세요</div>
+  <div class="btns"><button class="tbtn" id="saveBtn" disabled>기록하기</button><button class="tbtn sub" id="discardBtn">취소</button></div>
+ </div>
+ <button class="tbtn big" id="startBtn">15초 세기 시작</button>
+ <div id="history">
+  <h3>최근 기록</h3>
+  <ul class="list" id="recent"></ul>
+  <h3>지난 7일</h3>
+  <div class="week" id="week" aria-label="지난 7일 하루 평균 맥박"></div>
+ </div>
+</section>
+
+<section class="card" aria-labelledby="h-anim">
+ <h2 id="h-anim">맥박은 어디에 먼저 도착할까?</h2>
+ <svg id="anim" viewBox="0 0 320 220" width="100%" role="img" aria-label="심장에서 배 쪽 큰 혈관과 팔로 맥박이 동시에 출발하는 그림">
+  <path id="pBelly" d="M160 62 L160 130 L150 196" stroke="var(--track)" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <path id="pArm" d="M160 62 L215 70 L255 122 L285 168" stroke="var(--track)" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M160 58 c-14-10-24 2-14 12 l14 12 l14-12 c10-10 0-22-14-12z" fill="var(--orange)"/>
+  <text x="170" y="146">배 쪽 큰 혈관</text><text x="92" y="200">허벅지 쪽</text><text x="250" y="190">손목</text><text x="182" y="50">심장</text>
+  <circle id="endB" cx="150" cy="196" r="10" fill="none" stroke="var(--accent)" stroke-width="2" opacity="0"/>
+  <circle id="endA" cx="285" cy="168" r="10" fill="none" stroke="var(--accent)" stroke-width="2" opacity="0"/>
+  <circle id="dB" r="7" fill="var(--orange)" cx="160" cy="62"/>
+  <circle id="dA" r="7" fill="var(--orange)" cx="160" cy="62"/>
+ </svg>
+ <p class="status" id="aStatus" aria-live="polite">&nbsp;</p>
+ <div class="seg" role="group" aria-label="혈관 상태 바꾸기">
+  <button aria-pressed="true" data-m="soft">말랑한 혈관</button><button aria-pressed="false" data-m="stiff">단단한 혈관</button>
+ </div>
+ <p class="caption">맥박이 배 쪽 큰 혈관과 팔로 동시에 출발해요. 큰 혈관이 단단해지면 그쪽이 먼저 도착해요.</p>
+ <p class="caption sub">말랑한 호스와 딱딱한 파이프를 떠올려 보세요.</p>
+ <button class="tbtn" id="replayBtn">다시 보기</button>
+</section>
+
+<section class="card" aria-labelledby="h-ex">
+ <h2 id="h-ex">운동 루틴</h2>
+ <div class="chips" id="chips"></div>
+ <p class="meta" id="exDone"></p>
+</section>
+
+<footer><p class="note">참고·교육용이에요. 의료 진단을 대신하지 않아요.</p><p>기록은 이 기기에만 저장돼요.</p></footer>
+</main>
+
+<div class="sheet hide" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sTitle">
+ <div class="card sheet-card">
+  <div class="sheet-head"><h2 id="sTitle"></h2><button class="tbtn" id="closeBtn">닫기</button></div>
+  <div class="clock" id="clock">05:00</div>
+  <ol class="steps" id="steps"></ol>
+  <div class="btns"><button class="tbtn big" id="goBtn">시작</button><button class="tbtn" id="doneBtn">완료</button></div>
+  <p class="meta hide" id="savedMsg">완료로 기록했어요.</p>
+  <p class="note">참고·교육용이에요. 의료 진단을 대신하지 않아요.</p>
+ </div>
+</div>
+<script src="js/app.js?v=4"></script>
+</body></html>
