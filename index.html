@@ -7,10 +7,10 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="맥박 노트">
 <title>맥박 노트</title>
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=20">
-<link rel="icon" href="favicon.svg?v=20" type="image/svg+xml">
-<link rel="icon" href="favicon-32.png?v=20" sizes="32x32" type="image/png">
-<link rel="manifest" href="manifest.webmanifest?v=20">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=21">
+<link rel="icon" href="favicon.svg?v=21" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png?v=21" sizes="32x32" type="image/png">
+<link rel="manifest" href="manifest.webmanifest?v=21">
 <script>/* 화면 테마: 페인트 전에 html[data-theme] 적용 (hc.ui.v1.theme: auto|light|dark) */
 (function(){var d=document.documentElement,p='auto',sl=false,ov=false;try{var u=JSON.parse(localStorage.getItem('hc.ui.v1'));if(u&&/^(light|dark)$/.test(u.theme))p=u.theme}catch(e){}
 /* 자는 중(hc.sleep.v1에 end 없는 기록)이면 다크 강제 — 저장된 선택은 그대로, 헤더 버튼을 누르면 해제 */
@@ -20,7 +20,7 @@ window.hcTheme=function(pref){if(pref){p=pref;ov=false}var t=ov?'dark':p==='auto
  var tc=document.querySelectorAll('meta[name=theme-color]');for(var i=0;i<tc.length;i++){tc[i].removeAttribute('media');tc[i].setAttribute('content',t==='light'?'#e9eef0':'#0f1417')}return t};
 window.hcSleep=function(on){on=!!on;if(on===sl)return;sl=ov=on;window.hcTheme()};
 window.hcTheme();if(m){var f=function(){if(p==='auto'&&!ov)window.hcTheme()};m.addEventListener?m.addEventListener('change',f):m.addListener&&m.addListener(f)}})();</script>
-<link rel="stylesheet" href="css/app.css?v=20">
+<link rel="stylesheet" href="css/app.css?v=21">
 </head><body>
 <script>/* 첫 화면: 로그인 선택 전이면 로그인 화면 (hc.login.v1) */
 (function(){var c=null;try{c=JSON.parse(localStorage.getItem('hc.login.v1'))}catch(e){}if(!c||!c.mode)document.documentElement.classList.add('gate')})();</script>
@@ -95,6 +95,7 @@ window.hcTheme();if(m){var f=function(){if(p==='auto'&&!ov)window.hcTheme()};m.a
 </section>
 
 <section class="card" aria-labelledby="h-anim">
+ <p class="kicker" aria-hidden="true">1분 의학</p>
  <h2 id="h-anim">맥박은 어디에 먼저 도착할까?</h2>
  <svg id="anim" viewBox="0 0 320 220" width="100%" role="img" aria-label="심장에서 배 쪽 큰 혈관과 팔로 맥박이 동시에 출발하는 그림">
   <path id="pBelly" d="M160 62 L160 130 L150 196" stroke="var(--track)" stroke-width="8" fill="none" stroke-linecap="round"/>
@@ -261,6 +262,16 @@ window.hcTheme();if(m){var f=function(){if(p==='auto'&&!ov)window.hcTheme()};m.a
  </details>
 </section>
 </div>
+<div id="tabVid" class="hide" role="tabpanel" aria-labelledby="tb-videos">
+<header><h1>건강 영상</h1><p class="note">공공기관·대학병원 채널의 교육 영상이에요.</p></header>
+<section class="card cprn" aria-labelledby="h-cprn">
+ <h2 id="h-cprn" class="vh">119 신고 안내</h2>
+ <p class="cprt">주변에 쓰러진 사람이 있으면 먼저 119에 신고하세요</p>
+ <a class="tbtn big call" href="tel:119" data-gc="call-119">119 전화하기</a>
+</section>
+<div id="vList"></div>
+<footer class="notice"><p>영상은 각 기관의 유튜브 채널에서 가져와요. 참고·교육용이에요.</p></footer>
+</div>
 <div id="tabSet" class="hide" role="tabpanel" aria-labelledby="tb-settings">
 <header><h1>설정</h1></header>
 <section class="card acct st-cfg" id="acctCard" aria-labelledby="h-acct">
@@ -293,7 +304,7 @@ window.hcTheme();if(m){var f=function(){if(p==='auto'&&!ov)window.hcTheme()};m.a
 <p class="fbnote">의견은 Google 폼으로 받아 앱 개선에만 쓰고, 다른 곳에 공유하지 않아요.</p>
 <section class="card gcn" aria-labelledby="h-gc">
  <h2 id="h-gc">사용 통계</h2>
- <p class="meta">방문 수와 어떤 버튼을 눌렀는지만 GoatCounter로 세요. 쿠키는 쓰지 않아요. 맥박·운동·수면 기록, 기본 정보, 프로필 사진은 보내지 않아요.</p>
+ <p class="meta">방문 수, 어떤 버튼을 눌렀는지, 어떤 영상을 눌렀는지(영상 번호)만 GoatCounter로 세요. 쿠키는 쓰지 않아요. 맥박·운동·수면 기록, 기본 정보, 프로필 사진은 보내지 않아요.</p>
 </section>
 <footer class="notice">
  <p>이 앱은 의료 진단이 아니에요. 일반적인 건강 관리와 교육용으로만 써 주세요.</p>
@@ -303,7 +314,7 @@ window.hcTheme();if(m){var f=function(){if(p==='auto'&&!ov)window.hcTheme()};m.a
 </main>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <nav class="tabbar" role="tablist" aria-label="화면 이동">
- <button role="tab" id="tb-profile" aria-selected="false" aria-controls="tabMe" data-t="tabMe" data-gc="tab-profile">프로필</button><button role="tab" id="tb-exercise" aria-selected="true" aria-controls="tabEx" data-t="tabEx" data-gc="tab-exercise">운동</button><button role="tab" id="tb-sleep" aria-selected="false" aria-controls="tabSleep" data-t="tabSleep" data-gc="tab-sleep">수면</button><button role="tab" id="tb-pulse" aria-selected="false" aria-controls="tabHome" data-t="tabHome" data-gc="tab-pulse">맥박</button><button role="tab" id="tb-settings" aria-selected="false" aria-controls="tabSet" data-t="tabSet" data-gc="tab-settings">설정</button>
+ <button role="tab" id="tb-profile" aria-selected="false" aria-controls="tabMe" data-t="tabMe" data-gc="tab-profile">프로필</button><button role="tab" id="tb-exercise" aria-selected="true" aria-controls="tabEx" data-t="tabEx" data-gc="tab-exercise">운동</button><button role="tab" id="tb-sleep" aria-selected="false" aria-controls="tabSleep" data-t="tabSleep" data-gc="tab-sleep">수면</button><button role="tab" id="tb-pulse" aria-selected="false" aria-controls="tabHome" data-t="tabHome" data-gc="tab-pulse">맥박</button><button role="tab" id="tb-videos" aria-selected="false" aria-controls="tabVid" data-t="tabVid" data-gc="tab-videos">영상</button><button role="tab" id="tb-settings" aria-selected="false" aria-controls="tabSet" data-t="tabSet" data-gc="tab-settings">설정</button>
 </nav>
 <div class="sheet hide" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sTitle">
  <div class="card sheet-card">
@@ -317,13 +328,14 @@ window.hcTheme();if(m){var f=function(){if(p==='auto'&&!ov)window.hcTheme()};m.a
 </div>
 
 
-<script src="js/app.js?v=20"></script>
-<script src="js/profile.js?v=20"></script>
-<script src="js/es.js?v=20"></script>
-<script src="js/ui.js?v=20"></script>
-<script src="js/ref.js?v=20"></script>
-<script src="js/data.js?v=20"></script>
-<script src="js/account.js?v=20"></script>
-<script src="js/gc.js?v=20"></script>
+<script src="js/app.js?v=21"></script>
+<script src="js/profile.js?v=21"></script>
+<script src="js/es.js?v=21"></script>
+<script src="js/ui.js?v=21"></script>
+<script src="js/ref.js?v=21"></script>
+<script src="js/data.js?v=21"></script>
+<script src="js/account.js?v=21"></script>
+<script src="js/videos.js?v=21"></script>
+<script src="js/gc.js?v=21"></script>
 <script data-goatcounter="https://jonghun-apps.goatcounter.com/count" data-goatcounter-settings='{"no_onload":true}' async src="//gc.zgo.at/count.js"></script>
 </body></html>
