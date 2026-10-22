@@ -3,7 +3,7 @@
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--text)}
 body{font-family:system-ui,-apple-system,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",sans-serif;min-height:100dvh;font-variant-numeric:tabular-nums;line-height:1.5;-webkit-text-size-adjust:100%}
-.wrap{max-width:430px;margin:0 auto;min-height:100dvh;padding:calc(16px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right)) calc(16px + env(safe-area-inset-bottom)) calc(16px + env(safe-area-inset-left))}
+.wrap{max-width:430px;margin:0 auto;min-height:100dvh;padding:calc(16px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right)) calc(88px + env(safe-area-inset-bottom)) calc(16px + env(safe-area-inset-left))}
 header{margin:4px 2px 14px}
 h1{font-size:22px;margin:0}
 .card{background:var(--card);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--border);border-radius:20px;padding:18px;margin-bottom:14px}
@@ -61,3 +61,10 @@ footer{text-align:center;font-size:13px;color:var(--sub);margin:18px 0 6px}foote
 @media (prefers-reduced-motion: reduce){#arc,.ring{transition:none}}
 
 @media (prefers-color-scheme: light){}
+
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;justify-content:center;gap:8px;background:var(--sheet);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-top:1px solid var(--border);padding:6px calc(12px + env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) calc(12px + env(safe-area-inset-left))}
+.tabbar button{flex:1;max-width:200px;min-height:52px;border:none;background:none;color:var(--sub);font-weight:600;font-size:16px;border-radius:12px}
+.tabbar button[aria-selected=true]{color:var(--accent);background:var(--chip)}
+.field{margin-bottom:14px}.field .lbl{display:block;font-size:14px;color:var(--sub);margin-bottom:4px}
+#tabMe input[type=number]{font-size:18px}
+.bmi{font-size:28px;font-weight:700}

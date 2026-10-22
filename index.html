@@ -7,13 +7,14 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="맥박 노트">
 <title>맥박 노트</title>
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=4">
-<link rel="icon" href="favicon.svg?v=4" type="image/svg+xml">
-<link rel="icon" href="favicon-32.png?v=4" sizes="32x32" type="image/png">
-<link rel="manifest" href="manifest.webmanifest?v=4">
-<link rel="stylesheet" href="css/app.css?v=4">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=5">
+<link rel="icon" href="favicon.svg?v=5" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png?v=5" sizes="32x32" type="image/png">
+<link rel="manifest" href="manifest.webmanifest?v=5">
+<link rel="stylesheet" href="css/app.css?v=5">
 </head><body>
 <main class="wrap">
+<div id="tabHome" role="tabpanel" aria-labelledby="tb-home">
 <header><h1>맥박 노트</h1><p class="note">참고·교육용이에요. 의료 진단을 대신하지 않아요.</p></header>
 
 <section class="card" id="pulse" aria-labelledby="h-pulse">
@@ -75,7 +76,32 @@
 </section>
 
 <footer><p class="note">참고·교육용이에요. 의료 진단을 대신하지 않아요.</p><p>기록은 이 기기에만 저장돼요.</p></footer>
+</div>
+<div id="tabMe" class="hide" role="tabpanel" aria-labelledby="tb-me">
+<header><h1>내 정보</h1></header>
+<section class="card" aria-labelledby="h-me">
+ <h2 id="h-me">기본 정보</h2>
+ <div class="field"><label for="age">나이</label><input id="age" type="number" inputmode="numeric" pattern="[0-9]*" min="1" max="120" placeholder="예: 45"></div>
+ <div class="field"><span class="lbl" id="sexL">성별</span>
+  <div class="seg" id="sexSeg" role="group" aria-labelledby="sexL">
+   <button type="button" aria-pressed="false" data-v="male">남성</button><button type="button" aria-pressed="false" data-v="female">여성</button><button type="button" aria-pressed="false" data-v="none">선택 안 함</button>
+  </div></div>
+ <div class="field"><label for="ht">키 (cm)</label><input id="ht" type="number" inputmode="decimal" min="50" max="250" step="0.1" placeholder="예: 170"></div>
+ <div class="field"><label for="wt">몸무게 (kg)</label><input id="wt" type="number" inputmode="decimal" min="10" max="300" step="0.1" placeholder="예: 65"></div>
+ <button class="tbtn big" id="pfSave">저장</button>
+ <p class="meta" id="pfMsg" aria-live="polite"></p>
+ <p class="meta">이 정보는 이 휴대폰에만 저장돼요.</p>
+</section>
+<section class="card hide" id="bmiCard" aria-labelledby="h-bmi">
+ <h2 id="h-bmi">BMI</h2>
+ <div class="bmi" id="bmiVal"></div>
+ <p class="meta">건강 상태를 판단하는 값이 아니에요.</p>
+</section>
+</div>
 </main>
+<nav class="tabbar" role="tablist" aria-label="화면 이동">
+ <button role="tab" id="tb-home" aria-selected="true" aria-controls="tabHome" data-t="tabHome">홈</button><button role="tab" id="tb-me" aria-selected="false" aria-controls="tabMe" data-t="tabMe">내 정보</button>
+</nav>
 
 <div class="sheet hide" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sTitle">
  <div class="card sheet-card">
@@ -87,5 +113,6 @@
   <p class="note">참고·교육용이에요. 의료 진단을 대신하지 않아요.</p>
  </div>
 </div>
-<script src="js/app.js?v=4"></script>
+<script src="js/app.js?v=5"></script>
+<script src="js/profile.js?v=5"></script>
 </body></html>
