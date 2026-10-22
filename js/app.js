@@ -16,7 +16,7 @@ let mode='view',iv=null;
 function show(m){mode=m;const has=load(PK).length>0;
  $('pView').classList.toggle('hide',!(m==='view'&&has));$('pEmpty').classList.toggle('hide',!(m==='view'&&!has));
  $('pTimer').classList.toggle('hide',m!=='timer');$('pInput').classList.toggle('hide',m!=='input');
- $('startBtn').classList.toggle('hide',m!=='view');$('history').classList.toggle('hide',!(m==='view'&&has))}
+ $('startBtn').classList.toggle('hide',m!=='view');$('pwEmpty').classList.toggle('hide',has);$('week').classList.toggle('hide',!has);$('plEmpty').classList.toggle('hide',has)}
 function render(){const recs=load(PK).sort((a,b)=>b.ts-a.ts);
  if(recs[0]){$('bpm').textContent=recs[0].bpm;$('date').textContent=fmt(recs[0].ts)+' 기록'}
  const ul=$('recent');ul.innerHTML='';
@@ -43,7 +43,7 @@ $('cnt').addEventListener('input',calc);$('startBtn').onclick=start;
 $('cancelBtn').onclick=()=>{clearInterval(iv);show('view')};$('discardBtn').onclick=()=>show('view');
 $('saveBtn').onclick=()=>{const n=parseInt($('cnt').value,10);if(!(n>=1&&n<=60))return;
  const a=load(PK);a.push({id:uid(),ts:Date.now(),bpm:n*4});save(PK,a);render();show('view')};
-render();show('view');
+render();show('view');window.hcPulse=()=>{render();show(mode)};
 
 /* ---- 2. animation ---- */
 const pB=$('pBelly'),pA=$('pArm'),LB=pB.getTotalLength(),LA=pA.getTotalLength();

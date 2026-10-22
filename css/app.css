@@ -96,3 +96,7 @@ footer{text-align:center;font-size:13px;color:var(--sub);margin:18px 0 6px}foote
 .sum{color:var(--text);font-size:18px;margin-left:6px}
 .stats{display:flex;gap:8px;margin-bottom:12px}.stats div{flex:1;background:var(--chip);border:1px solid var(--border);border-radius:12px;padding:8px 10px}
 .stats span{display:block;font-size:13px;color:var(--sub)}.stats b{font-size:17px;font-variant-numeric:tabular-nums}
+.fold summary .sm{display:flex;flex-direction:column;gap:2px;min-width:0}
+.fold summary .st{color:var(--text,inherit)}
+.fold summary .hint{font-size:13px;font-weight:400;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fold summary{padding:4px 0}.fold[open] summary{margin-bottom:8px}

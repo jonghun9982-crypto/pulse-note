@@ -22,6 +22,6 @@ function sl(){const a=load('hc.sleep.v1').filter(r=>r.end&&r.end>r.start),D=days
  const avg=x=>x.reduce((t,v)=>t+v,0)/x.length;$('slwBed').textContent=clk(avg(bed));$('slwWake').textContent=clk(avg(wake));
  bars($('slWeek'),D,v=>(v/60).toFixed(1),v=>v?hm(v):'기록 없음')}
 function all(){try{ex()}catch(e){}try{sl()}catch(e){}}
-all();addEventListener('hc:exercise',all);addEventListener('storage',all);
+all();window.hcCharts=all;addEventListener('hc:exercise',all);addEventListener('storage',all);
 ['exList','slList'].forEach(id=>{const n=$(id);n&&new MutationObserver(all).observe(n,{childList:true})});
 })();

@@ -7,11 +7,11 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="맥박 노트">
 <title>맥박 노트</title>
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=8">
-<link rel="icon" href="favicon.svg?v=8" type="image/svg+xml">
-<link rel="icon" href="favicon-32.png?v=8" sizes="32x32" type="image/png">
-<link rel="manifest" href="manifest.webmanifest?v=8">
-<link rel="stylesheet" href="css/app.css?v=8">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=9">
+<link rel="icon" href="favicon.svg?v=9" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png?v=9" sizes="32x32" type="image/png">
+<link rel="manifest" href="manifest.webmanifest?v=9">
+<link rel="stylesheet" href="css/app.css?v=9">
 </head><body>
 <main class="wrap">
 <div id="tabMe" class="" role="tabpanel" aria-labelledby="tb-profile">
@@ -44,18 +44,21 @@
 </section>
 
 <section class="card" aria-labelledby="h-exw">
- <h2 id="h-exw">최근 7일 운동 시간</h2>
- <p class="empty" id="exwEmpty">아직 운동 기록이 없어요.</p>
- <div id="exwBody" class="hide">
-  <p class="meta">최근 7일 합계 <b class="sum" id="exwTotal"></b></p>
-  <div class="week" id="exWeek" aria-label="최근 7일 하루 운동 시간(분)"></div>
- </div>
+ <details class="ref fold" id="exwCard" data-k="exw">
+  <summary id="h-exw"><span class="sm"><span class="st">최근 7일 운동 시간</span><span class="hint" id="exwHint"></span></span></summary>
+  <p class="empty" id="exwEmpty">아직 운동 기록이 없어요.</p>
+  <div id="exwBody" class="hide">
+   <p class="meta">최근 7일 합계 <b class="sum" id="exwTotal"></b></p>
+   <div class="week" id="exWeek" aria-label="최근 7일 하루 운동 시간(분)"></div>
+  </div>
+ </details>
 </section>
-
 <section class="card" aria-labelledby="h-exl">
- <h2 id="h-exl">최근 운동 기록</h2>
- <p class="empty" id="exEmpty">아직 기록이 없어요. 루틴을 골라 완료해 보세요.</p>
- <ul class="list" id="exList"></ul>
+ <details class="ref fold" id="exlCard" data-k="exl">
+  <summary id="h-exl"><span class="sm"><span class="st">최근 운동 기록</span><span class="hint" id="exlHint"></span></span></summary>
+  <p class="empty" id="exEmpty">아직 기록이 없어요. 루틴을 골라 완료해 보세요.</p>
+  <ul class="list" id="exList"></ul>
+ </details>
 </section>
 <section class="card" aria-labelledby="h-exref">
  <details class="ref" id="exrefCard">
@@ -100,18 +103,22 @@
  <p class="meta">잠들 때 수면, 일어나면 기상을 눌러 주세요.</p>
 </section>
 <section class="card" aria-labelledby="h-slw">
- <h2 id="h-slw">최근 7일 수면 시간</h2>
- <p class="empty" id="slwEmpty">아직 수면 기록이 없어요.</p>
- <div id="slwBody" class="hide">
-  <div class="stats"><div><span>평균 수면</span><b id="slwAvg"></b></div><div><span>평균 취침</span><b id="slwBed"></b></div><div><span>평균 기상</span><b id="slwWake"></b></div></div>
-  <div class="week" id="slWeek" aria-label="최근 7일 수면 시간(시간), 일어난 날 기준"></div>
-  <p class="meta">일어난 날 기준, 단위: 시간</p>
- </div>
+ <details class="ref fold" id="slwCard" data-k="slw">
+  <summary id="h-slw"><span class="sm"><span class="st">최근 7일 수면 시간</span><span class="hint" id="slwHint"></span></span></summary>
+  <p class="empty" id="slwEmpty">아직 수면 기록이 없어요.</p>
+  <div id="slwBody" class="hide">
+   <div class="stats"><div><span>평균 수면</span><b id="slwAvg"></b></div><div><span>평균 취침</span><b id="slwBed"></b></div><div><span>평균 기상</span><b id="slwWake"></b></div></div>
+   <div class="week" id="slWeek" aria-label="최근 7일 수면 시간(시간), 일어난 날 기준"></div>
+   <p class="meta">일어난 날 기준, 단위: 시간</p>
+  </div>
+ </details>
 </section>
 <section class="card" aria-labelledby="h-sll">
- <h2 id="h-sll">최근 수면 기록</h2>
- <p class="empty" id="slEmpty">아직 기록이 없어요.</p>
- <ul class="list" id="slList"></ul>
+ <details class="ref fold" id="sllCard" data-k="sll">
+  <summary id="h-sll"><span class="sm"><span class="st">수면 기록</span><span class="hint" id="sllHint"></span></span></summary>
+  <p class="empty" id="slEmpty">아직 기록이 없어요.</p>
+  <ul class="list" id="slList"></ul>
+ </details>
 </section>
 <section class="card" aria-labelledby="h-slref">
  <details class="ref" id="slrefCard">
@@ -164,7 +171,7 @@
 <div id="tabHome" class="hide" role="tabpanel" aria-labelledby="tb-pulse">
 <header><h1>맥박 카드</h1><p class="note">참고·교육용이에요. 의료 진단을 대신하지 않아요.</p></header>
 <section class="card" id="pulse" aria-labelledby="h-pulse">
- <h2 id="h-pulse">맥박 기록</h2>
+ <h2 id="h-pulse">맥박 세기</h2>
  <div id="pView">
   <div><span class="bpm" id="bpm">--</span><span class="unit">회/분</span></div>
   <div class="meta" id="date"></div>
@@ -186,12 +193,6 @@
   <div class="btns"><button class="tbtn" id="saveBtn" data-gc="pulse-save" disabled>기록하기</button><button class="tbtn sub" id="discardBtn">취소</button></div>
  </div>
  <button class="tbtn big" id="startBtn" data-gc="pulse-start">15초 세기 시작</button>
- <div id="history">
-  <h3>최근 기록</h3>
-  <ul class="list" id="recent"></ul>
-  <h3>지난 7일</h3>
-  <div class="week" id="week" aria-label="지난 7일 하루 평균 맥박"></div>
- </div>
 </section>
 
 <section class="card" aria-labelledby="h-anim">
@@ -213,6 +214,21 @@
  <p class="caption">맥박이 배 쪽 큰 혈관과 팔로 동시에 출발해요. 큰 혈관이 단단해지면 그쪽이 먼저 도착해요.</p>
  <p class="caption sub">말랑한 호스와 딱딱한 파이프를 떠올려 보세요.</p>
  <button class="tbtn" id="replayBtn">다시 보기</button>
+</section>
+
+<section class="card" aria-labelledby="h-pw">
+ <details class="ref fold" id="pwCard" data-k="pw">
+  <summary id="h-pw"><span class="sm"><span class="st">최근 7일 맥박</span><span class="hint" id="pwHint"></span></span></summary>
+  <p class="empty" id="pwEmpty">아직 맥박 기록이 없어요.</p>
+  <div class="week" id="week" aria-label="지난 7일 하루 평균 맥박"></div>
+ </details>
+</section>
+<section class="card" aria-labelledby="h-pl">
+ <details class="ref fold" id="plCard" data-k="pl">
+  <summary id="h-pl"><span class="sm"><span class="st">맥박 기록</span><span class="hint" id="plHint"></span></span></summary>
+  <p class="empty" id="plEmpty">아직 기록이 없어요.</p>
+  <ul class="list" id="recent"></ul>
+ </details>
 </section>
 
 <section class="card" aria-labelledby="h-ref">
@@ -294,9 +310,10 @@
   <p class="note">참고·교육용이에요. 의료 진단을 대신하지 않아요.</p>
  </div>
 </div>
-<script src="js/app.js?v=8"></script>
-<script src="js/profile.js?v=8"></script>
-<script src="js/more.js?v=8"></script>
-<script src="js/charts.js?v=8"></script>
+<script src="js/app.js?v=9"></script>
+<script src="js/profile.js?v=9"></script>
+<script src="js/more.js?v=9"></script>
+<script src="js/charts.js?v=9"></script>
+<script src="js/ui.js?v=9"></script>
 <script data-goatcounter="https://jonghun-apps.goatcounter.com/count" data-goatcounter-settings='{"no_onload":true}' async src="//gc.zgo.at/count.js"></script>
 </body></html>
