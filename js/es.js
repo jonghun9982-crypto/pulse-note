@@ -34,18 +34,40 @@ $('doneBtn').onclick=()=>{const a=load(EK);a.push({id:uid(),ts:Date.now(),routin
 $('closeBtn').onclick=close;$('sheet').addEventListener('click',e=>{if(e.target.id==='sheet')close()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('sheet').classList.contains('hide'))close()});
 
-/* ---- exercise list + card ---- */
+/* ---- exercise list + card (routine | type:'strength' | type:'cardio') ---- */
+const n0=v=>{const x=parseFloat(v);return isFinite(x)&&x>0?x:null};
+const today=()=>{const d=new Date();return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`};
+const dts=v=>{if(!v||v===today())return Date.now();const [y,m,d]=v.split('-').map(Number);return new Date(y,m-1,d,12,0).getTime()};
+const dayk=ts=>{const d=new Date(ts);return d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate()};
+const fmtD=ts=>{const d=new Date(ts);return `${d.getMonth()+1}월 ${d.getDate()}일 (${DW[d.getDay()]})`};
+function desc(r){if(r.type==='strength')return{tag:'<span class="tag tg-s">근력</span>',name:r.name||'근력',sub:[r.sets&&r.reps?`${r.sets}세트 × ${r.reps}회`:'',r.kg?`${r.kg}kg`:'',fmtD(r.ts)].filter(Boolean).join(' · ')};
+ if(r.type==='cardio')return{tag:'<span class="tag tg-c">유산소</span>',name:r.name||'유산소',sub:[r.min?`${r.min}분`:'',r.km?`${r.km}km`:'',fmtD(r.ts)].filter(Boolean).join(' · ')};
+ return{tag:'<span class="tag tg-r">루틴</span>',name:RN[r.routine]||r.routine||'운동',sub:(r.min?r.min+'분 · ':'')+fmt(r.ts)}}
 function exRender(){const a=load(EK).filter(r=>r&&isFinite(r.ts)).sort((x,y)=>y.ts-x.ts),ul=$('exList');ul.innerHTML='';$('exEmpty').classList.toggle('hide',a.length>0);
- a.slice(0,20).forEach(r=>{const li=document.createElement('li');li.innerHTML=`<div><b>${esc(RN[r.routine]||r.routine||'운동')}</b> <span>${r.min?esc(r.min)+'분 · ':''}${fmt(r.ts)}</span></div>`;
-  li.appendChild(delBtn(fmt(r.ts)+' 운동 기록',()=>{save(EK,load(EK).filter(x=>x.id!==r.id));exRender()}));ul.appendChild(li)});
- $('exlHint').textContent=a.length?`기록 ${a.length}개`:'기록 없음';
+ a.slice(0,30).forEach(r=>{const li=document.createElement('li'),d=desc(r);li.innerHTML=`<div>${d.tag}<b>${esc(d.name)}</b> <span>${esc(d.sub)}</span></div>`;
+  li.appendChild(delBtn(d.name+' '+fmtD(r.ts)+' 운동 기록',()=>{save(EK,load(EK).filter(x=>x.id!==r.id));exRender()}));ul.appendChild(li)});
+ const ns=a.filter(r=>r.type==='strength').length,nc=a.filter(r=>r.type==='cardio').length;
+ $('exlHint').textContent=a.length?`기록 ${a.length}개`+(ns||nc?` · 근력 ${ns} · 유산소 ${nc}`:''):'기록 없음';
  const s0=new Date();s0.setHours(0,0,0,0);const n=a.filter(x=>x.ts>=s0.getTime()).length;$('exDone').textContent=n?`오늘 ${n}번 기록했어요.`:'';
- const w=a.filter(r=>r.ts>=wk()),tot=w.reduce((t,r)=>t+(+r.min||0),0),max=Math.max(360,Math.ceil(tot*1.1/60)*60),bar=$('exvBar');
+ const w=a.filter(r=>r.ts>=wk()),wm=w.filter(r=>r.type!=='strength'&&+r.min>0),tot=wm.reduce((t,r)=>t+(+r.min||0),0),max=Math.max(360,Math.ceil(tot*1.1/60)*60),bar=$('exvBar');
+ const sd=new Set(w.filter(r=>r.type==='strength').map(r=>dayk(r.ts))).size;
+ $('exaSHint').textContent=`이번 주 근력 ${sd}일`;$('exaCHint').textContent=`최근 7일 유산소 ${w.filter(r=>r.type==='cardio').reduce((t,r)=>t+(+r.min||0),0)}분`;
  let g=`<div class="tr"></div><div class="bd" style="left:${P(150,max)};width:calc(${P(300,max)} - ${P(150,max)})"><span>권장 150~300분</span></div>`;
- if(w.length)g+=`<div class="fill" style="width:${P(tot,max)}"></div><div class="rdot" style="left:${P(tot,max)}"></div>`;
+ if(wm.length)g+=`<div class="fill" style="width:${P(tot,max)}"></div><div class="rdot" style="left:${P(tot,max)}"></div>`;
  g+=[0,150,300,max].filter((v,i,x)=>x.indexOf(v)===i).map(v=>`<span class="ax" style="left:${P(v,max)}">${v}${v===max?'분':''}</span>`).join('');
  bar.innerHTML=g;
- $('exvMine').innerHTML=w.length?`<span class="dotk"></span>내 최근 7일 <b>${tot}분</b> · 권장 150~300분`:'<span class="rempty">루틴을 완료하면 최근 7일 합계가 여기에 표시돼요</span>'}
+ $('exvMine').innerHTML=(wm.length?`<span class="dotk"></span>내 최근 7일 <b>${tot}분</b> · 권장 150~300분`:'<span class="rempty">루틴을 완료하거나 유산소를 추가하면 최근 7일 합계가 여기에 표시돼요</span>')+`<br><span class="sub">이번 주 근력 ${sd}일</span>`}
+document.querySelectorAll('.qchips').forEach(q=>{const inp=$(q.dataset.for),sync=()=>q.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.textContent===inp.value.trim())));
+ q.querySelectorAll('button').forEach(b=>b.onclick=()=>{inp.value=b.textContent;sync()});inp.addEventListener('input',sync);sync()});
+['sDate','cDate'].forEach(id=>{$(id).value=today();$(id).max=today()});
+function addEx(rec,msg,ids){const a=load(EK);a.push(Object.assign({id:uid()},rec));save(EK,a);ids.forEach(id=>{$(id).value=''});
+ document.querySelectorAll('.qchips button').forEach(b=>b.setAttribute('aria-pressed','false'));$(msg).textContent='저장했어요. 운동 기록에서 볼 수 있어요.';vib(40);exRender()}
+$('sSave').onclick=()=>{const name=$('sName').value.trim(),sets=n0($('sSets').value),reps=n0($('sReps').value),kg=n0($('sKg').value);
+ if(!name||!sets||!reps){$('sMsg').textContent='운동 이름, 세트, 횟수를 넣어 주세요.';return}
+ const r={type:'strength',ts:dts($('sDate').value),name,sets:Math.round(sets),reps:Math.round(reps)};if(kg)r.kg=kg;addEx(r,'sMsg',['sName','sSets','sReps','sKg'])};
+$('cSave').onclick=()=>{const name=$('cName').value.trim(),min=n0($('cMin').value),km=n0($('cKm').value);
+ if(!name||!min){$('cMsg').textContent='운동 이름과 시간을 넣어 주세요.';return}
+ const r={type:'cardio',ts:dts($('cDate').value),name,min:Math.round(min)};if(km)r.km=km;addEx(r,'cMsg',['cName','cMin','cKm'])};
 exRender();
 
 /* ---- sleep ---- */

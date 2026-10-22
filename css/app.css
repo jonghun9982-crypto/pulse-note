@@ -144,3 +144,13 @@ footer{text-align:center;font-size:13px;color:var(--sub);margin:18px 0 6px}foote
 .hbar .rtick{top:14px;height:30px}
 .hbar .tl{position:absolute;top:-22px;transform:translateX(-50%);font-size:12px;color:var(--text);white-space:nowrap}
 .hbar .ax{position:absolute;top:50px;transform:translateX(-50%);white-space:nowrap;font-size:12px;color:var(--sub)}
+input[type=text],input[type=date]{width:100%;box-sizing:border-box;font:inherit;font-size:18px;min-height:48px;padding:10px 12px;border-radius:12px;border:1px solid var(--border);background:var(--chip);color:var(--text);margin-top:4px;-webkit-appearance:none;appearance:none}
+#tabEx input[type=number]{font-size:18px;box-sizing:border-box}
+.frow{display:flex;gap:10px}.frow .field{flex:1;min-width:0}
+.qchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.qchips button{min-height:36px;padding:6px 12px;border-radius:18px;border:1px solid var(--border);background:var(--chip);color:var(--text);font:inherit;font-size:14px}
+.qchips button[aria-pressed=true]{border-color:var(--accent);color:var(--accent)}
+#exaS{margin-top:4px}#exaC{border-top:1px solid var(--border);margin-top:6px;padding-top:4px}
+.tag{display:inline-block;font-size:12px!important;font-weight:600;padding:1px 7px;border-radius:9px;border:1px solid var(--border);margin-right:6px;vertical-align:2px}
+.tag.tg-s{color:var(--orange)!important}.tag.tg-c{color:var(--accent)!important}.tag.tg-r{color:var(--sub)!important}
+.list li>div{min-width:0;padding:6px 0}

@@ -7,11 +7,11 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="맥박 노트">
 <title>맥박 노트</title>
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=13">
-<link rel="icon" href="favicon.svg?v=13" type="image/svg+xml">
-<link rel="icon" href="favicon-32.png?v=13" sizes="32x32" type="image/png">
-<link rel="manifest" href="manifest.webmanifest?v=13">
-<link rel="stylesheet" href="css/app.css?v=13">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=14">
+<link rel="icon" href="favicon.svg?v=14" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png?v=14" sizes="32x32" type="image/png">
+<link rel="manifest" href="manifest.webmanifest?v=14">
+<link rel="stylesheet" href="css/app.css?v=14">
 </head><body>
 <main class="wrap">
 <div id="tabMe" class="" role="tabpanel" aria-labelledby="tb-profile">
@@ -134,6 +134,30 @@
  <div class="chips" id="chips"></div>
  <p class="meta" id="exDone"></p>
 </section>
+<section class="card" aria-labelledby="h-exa">
+ <h2 id="h-exa">내 운동 직접 추가</h2>
+ <details class="ref fold" id="exaS" data-k="exaS">
+  <summary><span class="sm"><span class="st">근력</span><span class="hint" id="exaSHint"></span></span></summary>
+  <div class="field"><label for="sName">운동 이름</label><input id="sName" type="text" maxlength="30" placeholder="예: 스쿼트" autocomplete="off">
+   <div class="qchips" data-for="sName"><button type="button">스쿼트</button><button type="button">푸시업</button><button type="button">플랭크</button><button type="button">덤벨</button></div></div>
+  <div class="frow"><div class="field"><label for="sSets">세트</label><input id="sSets" type="number" inputmode="numeric" pattern="[0-9]*" min="1" max="50" placeholder="예: 3"></div>
+   <div class="field"><label for="sReps">횟수</label><input id="sReps" type="number" inputmode="numeric" pattern="[0-9]*" min="1" max="1000" placeholder="예: 10"></div></div>
+  <div class="frow"><div class="field"><label for="sKg">무게 kg (선택)</label><input id="sKg" type="number" inputmode="decimal" min="0" max="500" step="0.5" placeholder="비워도 돼요"></div>
+   <div class="field"><label for="sDate">날짜</label><input id="sDate" type="date"></div></div>
+  <button class="tbtn big" id="sSave" data-gc="exercise-add-strength">저장</button>
+  <p class="meta" id="sMsg" aria-live="polite"></p>
+ </details>
+ <details class="ref fold" id="exaC" data-k="exaC">
+  <summary><span class="sm"><span class="st">유산소</span><span class="hint" id="exaCHint"></span></span></summary>
+  <div class="field"><label for="cName">운동 이름</label><input id="cName" type="text" maxlength="30" placeholder="예: 걷기" autocomplete="off">
+   <div class="qchips" data-for="cName"><button type="button">걷기</button><button type="button">달리기</button><button type="button">자전거</button><button type="button">수영</button></div></div>
+  <div class="frow"><div class="field"><label for="cMin">시간 (분)</label><input id="cMin" type="number" inputmode="numeric" pattern="[0-9]*" min="1" max="600" placeholder="예: 30"></div>
+   <div class="field"><label for="cKm">거리 km (선택)</label><input id="cKm" type="number" inputmode="decimal" min="0" max="500" step="0.1" placeholder="비워도 돼요"></div></div>
+  <div class="field"><label for="cDate">날짜</label><input id="cDate" type="date"></div>
+  <button class="tbtn big" id="cSave" data-gc="exercise-add-cardio">저장</button>
+  <p class="meta" id="cMsg" aria-live="polite"></p>
+ </details>
+</section>
 <section class="card" aria-labelledby="h-exv">
  <details class="ref" id="exvCard" open>
   <summary id="h-exv">주당 신체활동 참고 자료</summary>
@@ -157,7 +181,7 @@
 <section class="card" aria-labelledby="h-exl">
  <details class="ref fold" id="exlCard" data-k="exl">
   <summary id="h-exl"><span class="sm"><span class="st">운동 기록</span><span class="hint" id="exlHint"></span></span></summary>
-  <p class="empty" id="exEmpty">아직 기록이 없어요. 루틴을 골라 완료해 보세요.</p>
+  <p class="empty" id="exEmpty">아직 기록이 없어요. 루틴을 완료하거나 직접 추가해 보세요.</p>
   <ul class="list" id="exList"></ul>
  </details>
 </section>
@@ -226,11 +250,11 @@
 </div>
 
 
-<script src="js/app.js?v=13"></script>
-<script src="js/profile.js?v=13"></script>
-<script src="js/es.js?v=13"></script>
-<script src="js/ui.js?v=13"></script>
-<script src="js/ref.js?v=13"></script>
-<script src="js/gc.js?v=13"></script>
+<script src="js/app.js?v=14"></script>
+<script src="js/profile.js?v=14"></script>
+<script src="js/es.js?v=14"></script>
+<script src="js/ui.js?v=14"></script>
+<script src="js/ref.js?v=14"></script>
+<script src="js/gc.js?v=14"></script>
 <script data-goatcounter="https://jonghun-apps.goatcounter.com/count" data-goatcounter-settings='{"no_onload":true}' async src="//gc.zgo.at/count.js"></script>
 </body></html>
