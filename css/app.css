@@ -242,3 +242,13 @@ html.gate .wrap,html.gate .tabbar{display:none}
 .vch{font-size:13px;color:var(--sub)}.vyt{color:var(--accent);font-size:14px;min-height:44px;display:inline-flex;align-items:center;align-self:flex-start}
 @media (max-width:359px){.tabbar{gap:0;padding-left:calc(2px + env(safe-area-inset-left));padding-right:calc(2px + env(safe-area-inset-right))}.tabbar button{font-size:13px;min-width:0;padding:4px 0;letter-spacing:-.3px}}
 .kicker{margin:0 0 4px;font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--accent)}.kicker+h2{margin-top:0}
+/* v22 언어 버튼 */
+.hbtns{position:absolute;top:calc(12px + env(safe-area-inset-top));right:calc(12px + env(safe-area-inset-right));z-index:5;display:flex;gap:6px}
+.hbtns .thbtn{position:static}
+.lgbtn{gap:3px;padding:6px 10px}.lgbtn span{opacity:.5;font-weight:600}.lgbtn span.on{opacity:1;font-weight:800;color:var(--accent)}.lgbtn i{font-style:normal;opacity:.35}
+html[lang=en] [data-only=ko],html[lang=ko] [data-only=en]{display:none!important}
+.cprk{margin:-6px 0 0;color:var(--sub);font-size:14px}
+.wrap>div>header:first-child{padding-right:0}
+main.wrap>div>header h1{padding-right:176px;min-height:44px;display:flex;align-items:center;box-sizing:border-box}
+@media (max-width:359px){#thLbl{display:none}.hbtns .thbtn{padding:6px 11px}main.wrap>div>header h1{padding-right:122px}}
+html[lang=en] .ref summary::after{content:"Show"}html[lang=en] .ref[open] summary::after{content:"Hide"}

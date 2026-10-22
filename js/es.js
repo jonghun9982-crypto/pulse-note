@@ -4,32 +4,33 @@ const load=k=>{try{const v=JSON.parse(localStorage.getItem(k));return Array.isAr
 const save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
 const vib=p=>{try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}};
-const DW=['일','월','화','수','목','금','토'],pad=n=>String(n).padStart(2,'0');
-const fmt=ts=>{const d=new Date(ts),h=d.getHours();return `${d.getMonth()+1}월 ${d.getDate()}일 (${DW[d.getDay()]}) ${h<12?'오전':'오후'} ${h%12||12}:${pad(d.getMinutes())}`};
-const dur=ms=>{const m=Math.max(0,Math.round(ms/6e4));return m<60?`${m}분`:`${Math.floor(m/60)}시간${m%60?' '+m%60+'분':''}`};
-const hm=m=>{m=Math.round(m);return `${Math.floor(m/60)}시간${m%60?' '+m%60+'분':''}`};
+const I18=window.hcI18n,t=I18.t,pad=n=>String(n).padStart(2,'0');
+const fmt=ts=>I18.F.dt(ts);
+const dur=ms=>I18.F.hm(ms/6e4);
+const hm=m=>I18.F.hm(m);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const wk=()=>{const n=new Date();return new Date(n.getFullYear(),n.getMonth(),n.getDate()-6).getTime()};
 const prof=()=>{try{return JSON.parse(localStorage.getItem('hc.profile.v1'))||{}}catch(e){return{}}};
-function delBtn(label,fn){const b=document.createElement('button');b.className='tbtn del';b.textContent='삭제';b.setAttribute('aria-label',label+' 삭제');b.onclick=()=>{if(confirm('이 기록을 지울까요?'))fn()};return b}
+function delBtn(label,fn){const b=document.createElement('button');b.className='tbtn del';b.textContent=t('del');b.setAttribute('aria-label',t('delLbl',{x:label}));b.onclick=()=>{if(confirm(t('delConfirm')))fn()};return b}
 const P=(v,max)=>(Math.min(max,Math.max(0,v))/max*100).toFixed(2)+'%';
 
 /* ---- routines ---- */
-const R=[{id:'stretch',min:3,name:'자리에서 스트레칭',steps:['목을 천천히 좌우로 돌려요','어깨를 위로 올렸다 툭 내려요','깍지 끼고 팔을 위로 쭉 펴요','앉아서 상체를 좌우로 비틀어요','발목을 돌리고 크게 숨 쉬어요']},
- {id:'stairs',min:6,name:'계단 걷기',steps:['난간을 잡고 천천히 시작해요','한 층씩 편한 속도로 올라가요','숨이 차면 잠깐 쉬어요','내려올 때는 더 천천히','끝나면 종아리를 가볍게 풀어요']},
- {id:'walk',min:9,name:'점심 산책',steps:['편한 신발로 밖에 나가요','처음 2분은 천천히 걸어요','조금 빠르게 6분 걸어요','마지막 1분은 천천히 정리해요']}];
-const RN=Object.fromEntries(R.map(r=>[r.id,r.name]));
+/* 루틴: 저장은 id만, 이름·단계는 i18n (r_<id>, rs_<id>) */
+const R=[{id:'stretch',min:3},{id:'stairs',min:6},{id:'walk',min:9}];
+R.forEach(r=>{Object.defineProperty(r,'name',{get:()=>t('r_'+r.id)});Object.defineProperty(r,'steps',{get:()=>t('rs_'+r.id)})});
+const RN=id=>I18.D['r_'+id]?t('r_'+id):null;
 let cur=null,left=0,rIv=null,running=false;
-R.forEach(r=>{const b=document.createElement('button');b.className='chip';b.innerHTML=`<b>${r.min}분</b>${r.name}`;b.onclick=()=>open(r);$('chips').appendChild(b)});
+function chips(){$('chips').innerHTML='';R.forEach(r=>{const b=document.createElement('button');b.className='chip';b.dataset.gc='routine-'+r.id;b.innerHTML=`<b>${t('nMin',{n:r.min})}</b>${r.name}`;b.onclick=()=>open(r);$('chips').appendChild(b)})}chips();
 function clock(){$('clock').textContent=`${pad(Math.floor(left/60))}:${pad(left%60)}`;
  const per=cur.min*60/cur.steps.length,idx=Math.min(cur.steps.length-1,Math.floor((cur.min*60-left)/per));
  [...$('steps').children].forEach((li,i)=>li.classList.toggle('cur',running&&i===idx))}
-function stopT(){clearInterval(rIv);running=false;$('goBtn').textContent=left<cur.min*60&&left>0?'이어서':'시작'}
-function open(r){cur=r;left=r.min*60;$('sTitle').textContent=`${r.min}분 ${r.name}`;$('steps').innerHTML=r.steps.map(s=>`<li>${s}</li>`).join('');
+function stopT(){clearInterval(rIv);running=false;$('goBtn').textContent=left<cur.min*60&&left>0?t('resume'):t('start')}
+function open(r){cur=r;left=r.min*60;sheetText();
  $('savedMsg').classList.add('hide');$('doneBtn').disabled=false;stopT();clock();$('sheet').classList.remove('hide');$('closeBtn').focus()}
+function sheetText(){if(!cur)return;$('sTitle').textContent=t('rTitle',{n:cur.min,x:cur.name});$('steps').innerHTML=cur.steps.map(s=>`<li>${s}</li>`).join('');if(running)$('goBtn').textContent=t('pause');else if(left<=0)$('goBtn').textContent=t('restart');else stopT();clock()}
 function close(){stopT();$('sheet').classList.add('hide')}
-$('goBtn').onclick=()=>{if(running){stopT();clock();return}if(left<=0)left=cur.min*60;running=true;$('goBtn').textContent='잠시 멈춤';vib(60);clock();
- rIv=setInterval(()=>{left--;clock();if(left<=0){stopT();vib([80,80,80]);$('goBtn').textContent='다시 시작'}},1000)};
+$('goBtn').onclick=()=>{if(running){stopT();clock();return}if(left<=0)left=cur.min*60;running=true;$('goBtn').textContent=t('pause');vib(60);clock();
+ rIv=setInterval(()=>{left--;clock();if(left<=0){stopT();vib([80,80,80]);$('goBtn').textContent=t('restart')}},1000)};
 $('doneBtn').onclick=()=>{const a=load(EK);a.push({id:uid(),ts:Date.now(),routine:cur.id,min:cur.min});save(EK,a);$('savedMsg').classList.remove('hide');$('doneBtn').disabled=true;stopT();exRender()};
 $('closeBtn').onclick=close;$('sheet').addEventListener('click',e=>{if(e.target.id==='sheet')close()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('sheet').classList.contains('hide'))close()});
@@ -39,64 +40,69 @@ const n0=v=>{const x=parseFloat(v);return isFinite(x)&&x>0?x:null};
 const today=()=>{const d=new Date();return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`};
 const dts=v=>{if(!v||v===today())return Date.now();const [y,m,d]=v.split('-').map(Number);return new Date(y,m-1,d,12,0).getTime()};
 const dayk=ts=>{const d=new Date(ts);return d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate()};
-const fmtD=ts=>{const d=new Date(ts);return `${d.getMonth()+1}월 ${d.getDate()}일 (${DW[d.getDay()]})`};
-function desc(r){if(r.type==='strength')return{tag:'<span class="tag tg-s">근력</span>',name:r.name||'근력',sub:[r.sets&&r.reps?`${r.sets}세트 × ${r.reps}회`:'',r.kg?`${r.kg}kg`:'',fmtD(r.ts)].filter(Boolean).join(' · ')};
- if(r.type==='cardio')return{tag:'<span class="tag tg-c">유산소</span>',name:r.name||'유산소',sub:[r.min?`${r.min}분`:'',r.km?`${r.km}km`:'',fmtD(r.ts)].filter(Boolean).join(' · ')};
- return{tag:'<span class="tag tg-r">루틴</span>',name:RN[r.routine]||r.routine||'운동',sub:(r.min?r.min+'분 · ':'')+fmt(r.ts)}}
+const fmtD=ts=>I18.F.d(ts);
+/* 빠른 칩 이름은 그대로 저장하고, 화면에서는 지금 언어로 보여요 */
+const QN=s=>{const k=I18.key(s);return k&&/^q_/.test(k)?t(k):s};
+function desc(r){if(r.type==='strength')return{tag:`<span class="tag tg-s">${t('str')}</span>`,name:r.name?QN(r.name):t('str'),sub:[r.sets&&r.reps?t('setsReps',{s:r.sets,r:r.reps}):'',r.kg?`${r.kg}kg`:'',fmtD(r.ts)].filter(Boolean).join(' · ')};
+ if(r.type==='cardio')return{tag:`<span class="tag tg-c">${t('car')}</span>`,name:r.name?QN(r.name):t('car'),sub:[r.min?t('nMin',{n:r.min}):'',r.km?`${r.km}km`:'',fmtD(r.ts)].filter(Boolean).join(' · ')};
+ return{tag:`<span class="tag tg-r">${t('routine')}</span>`,name:RN(r.routine)||r.routine||t('exercise'),sub:(r.min?t('nMin',{n:r.min})+' · ':'')+fmt(r.ts)}}
 function exRender(){const a=load(EK).filter(r=>r&&isFinite(r.ts)).sort((x,y)=>y.ts-x.ts),ul=$('exList');ul.innerHTML='';$('exEmpty').classList.toggle('hide',a.length>0);
  a.slice(0,30).forEach(r=>{const li=document.createElement('li'),d=desc(r);li.innerHTML=`<div>${d.tag}<b>${esc(d.name)}</b> <span>${esc(d.sub)}</span></div>`;
-  li.appendChild(delBtn(d.name+' '+fmtD(r.ts)+' 운동 기록',()=>{save(EK,load(EK).filter(x=>x.id!==r.id));exRender()}));ul.appendChild(li)});
+  li.appendChild(delBtn(t('exLog',{x:d.name+' '+fmtD(r.ts)}),()=>{save(EK,load(EK).filter(x=>x.id!==r.id));exRender()}));ul.appendChild(li)});
  const ns=a.filter(r=>r.type==='strength').length,nc=a.filter(r=>r.type==='cardio').length;
- $('exlHint').textContent=a.length?`기록 ${a.length}개`+(ns||nc?` · 근력 ${ns} · 유산소 ${nc}`:''):'기록 없음';
- const s0=new Date();s0.setHours(0,0,0,0);const n=a.filter(x=>x.ts>=s0.getTime()).length;$('exDone').textContent=n?`오늘 ${n}번 기록했어요.`:'';
+ $('exlHint').textContent=a.length?t('nRec',{n:a.length})+(ns||nc?t('exHint',{s:ns,c:nc}):''):t('noRec');
+ const s0=new Date();s0.setHours(0,0,0,0);const n=a.filter(x=>x.ts>=s0.getTime()).length;$('exDone').textContent=n?t('exToday',{n}):'';
  const w=a.filter(r=>r.ts>=wk()),wm=w.filter(r=>r.type!=='strength'&&+r.min>0),tot=wm.reduce((t,r)=>t+(+r.min||0),0),max=Math.max(360,Math.ceil(tot*1.1/60)*60),bar=$('exvBar');
  const sd=new Set(w.filter(r=>r.type==='strength').map(r=>dayk(r.ts))).size;
- $('exaSHint').textContent=`이번 주 근력 ${sd}일`;$('exaCHint').textContent=`최근 7일 유산소 ${w.filter(r=>r.type==='cardio').reduce((t,r)=>t+(+r.min||0),0)}분`;
- let g=`<div class="tr"></div><div class="bd" style="left:${P(150,max)};width:calc(${P(300,max)} - ${P(150,max)})"><span>권장 150~300분</span></div>`;
+ $('exaSHint').textContent=t('sHint',{n:sd});$('exaCHint').textContent=t('cHint',{n:w.filter(r=>r.type==='cardio').reduce((a,r)=>a+(+r.min||0),0)});
+ let g=`<div class="tr"></div><div class="bd" style="left:${P(150,max)};width:calc(${P(300,max)} - ${P(150,max)})"><span>${t('rec150')}</span></div>`;
  if(wm.length)g+=`<div class="fill" style="width:${P(tot,max)}"></div><div class="rdot" style="left:${P(tot,max)}"></div>`;
- g+=[0,150,300,max].filter((v,i,x)=>x.indexOf(v)===i).map(v=>`<span class="ax" style="left:${P(v,max)}">${v}${v===max?'분':''}</span>`).join('');
+ g+=[0,150,300,max].filter((v,i,x)=>x.indexOf(v)===i).map(v=>`<span class="ax" style="left:${P(v,max)}">${v}${v===max?(I18.lang==='en'?' ':'')+t('min'):''}</span>`).join('');
  bar.innerHTML=g;
- $('exvMine').innerHTML=(wm.length?`<span class="dotk"></span>내 최근 7일 <b>${tot}분</b> · 권장 150~300분`:'<span class="rempty">루틴을 완료하거나 유산소를 추가하면 최근 7일 합계가 여기에 표시돼요</span>')+`<br><span class="sub">이번 주 근력 ${sd}일</span>`}
-document.querySelectorAll('.qchips').forEach(q=>{const inp=$(q.dataset.for),sync=()=>q.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.textContent===inp.value.trim())));
+ $('exvMine').innerHTML=(wm.length?`<span class="dotk"></span>`+t('exvMine',{n:tot}):`<span class="rempty">${t('exvEmpty')}</span>`)+`<br><span class="sub">${t('sHint',{n:sd})}</span>`}
+const qsync=[];document.querySelectorAll('.qchips').forEach(q=>{const inp=$(q.dataset.for),sync=()=>q.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.textContent===inp.value.trim())));qsync.push(sync);
  q.querySelectorAll('button').forEach(b=>b.onclick=()=>{inp.value=b.textContent;sync()});inp.addEventListener('input',sync);sync()});
 ['sDate','cDate'].forEach(id=>{$(id).value=today();$(id).max=today()});
 function addEx(rec,msg,ids){const a=load(EK);a.push(Object.assign({id:uid()},rec));save(EK,a);ids.forEach(id=>{$(id).value=''});
- document.querySelectorAll('.qchips button').forEach(b=>b.setAttribute('aria-pressed','false'));$(msg).textContent='저장했어요. 운동 기록에서 볼 수 있어요.';vib(40);exRender()}
+ document.querySelectorAll('.qchips button').forEach(b=>b.setAttribute('aria-pressed','false'));$(msg).textContent=t('exSaved');vib(40);exRender()}
 $('sSave').onclick=()=>{const name=$('sName').value.trim(),sets=n0($('sSets').value),reps=n0($('sReps').value),kg=n0($('sKg').value);
- if(!name||!sets||!reps){$('sMsg').textContent='운동 이름, 세트, 횟수를 넣어 주세요.';return}
+ if(!name||!sets||!reps){$('sMsg').textContent=t('sNeed');return}
  const r={type:'strength',ts:dts($('sDate').value),name,sets:Math.round(sets),reps:Math.round(reps)};if(kg)r.kg=kg;addEx(r,'sMsg',['sName','sSets','sReps','sKg'])};
 $('cSave').onclick=()=>{const name=$('cName').value.trim(),min=n0($('cMin').value),km=n0($('cKm').value);
- if(!name||!min){$('cMsg').textContent='운동 이름과 시간을 넣어 주세요.';return}
+ if(!name||!min){$('cMsg').textContent=t('cNeed');return}
  const r={type:'cardio',ts:dts($('cDate').value),name,min:Math.round(min)};if(km)r.km=km;addEx(r,'cMsg',['cName','cMin','cKm'])};
 exRender();
 
 /* ---- sleep ---- */
-const NSF=a=>a==null||!isFinite(a)?[7,9,'성인 기준']:a<=2?[11,14,'1–2세']:a<=5?[10,13,'3–5세']:a<=13?[9,11,'6–13세']:a<=17?[8,10,'14–17세']:a<=25?[7,9,'18–25세']:a<=64?[7,9,'26–64세']:[7,8,'65세 이상'];
-const KR=a=>a==null||!isFinite(a)||a<10?[481,'한국 전체 평균']:a<20?[517,'같은 연령대(10대) 한국 평균']:a<30?[506,'같은 연령대(20대) 한국 평균']:a<40?[486,'같은 연령대(30대) 한국 평균']:a<50?[472,'같은 연령대(40대) 한국 평균']:a<60?[460,'같은 연령대(50대) 한국 평균']:[478,'같은 연령대(60세 이상) 한국 평균'];
+/* NSF 권장(시간) · 한국 평균(분, 2024 생활시간조사) — 라벨은 i18n */
+const NA=i=>t('nsfAge')[i],KA=i=>t('krAge',{a:t('krAges')[i]});
+const NSF=a=>a==null||!isFinite(a)?[7,9,t('adultStd'),1]:a<=2?[11,14,NA(0)]:a<=5?[10,13,NA(1)]:a<=13?[9,11,NA(2)]:a<=17?[8,10,NA(3)]:a<=25?[7,9,NA(4)]:a<=64?[7,9,NA(5)]:[7,8,NA(6)];
+const KR=a=>a==null||!isFinite(a)||a<10?[481,t('krAll')]:a<20?[517,KA(0)]:a<30?[506,KA(1)]:a<40?[486,KA(2)]:a<50?[472,KA(3)]:a<60?[460,KA(4)]:[478,KA(5)];
 let tick=null;
-function slCard(a){const p=prof(),age=p&&p.age!=null&&isFinite(p.age)?+p.age:null,[lo,hi,lab]=NSF(age),[kr,krl]=KR(age);
+function slCard(a){const p=prof(),age=p&&p.age!=null&&isFinite(p.age)?+p.age:null,[lo,hi,lab,isAd]=NSF(age),[kr,krl]=KR(age);
  let d=a.filter(r=>r.end&&r.end>r.start&&r.end>=wk());if(!d.length)d=a.filter(r=>r.end&&r.end>r.start).slice(0,7);
  const avg=d.length?d.reduce((t,r)=>t+(r.end-r.start)/6e4,0)/d.length:null,max=Math.max(12*60,(hi+2)*60,avg?Math.ceil(avg/60+1)*60:0);
- let g=`<div class="tr"></div><div class="bd" style="left:${P(lo*60,max)};width:calc(${P(hi*60,max)} - ${P(lo*60,max)})"><span>권장 ${lo}~${hi}시간</span></div>`;
+ let g=`<div class="tr"></div><div class="bd" style="left:${P(lo*60,max)};width:calc(${P(hi*60,max)} - ${P(lo*60,max)})"><span>${t('recH',{a:lo,b:hi})}</span></div>`;
  g+=`<div class="rtick" style="left:${P(kr,max)}"></div>`;
  if(avg!=null)g+=`<div class="fill" style="width:${P(avg,max)}"></div><div class="rdot" style="left:${P(avg,max)}"></div>`;
  for(let h=0;h<=max/60;h+=3)g+=`<span class="ax" style="left:${P(h*60,max)}">${h}${h*60>max-180?'h':''}</span>`;
- $('slvBar').innerHTML=g;$('slvKeyBand').textContent=`권장 ${lo}~${hi}시간 (NSF, ${lab})`;$('slvKeyKr').textContent=krl;
+ $('slvBar').innerHTML=g;$('slvKeyBand').textContent=t('recHK',{a:lo,b:hi,l:lab});$('slvKeyKr').textContent=krl;
  const krt=`${krl} ${hm(kr)}`;
- $('slvMine').innerHTML=(avg!=null?`<span class="dotk"></span>내 평균 <b>${hm(avg)}</b> · 권장 ${lo}~${hi}시간<br><span class="sub">${krt}</span>`:`<span class="rempty">수면과 기상을 기록하면 평균이 여기에 표시돼요</span><br><span class="sub">권장 ${lo}~${hi}시간 · ${krt}</span>`)+(lab==='성인 기준'?'<br><span class="sub">성인 기준 (계정 탭에 나이를 넣으면 연령에 맞춰 보여 드려요)</span>':'')}
+ $('slvMine').innerHTML=(avg!=null?`<span class="dotk"></span>`+t('slMine',{v:hm(avg),a:lo,b:hi})+`<br><span class="sub">${krt}</span>`:`<span class="rempty">${t('slEmpty')}</span><br><span class="sub">${t('recH',{a:lo,b:hi})} · ${krt}</span>`)+(isAd?`<br><span class="sub">${t('slAdult')}</span>`:'')}
 function slRender(){const a=load(SK).filter(r=>r&&isFinite(r.start)).sort((x,y)=>y.start-x.start),op=a.find(r=>!r.end);
- $('slToggle').textContent=op?'기상':'수면';$('slToggle').classList.toggle('on',!!op);$('slToggle').setAttribute('aria-label',op?'기상 기록하기':'수면 기록하기');
- $('slIcon').classList.toggle('on',!!op);$('slIcon').setAttribute('aria-label',op?'자는 중':'깨어 있음');
- $('slState').textContent=op?'자는 중':'깨어 있어요';$('slSince').textContent=op?`${fmt(op.start)}부터 · ${dur(Date.now()-op.start)}`:'';
- const ul=$('slList');ul.innerHTML='';$('slEmpty').classList.toggle('hide',a.length>0);$('sllHint').textContent=a.length?`기록 ${a.length}개`:'기록 없음';
+ $('slToggle').textContent=op?t('wakeBtn'):t('slBtn');$('slToggle').classList.toggle('on',!!op);$('slToggle').setAttribute('aria-label',op?t('wakeAria'):t('slAria'));
+ $('slIcon').classList.toggle('on',!!op);$('slIcon').setAttribute('aria-label',op?t('asleep'):t('awakeA'));
+ $('slState').textContent=op?t('asleep'):t('awake');$('slSince').textContent=op?t('since',{d:fmt(op.start),x:dur(Date.now()-op.start)}):'';
+ const ul=$('slList');ul.innerHTML='';$('slEmpty').classList.toggle('hide',a.length>0);$('sllHint').textContent=a.length?t('nRec',{n:a.length}):t('noRec');
  a.slice(0,20).forEach(r=>{const li=document.createElement('li');
-  li.innerHTML=r.end?`<div><b>${dur(r.end-r.start)}</b> <span>${fmt(r.start)} ~ ${fmt(r.end)}</span></div>`:`<div><b>자는 중</b> <span>${fmt(r.start)}부터</span></div>`;
-  li.appendChild(delBtn(fmt(r.start)+' 수면 기록',()=>{save(SK,load(SK).filter(x=>x.id!==r.id));slRender()}));ul.appendChild(li)});
+  li.innerHTML=r.end?`<div><b>${dur(r.end-r.start)}</b> <span>${fmt(r.start)} ~ ${fmt(r.end)}</span></div>`:`<div><b>${t('asleep')}</b> <span>${t('sinceS',{d:fmt(r.start)})}</span></div>`;
+  li.appendChild(delBtn(t('slLog',{d:fmt(r.start)}),()=>{save(SK,load(SK).filter(x=>x.id!==r.id));slRender()}));ul.appendChild(li)});
  window.hcSleep&&window.hcSleep(!!op);
  slCard(a);clearInterval(tick);if(op)tick=setInterval(slRender,60000)}
 $('slToggle').onclick=()=>{const a=load(SK),op=a.find(r=>!r.end),now=Date.now();
  if(op)op.end=Math.max(now,op.start);else a.push({id:uid(),start:now,end:null});save(SK,a);slRender()};
 slRender();
 const all=()=>{exRender();slRender()};addEventListener('storage',all);
+addEventListener('hc:lang',()=>{chips();all();qsync.forEach(f=>f());if(!$('sheet').classList.contains('hide'))sheetText();['sMsg','cMsg'].forEach(id=>{$(id).textContent=''})});
 const pf=$('pfSave');pf&&pf.addEventListener('click',()=>setTimeout(all,0));
 })();
