@@ -7,10 +7,10 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="맥박 노트">
 <title>맥박 노트</title>
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=19">
-<link rel="icon" href="favicon.svg?v=19" type="image/svg+xml">
-<link rel="icon" href="favicon-32.png?v=19" sizes="32x32" type="image/png">
-<link rel="manifest" href="manifest.webmanifest?v=19">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=20">
+<link rel="icon" href="favicon.svg?v=20" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png?v=20" sizes="32x32" type="image/png">
+<link rel="manifest" href="manifest.webmanifest?v=20">
 <script>/* 화면 테마: 페인트 전에 html[data-theme] 적용 (hc.ui.v1.theme: auto|light|dark) */
 (function(){var d=document.documentElement,p='auto',sl=false,ov=false;try{var u=JSON.parse(localStorage.getItem('hc.ui.v1'));if(u&&/^(light|dark)$/.test(u.theme))p=u.theme}catch(e){}
 /* 자는 중(hc.sleep.v1에 end 없는 기록)이면 다크 강제 — 저장된 선택은 그대로, 헤더 버튼을 누르면 해제 */
@@ -20,7 +20,7 @@ window.hcTheme=function(pref){if(pref){p=pref;ov=false}var t=ov?'dark':p==='auto
  var tc=document.querySelectorAll('meta[name=theme-color]');for(var i=0;i<tc.length;i++){tc[i].removeAttribute('media');tc[i].setAttribute('content',t==='light'?'#e9eef0':'#0f1417')}return t};
 window.hcSleep=function(on){on=!!on;if(on===sl)return;sl=ov=on;window.hcTheme()};
 window.hcTheme();if(m){var f=function(){if(p==='auto'&&!ov)window.hcTheme()};m.addEventListener?m.addEventListener('change',f):m.addListener&&m.addListener(f)}})();</script>
-<link rel="stylesheet" href="css/app.css?v=19">
+<link rel="stylesheet" href="css/app.css?v=20">
 </head><body>
 <script>/* 첫 화면: 로그인 선택 전이면 로그인 화면 (hc.login.v1) */
 (function(){var c=null;try{c=JSON.parse(localStorage.getItem('hc.login.v1'))}catch(e){}if(!c||!c.mode)document.documentElement.classList.add('gate')})();</script>
@@ -115,21 +115,6 @@ window.hcTheme();if(m){var f=function(){if(p==='auto'&&!ov)window.hcTheme()};m.a
  <button class="tbtn" id="replayBtn">다시 보기</button>
 </section>
 
-<section class="card" aria-labelledby="h-pw">
- <details class="ref fold" id="pwCard" data-k="pw">
-  <summary id="h-pw"><span class="sm"><span class="st">최근 7일 맥박</span><span class="hint" id="pwHint"></span></span></summary>
-  <p class="empty" id="pwEmpty">아직 맥박 기록이 없어요.</p>
-  <div class="week" id="week" aria-label="지난 7일 하루 평균 맥박"></div>
- </details>
-</section>
-<section class="card" aria-labelledby="h-pl">
- <details class="ref fold" id="plCard" data-k="pl">
-  <summary id="h-pl"><span class="sm"><span class="st">맥박 기록</span><span class="hint" id="plHint"></span></span></summary>
-  <p class="empty" id="plEmpty">아직 기록이 없어요.</p>
-  <ul class="list" id="recent"></ul>
- </details>
-</section>
-
 <section class="card" aria-labelledby="h-ref">
  <details class="ref" id="refCard" open>
   <summary id="h-ref">안정 시 맥박 참고 자료</summary>
@@ -150,6 +135,21 @@ window.hcTheme();if(m){var f=function(){if(p==='auto'&&!ov)window.hcTheme()};m.a
     <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10840174/" target="_blank" rel="noopener">한국 평균: Park 외, BMC Public Health 2024;24:367 (KNHANES 2011–2014)</a></li>
    </ul>
   </details>
+ </details>
+</section>
+
+<section class="card" aria-labelledby="h-pw">
+ <details class="ref fold" id="pwCard" data-k="pw">
+  <summary id="h-pw"><span class="sm"><span class="st">최근 7일 맥박</span><span class="hint" id="pwHint"></span></span></summary>
+  <p class="empty" id="pwEmpty">아직 맥박 기록이 없어요.</p>
+  <div class="week" id="week" aria-label="지난 7일 하루 평균 맥박"></div>
+ </details>
+</section>
+<section class="card" aria-labelledby="h-pl">
+ <details class="ref fold" id="plCard" data-k="pl">
+  <summary id="h-pl"><span class="sm"><span class="st">맥박 기록</span><span class="hint" id="plHint"></span></span></summary>
+  <p class="empty" id="plEmpty">아직 기록이 없어요.</p>
+  <ul class="list" id="recent"></ul>
  </details>
 </section>
 
@@ -317,13 +317,13 @@ window.hcTheme();if(m){var f=function(){if(p==='auto'&&!ov)window.hcTheme()};m.a
 </div>
 
 
-<script src="js/app.js?v=19"></script>
-<script src="js/profile.js?v=19"></script>
-<script src="js/es.js?v=19"></script>
-<script src="js/ui.js?v=19"></script>
-<script src="js/ref.js?v=19"></script>
-<script src="js/data.js?v=19"></script>
-<script src="js/account.js?v=19"></script>
-<script src="js/gc.js?v=19"></script>
+<script src="js/app.js?v=20"></script>
+<script src="js/profile.js?v=20"></script>
+<script src="js/es.js?v=20"></script>
+<script src="js/ui.js?v=20"></script>
+<script src="js/ref.js?v=20"></script>
+<script src="js/data.js?v=20"></script>
+<script src="js/account.js?v=20"></script>
+<script src="js/gc.js?v=20"></script>
 <script data-goatcounter="https://jonghun-apps.goatcounter.com/count" data-goatcounter-settings='{"no_onload":true}' async src="//gc.zgo.at/count.js"></script>
 </body></html>
