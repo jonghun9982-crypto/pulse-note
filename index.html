@@ -7,11 +7,11 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="맥박 노트">
 <title>맥박 노트</title>
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=9">
-<link rel="icon" href="favicon.svg?v=9" type="image/svg+xml">
-<link rel="icon" href="favicon-32.png?v=9" sizes="32x32" type="image/png">
-<link rel="manifest" href="manifest.webmanifest?v=9">
-<link rel="stylesheet" href="css/app.css?v=9">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=13">
+<link rel="icon" href="favicon.svg?v=13" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png?v=13" sizes="32x32" type="image/png">
+<link rel="manifest" href="manifest.webmanifest?v=13">
+<link rel="stylesheet" href="css/app.css?v=13">
 </head><body>
 <main class="wrap">
 <div id="tabMe" class="" role="tabpanel" aria-labelledby="tb-profile">
@@ -34,139 +34,11 @@
  <div class="bmi" id="bmiVal"></div>
  <p class="meta">건강 상태를 판단하는 값이 아니에요.</p>
 </section>
-</div>
-<div id="tabEx" class="hide" role="tabpanel" aria-labelledby="tb-exercise">
-<header><h1>운동 기록</h1><p class="note">참고·교육용이에요. 의료 진단을 대신하지 않아요.</p></header>
-<section class="card" aria-labelledby="h-ex">
- <h2 id="h-ex">운동 루틴</h2>
- <div class="chips" id="chips"></div>
- <p class="meta" id="exDone"></p>
-</section>
-
-<section class="card" aria-labelledby="h-exw">
- <details class="ref fold" id="exwCard" data-k="exw">
-  <summary id="h-exw"><span class="sm"><span class="st">최근 7일 운동 시간</span><span class="hint" id="exwHint"></span></span></summary>
-  <p class="empty" id="exwEmpty">아직 운동 기록이 없어요.</p>
-  <div id="exwBody" class="hide">
-   <p class="meta">최근 7일 합계 <b class="sum" id="exwTotal"></b></p>
-   <div class="week" id="exWeek" aria-label="최근 7일 하루 운동 시간(분)"></div>
-  </div>
- </details>
-</section>
-<section class="card" aria-labelledby="h-exl">
- <details class="ref fold" id="exlCard" data-k="exl">
-  <summary id="h-exl"><span class="sm"><span class="st">최근 운동 기록</span><span class="hint" id="exlHint"></span></span></summary>
-  <p class="empty" id="exEmpty">아직 기록이 없어요. 루틴을 골라 완료해 보세요.</p>
-  <ul class="list" id="exList"></ul>
- </details>
-</section>
-<section class="card" aria-labelledby="h-exref">
- <details class="ref" id="exrefCard">
-  <summary id="h-exref">신체활동 권장량 참고 자료</summary>
-  <h3>주당 유산소 신체활동</h3>
-  <table class="reft wide">
-   <thead><tr><th scope="col">대상</th><th scope="col">유산소 (주당)</th></tr></thead>
-   <tbody>
-    <tr><td>WHO 성인 18–64세</td><td>중강도 150–300분 또는 고강도 75–150분 (또는 동등 조합)</td></tr>
-    <tr><td>WHO 노인 65세+</td><td>성인과 동일</td></tr>
-    <tr><td>한국 성인 만 19–64세</td><td>중강도 150–300분 또는 고강도 75–150분</td></tr>
-    <tr><td>한국 노인 만 65세+</td><td>중강도 150–300분 또는 고강도 75–150분</td></tr>
-   </tbody>
-  </table>
-  <h3>근력운동 · 그 밖의 내용</h3>
-  <ul class="srcs plain">
-   <li>근력운동: 주 2일 이상 (WHO: 모든 주요 근육군, 중강도 이상 / 한국: 신체 각 부위, 세트당 8–12회)</li>
-   <li>WHO 노인: 기능적 균형·근력 중심 복합 신체활동, 중강도 이상, 주 3일 이상</li>
-   <li>한국 노인: 평형성 운동 주 3일 이상</li>
-   <li>앉아 있는 시간 줄이기 (WHO·한국 지침서)</li>
-   <li>고강도 1분 = 중강도 2분 (한국 지침서·WHO 동일)</li>
-   <li>중강도는 안정 시의 3.0–5.9배(METs), 고강도는 성인 6.0배 이상 (질병관리청)</li>
-  </ul>
-  <h3>출처</h3>
-  <ul class="srcs">
-   <li><a href="https://www.who.int/publications/i/item/9789240015128" target="_blank" rel="noopener">WHO, Guidelines on physical activity and sedentary behaviour (2020)</a></li>
-   <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7719906/" target="_blank" rel="noopener">Bull 외, Br J Sports Med 2020</a></li>
-   <li><a href="https://www.mohw.go.kr/board.es?act=view&bid=0019&list_no=1479208&mid=a10411010100&nPage=1&tag=" target="_blank" rel="noopener">보건복지부·한국건강증진개발원, 한국인을 위한 신체활동 지침서 (2023)</a></li>
-   <li><a href="https://health.kdca.go.kr/healthinfo/biz/health/gnrlzHealthInfo/gnrlzHealthInfo/gnrlzHealthInfoView.do?cntnts_sn=6251" target="_blank" rel="noopener">질병관리청 국가건강정보포털, 신체활동</a></li>
-  </ul>
-  <p class="note">참고용 자료예요. 건강 상태를 판단하는 기준이 아니에요.</p>
- </details>
-</section>
-</div>
-<div id="tabSleep" class="hide" role="tabpanel" aria-labelledby="tb-sleep">
-<header><h1>수면 기록</h1></header>
-<section class="card" aria-labelledby="h-sl">
- <h2 id="h-sl">지금</h2>
- <p class="sl-state" id="slState" aria-live="polite">깨어 있어요</p>
- <p class="meta" id="slSince"></p>
- <button class="bigtoggle" id="slToggle" data-gc="sleep-toggle">수면</button>
- <p class="meta">잠들 때 수면, 일어나면 기상을 눌러 주세요.</p>
-</section>
-<section class="card" aria-labelledby="h-slw">
- <details class="ref fold" id="slwCard" data-k="slw">
-  <summary id="h-slw"><span class="sm"><span class="st">최근 7일 수면 시간</span><span class="hint" id="slwHint"></span></span></summary>
-  <p class="empty" id="slwEmpty">아직 수면 기록이 없어요.</p>
-  <div id="slwBody" class="hide">
-   <div class="stats"><div><span>평균 수면</span><b id="slwAvg"></b></div><div><span>평균 취침</span><b id="slwBed"></b></div><div><span>평균 기상</span><b id="slwWake"></b></div></div>
-   <div class="week" id="slWeek" aria-label="최근 7일 수면 시간(시간), 일어난 날 기준"></div>
-   <p class="meta">일어난 날 기준, 단위: 시간</p>
-  </div>
- </details>
-</section>
-<section class="card" aria-labelledby="h-sll">
- <details class="ref fold" id="sllCard" data-k="sll">
-  <summary id="h-sll"><span class="sm"><span class="st">수면 기록</span><span class="hint" id="sllHint"></span></span></summary>
-  <p class="empty" id="slEmpty">아직 기록이 없어요.</p>
-  <ul class="list" id="slList"></ul>
- </details>
-</section>
-<section class="card" aria-labelledby="h-slref">
- <details class="ref" id="slrefCard">
-  <summary id="h-slref">권장 수면시간 참고 자료</summary>
-  <h3>연령별 권장 수면시간 (NSF 2015, 하루)</h3>
-  <table class="reft wide">
-   <thead><tr><th scope="col">연령</th><th scope="col">권장</th></tr></thead>
-   <tbody>
-    <tr><td>신생아 0–3개월</td><td>14–17시간</td></tr>
-    <tr><td>영아 4–11개월</td><td>12–15시간</td></tr>
-    <tr><td>걸음마기 1–2세</td><td>11–14시간</td></tr>
-    <tr><td>미취학 3–5세</td><td>10–13시간</td></tr>
-    <tr><td>학령기 6–13세</td><td>9–11시간</td></tr>
-    <tr><td>청소년 14–17세</td><td>8–10시간</td></tr>
-    <tr><td>청년 18–25세</td><td>7–9시간</td></tr>
-    <tr><td>성인 26–64세</td><td>7–9시간</td></tr>
-    <tr><td>노인 65세+</td><td>7–8시간</td></tr>
-   </tbody>
-  </table>
-  <h3>성인 (AASM/SRS)</h3>
-  <p class="caption">성인(18–60세)은 하루 7시간 이상을 규칙적으로 자는 것을 권장해요.</p>
-  <h3>한국인 평균 수면시간 (2024 생활시간조사, 10세 이상)</h3>
-  <table class="reft wide">
-   <thead><tr><th scope="col">구분</th><th scope="col">평균</th></tr></thead>
-   <tbody>
-    <tr><td>전체 평균</td><td>8시간 1분</td></tr>
-    <tr><td>평일</td><td>7시간 45분</td></tr>
-    <tr><td>토요일</td><td>8시간 31분</td></tr>
-    <tr><td>일요일</td><td>8시간 49분</td></tr>
-    <tr><td>10대</td><td>8시간 37분</td></tr>
-    <tr><td>20대</td><td>8시간 26분</td></tr>
-    <tr><td>30대</td><td>8시간 6분</td></tr>
-    <tr><td>40대</td><td>7시간 52분</td></tr>
-    <tr><td>50대</td><td>7시간 40분</td></tr>
-    <tr><td>60세 이상</td><td>7시간 58분</td></tr>
-   </tbody>
-  </table>
-  <p class="caption">평균 취침 23:28, 기상 06:59</p>
-  <p class="caption sub">시간일지로 잰 수면 행동 시간이에요.</p>
-  <h3>출처</h3>
-  <ul class="srcs">
-   <li><a href="https://doi.org/10.1016/j.sleh.2014.12.010" target="_blank" rel="noopener">Hirshkowitz 외, NSF 수면시간 권장 (Sleep Health 2015)</a></li>
-   <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4442216/" target="_blank" rel="noopener">Watson 외, AASM/SRS 합의문 (J Clin Sleep Med 2015)</a></li>
-   <li><a href="https://mods.go.kr/board.es?act=view&bid=220&list_no=437764&mid=a10301010000" target="_blank" rel="noopener">통계청, 2024년 생활시간조사 결과</a></li>
-  </ul>
-  <p class="note">참고용 자료예요. 건강 상태를 판단하는 기준이 아니에요.</p>
- </details>
-</section>
+<footer class="notice">
+ <p>이 앱은 의료 진단이 아니에요. 일반적인 건강 관리와 교육용으로만 써 주세요.</p>
+ <p>모든 기록은 이 기기에만 저장되고 다른 곳에 공유되지 않아요.</p>
+ <p>방문과 버튼 누름 횟수만 세고(GoatCounter) 기록 내용은 보내지 않아요.</p>
+</footer>
 </div>
 <div id="tabHome" class="hide" role="tabpanel" aria-labelledby="tb-pulse">
 <header><h1>맥박 카드</h1><p class="note">참고·교육용이에요. 의료 진단을 대신하지 않아요.</p></header>
@@ -232,74 +104,116 @@
 </section>
 
 <section class="card" aria-labelledby="h-ref">
- <details class="ref" id="refCard">
+ <details class="ref" id="refCard" open>
   <summary id="h-ref">안정 시 맥박 참고 자료</summary>
-  <h3>연령·성별 안정 시 맥박 (회/분)</h3>
-  <table class="reft">
-   <caption>미국 NHANES 1999–2008 (Ostchega 2011, NHSR No.41)</caption>
-   <thead><tr><th scope="col">연령</th><th scope="col">성별</th><th scope="col">평균</th><th scope="col">5–95백분위</th></tr></thead>
-   <tbody>
-    <tr><td>20–39세</td><td>남</td><td>71</td><td>52–89</td></tr>
-    <tr><td>20–39세</td><td>여</td><td>76</td><td>57–95</td></tr>
-    <tr><td>40–59세</td><td>남</td><td>71</td><td>52–90</td></tr>
-    <tr><td>40–59세</td><td>여</td><td>73</td><td>56–92</td></tr>
-    <tr><td>60–79세</td><td>남</td><td>70</td><td>50–91</td></tr>
-    <tr><td>60–79세</td><td>여</td><td>73</td><td>56–92</td></tr>
-    <tr><td>80세 이상</td><td>남</td><td>71</td><td>51–94</td></tr>
-    <tr><td>80세 이상</td><td>여</td><td>73</td><td>56–93</td></tr>
-   </tbody>
-  </table>
-  <h3>성인 일반 범위</h3>
-  <p class="caption">성인의 안정 시 맥박은 일반적으로 분당 60~100회예요 (AHA, MedlinePlus).</p>
-  <p class="caption sub">잘 훈련된 운동선수는 분당 40~60회일 수 있어요 (MedlinePlus).</p>
-  <h3>한국 자료</h3>
-  <p class="caption">국민건강영양조사(KNHANES 2011–2014) 기반 연구의 평균: 남성 68.2회, 여성 69.8회 (Park 등, 2024).</p>
-  <p class="note">범위는 사람들 사이의 분포일 뿐, 정상과 비정상을 가르는 기준이 아니에요.</p>
+  <div class="seg rseg" id="rSex" role="group" aria-label="성별 선택">
+   <button type="button" aria-pressed="true" data-v="male">남</button><button type="button" aria-pressed="false" data-v="female">여</button>
+  </div>
+  <p class="rmine" id="rMine" aria-live="polite"></p>
+  <div class="rchart" id="rChart" aria-label="연령대별 안정 시 맥박 분포 (5–95백분위, 평균)"></div>
+  <p class="rkey"><span class="kbar"></span>5–95백분위 <span class="ktick"></span>평균 <span class="kband"></span>성인 일반 범위 60–100</p>
+  <p class="caption sub" id="rKr"></p>
+  <p class="note">참고용이에요. 범위는 사람들 사이의 분포일 뿐 기준이 아니에요.</p>
   <p class="note">심장이나 뇌 질환이 있거나 맥박에 영향을 주는 약을 드신다면 의사와 상담하세요.</p>
-  <h3>출처</h3>
-  <ul class="srcs">
-   <li><a href="https://www.cdc.gov/nchs/data/nhsr/nhsr041.pdf" target="_blank" rel="noopener">Ostchega 외, NHSR No.41 (CDC, 2011)</a></li>
-   <li><a href="https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure/all-about-heart-rate-pulse" target="_blank" rel="noopener">미국심장협회(AHA), All About Heart Rate</a></li>
-   <li><a href="https://medlineplus.gov/ency/article/003399.htm" target="_blank" rel="noopener">MedlinePlus, Pulse</a></li>
-   <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10840174/" target="_blank" rel="noopener">Park 외, BMC Public Health 2024;24:367</a></li>
-  </ul>
+  <details class="srcbox">
+   <summary>출처 보기</summary>
+   <ul class="srcs">
+    <li><a href="https://www.cdc.gov/nchs/data/nhsr/nhsr041.pdf" target="_blank" rel="noopener">연령·성별 분포: Ostchega 외, NHSR No.41 (CDC, 2011), 미국 NHANES 1999–2008</a></li>
+    <li><a href="https://www.heart.org/en/health-topics/high-blood-pressure/the-facts-about-high-blood-pressure/all-about-heart-rate-pulse" target="_blank" rel="noopener">60–100 범위: 미국심장협회(AHA), All About Heart Rate</a></li>
+    <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10840174/" target="_blank" rel="noopener">한국 평균: Park 외, BMC Public Health 2024;24:367 (KNHANES 2011–2014)</a></li>
+   </ul>
+  </details>
  </details>
 </section>
 
 </div>
-<div id="tabAcct" class="hide" role="tabpanel" aria-labelledby="tb-account">
-<header><h1>계정</h1></header>
-<section class="card disabled" aria-labelledby="h-gl" aria-disabled="true">
- <h2 id="h-gl">구글 로그인과 동기화 (준비 중)</h2>
- <p class="meta">아직 사용할 수 없어요.</p>
+<div id="tabEx" class="hide" role="tabpanel" aria-labelledby="tb-exercise">
+<header><h1>운동</h1><p class="note">참고·교육용이에요. 의료 진단을 대신하지 않아요.</p></header>
+<section class="card" aria-labelledby="h-ex">
+ <h2 id="h-ex">운동 루틴</h2>
+ <div class="chips" id="chips"></div>
+ <p class="meta" id="exDone"></p>
 </section>
-<section class="card" aria-labelledby="h-bk">
- <h2 id="h-bk">백업</h2>
- <div class="stack">
-  <button class="pbtn" id="expJson" data-gc="export-json">JSON으로 내보내기</button>
-  <button class="pbtn" id="expCsv" data-gc="export-csv">CSV로 내보내기</button>
-  <button class="pbtn" id="impBtn" data-gc="import">불러오기</button>
-  <input type="file" id="impFile" accept=".json,.csv,application/json,text/csv,text/plain" class="hide">
- </div>
- <p class="meta" id="bkMsg" aria-live="polite">불러오기는 JSON과 CSV 파일 모두 돼요. 이미 있는 기록은 겹치지 않게 합쳐요.</p>
+<section class="card" aria-labelledby="h-exv">
+ <details class="ref" id="exvCard" open>
+  <summary id="h-exv">주당 신체활동 참고 자료</summary>
+  <p class="rmine" id="exvMine" aria-live="polite"></p>
+  <div class="hbar" id="exvBar" aria-hidden="true"></div>
+  <p class="rkey"><span class="kband"></span>권장 중강도 150~300분 (WHO · 한국 지침) <span class="dotk"></span>내 최근 7일</p>
+  <p class="caption sub">근력운동 주 2일 이상 권장</p>
+  <p class="caption sub">고강도 1분은 중강도 2분으로 쳐요. 여기서는 기록한 시간을 그대로 더했어요.</p>
+  <p class="note">참고용이에요. 건강 상태를 판단하는 기준이 아니에요.</p>
+  <details class="srcbox">
+   <summary>출처 보기</summary>
+   <ul class="srcs">
+    <li><a href="https://www.who.int/publications/i/item/9789240015128" target="_blank" rel="noopener">WHO, Guidelines on physical activity and sedentary behaviour (2020)</a></li>
+    <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7719906/" target="_blank" rel="noopener">Bull 외, Br J Sports Med 2020</a></li>
+    <li><a href="https://www.mohw.go.kr/board.es?act=view&amp;bid=0019&amp;list_no=1479208&amp;mid=a10411010100&amp;nPage=1&amp;tag=" target="_blank" rel="noopener">보건복지부·한국건강증진개발원, 한국인을 위한 신체활동 지침서 (2023)</a></li>
+    <li><a href="https://health.kdca.go.kr/healthinfo/biz/health/gnrlzHealthInfo/gnrlzHealthInfo/gnrlzHealthInfoView.do?cntnts_sn=6251" target="_blank" rel="noopener">질병관리청 국가건강정보포털, 신체활동</a></li>
+   </ul>
+  </details>
+ </details>
 </section>
-<section class="card" aria-labelledby="h-fb">
- <h2 id="h-fb">의견 보내기</h2>
- <button class="pbtn" id="fbBtn" data-gc="feedback" disabled>의견 보내기</button>
- <p class="meta" id="fbNote">준비 중</p>
+<section class="card" aria-labelledby="h-exl">
+ <details class="ref fold" id="exlCard" data-k="exl">
+  <summary id="h-exl"><span class="sm"><span class="st">운동 기록</span><span class="hint" id="exlHint"></span></span></summary>
+  <p class="empty" id="exEmpty">아직 기록이 없어요. 루틴을 골라 완료해 보세요.</p>
+  <ul class="list" id="exList"></ul>
+ </details>
 </section>
-<section class="card" aria-labelledby="h-info">
- <h2 id="h-info">알림</h2>
- <p class="info">방문과 버튼 누름 횟수만 세고 기록 내용은 보내지 않아요.</p>
- <p class="info">모든 기록은 이 기기에만 저장되고 다른 곳에 공유되지 않아요.</p>
- <p class="info note">이 앱은 의료 진단이 아니에요. 일반적인 건강 관리와 교육용으로만 써 주세요.</p>
+</div>
+<div id="tabSleep" class="hide" role="tabpanel" aria-labelledby="tb-sleep">
+<header><h1>수면</h1></header>
+<section class="card" aria-labelledby="h-sl">
+ <h2 id="h-sl">지금</h2>
+ <svg class="slicon" id="slIcon" viewBox="0 0 160 130" width="148" height="120" role="img" aria-label="깨어 있음">
+  <g class="face">
+   <circle cx="70" cy="70" r="52" fill="#ffe3c8"/>
+   <ellipse cx="58" cy="44" rx="16" ry="9" fill="#fff" opacity=".45"/>
+   <ellipse cx="40" cy="84" rx="10" ry="6.5" fill="#ff9fb4" opacity=".75"/><ellipse cx="100" cy="84" rx="10" ry="6.5" fill="#ff9fb4" opacity=".75"/>
+   <g class="eyes"><circle cx="50" cy="68" r="9" fill="#5a4048"/><circle cx="90" cy="68" r="9" fill="#5a4048"/><circle cx="53.5" cy="64.5" r="3.2" fill="#fff"/><circle cx="93.5" cy="64.5" r="3.2" fill="#fff"/><circle cx="47.5" cy="71.5" r="1.4" fill="#fff"/><circle cx="87.5" cy="71.5" r="1.4" fill="#fff"/></g>
+   <path d="M63 88 Q70 95 77 88" fill="none" stroke="#c9727f" stroke-width="3" stroke-linecap="round"/>
+   <g class="mask"><path d="M14 58 Q70 44 126 58 Q128 72 122 82 Q96 88 70 80 Q44 88 18 82 Q12 72 14 58Z" fill="#cdb8f2"/>
+    <path d="M70 58 l3 6 6.5 1 -4.7 4.6 1.1 6.4 -5.9-3.1 -5.9 3.1 1.1-6.4 -4.7-4.6 6.5-1z" fill="#fff7c2"/>
+    <path d="M36 72 Q44 77 52 72 M88 72 Q96 77 104 72" fill="none" stroke="#8e76c4" stroke-width="2.5" stroke-linecap="round"/></g>
+  </g>
+  <text class="zz z1" x="118" y="40">z</text><text class="zz z2" x="128" y="26">z</text><text class="zz z3" x="140" y="10">z</text>
+ </svg>
+ <p class="sl-state" id="slState" aria-live="polite">깨어 있어요</p>
+ <p class="meta" id="slSince"></p>
+ <button class="bigtoggle" id="slToggle" data-gc="sleep-toggle">수면</button>
+ <p class="meta">잠들 때 수면, 일어나면 기상을 눌러 주세요.</p>
+</section>
+<section class="card" aria-labelledby="h-slv">
+ <details class="ref" id="slvCard" open>
+  <summary id="h-slv">수면시간 참고 자료</summary>
+  <p class="rmine" id="slvMine" aria-live="polite"></p>
+  <div class="hbar" id="slvBar" aria-hidden="true"></div>
+  <p class="rkey"><span class="kband"></span><span id="slvKeyBand">권장 범위</span> <span class="ktick"></span><span id="slvKeyKr">한국 평균</span> <span class="dotk"></span>내 평균</p>
+  <p class="caption sub">한국 평균은 시간일지로 잰 수면 행동 시간이에요 (2024 생활시간조사, 10세 이상).</p>
+  <p class="note">참고용이에요. 건강 상태를 판단하는 기준이 아니에요.</p>
+  <details class="srcbox">
+   <summary>출처 보기</summary>
+   <ul class="srcs">
+    <li><a href="https://doi.org/10.1016/j.sleh.2014.12.010" target="_blank" rel="noopener">Hirshkowitz 외, NSF 수면시간 권장 (Sleep Health 2015)</a></li>
+    <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4442216/" target="_blank" rel="noopener">Watson 외, AASM/SRS 합의문 (J Clin Sleep Med 2015)</a></li>
+    <li><a href="https://mods.go.kr/board.es?act=view&amp;bid=220&amp;list_no=437764&amp;mid=a10301010000" target="_blank" rel="noopener">통계청, 2024년 생활시간조사 결과</a></li>
+   </ul>
+  </details>
+ </details>
+</section>
+<section class="card" aria-labelledby="h-sll">
+ <details class="ref fold" id="sllCard" data-k="sll">
+  <summary id="h-sll"><span class="sm"><span class="st">수면 기록</span><span class="hint" id="sllHint"></span></span></summary>
+  <p class="empty" id="slEmpty">아직 기록이 없어요.</p>
+  <ul class="list" id="slList"></ul>
+ </details>
 </section>
 </div>
 </main>
 <nav class="tabbar" role="tablist" aria-label="화면 이동">
- <button role="tab" id="tb-profile" aria-selected="true" aria-controls="tabMe" data-t="tabMe" data-gc="tab-profile">기본 정보</button><button role="tab" id="tb-exercise" aria-selected="false" aria-controls="tabEx" data-t="tabEx" data-gc="tab-exercise">운동 기록</button><button role="tab" id="tb-sleep" aria-selected="false" aria-controls="tabSleep" data-t="tabSleep" data-gc="tab-sleep">수면 기록</button><button role="tab" id="tb-pulse" aria-selected="false" aria-controls="tabHome" data-t="tabHome" data-gc="tab-pulse">맥박 카드</button><button role="tab" id="tb-account" aria-selected="false" aria-controls="tabAcct" data-t="tabAcct" data-gc="tab-account">계정</button>
+ <button role="tab" id="tb-profile" aria-selected="true" aria-controls="tabMe" data-t="tabMe" data-gc="tab-profile">기본 정보</button><button role="tab" id="tb-pulse" aria-selected="false" aria-controls="tabHome" data-t="tabHome" data-gc="tab-pulse">맥박 카드</button><button role="tab" id="tb-exercise" aria-selected="false" aria-controls="tabEx" data-t="tabEx" data-gc="tab-exercise">운동</button><button role="tab" id="tb-sleep" aria-selected="false" aria-controls="tabSleep" data-t="tabSleep" data-gc="tab-sleep">수면</button>
 </nav>
-
 <div class="sheet hide" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sTitle">
  <div class="card sheet-card">
   <div class="sheet-head"><h2 id="sTitle"></h2><button class="tbtn" id="closeBtn">닫기</button></div>
@@ -310,10 +224,13 @@
   <p class="note">참고·교육용이에요. 의료 진단을 대신하지 않아요.</p>
  </div>
 </div>
-<script src="js/app.js?v=9"></script>
-<script src="js/profile.js?v=9"></script>
-<script src="js/more.js?v=9"></script>
-<script src="js/charts.js?v=9"></script>
-<script src="js/ui.js?v=9"></script>
+
+
+<script src="js/app.js?v=13"></script>
+<script src="js/profile.js?v=13"></script>
+<script src="js/es.js?v=13"></script>
+<script src="js/ui.js?v=13"></script>
+<script src="js/ref.js?v=13"></script>
+<script src="js/gc.js?v=13"></script>
 <script data-goatcounter="https://jonghun-apps.goatcounter.com/count" data-goatcounter-settings='{"no_onload":true}' async src="//gc.zgo.at/count.js"></script>
 </body></html>
