@@ -25,10 +25,11 @@ $('fbBtn').onclick=()=>{if(fbOk){const w=window.open(CONFIG.formUrl,'_blank','no
  else{toast(t('fbPrep'));$('fbMsg').textContent=t('fbPrep2')}};
 /* ---- 상태 표시: 모양 + 글자 (색만으로 구분하지 않아요) ---- */
 const ST=s=>t('st_'+s);
-/* ---- 로그인 화면 (hc.login.v1 = {mode:'guest'|'google', at}) ---- */
-const LK='hc.login.v1';
-function choose(mode){try{localStorage.setItem(LK,JSON.stringify({mode,at:Date.now()}))}catch(e){}if(mode==='google')gate(false)}
-function gate(on){const d=document.documentElement;if(on){try{localStorage.removeItem(LK)}catch(e){}$('lgMsg').textContent=''}d.classList.toggle('gate',on);scrollTo(0,0)}
+/* ---- 로그인 화면 (hc.login.v1 = {mode:'guest'|'google', at, b}) ----
+   b = window.__HC_BUILD. file:// 게이트는 sessionStorage(hc.login.sess)만 신뢰. */
+const LK='hc.login.v1',SK='hc.login.sess',BUILD=window.__HC_BUILD||29;
+function choose(mode){const rec={mode,at:Date.now(),b:BUILD};try{localStorage.setItem(LK,JSON.stringify(rec))}catch(e){}try{sessionStorage.setItem(SK,JSON.stringify(rec))}catch(e){}if(mode==='google')gate(false)}
+function gate(on){const d=document.documentElement;if(on){try{localStorage.removeItem(LK)}catch(e){}try{sessionStorage.removeItem(SK)}catch(e){}$('lgMsg').textContent=''}d.classList.toggle('gate',on);scrollTo(0,0)}
 window.hcGate=gate;
 let F=null,auth=null,db=null,user=null,busy=false,err='',online=navigator.onLine!==false,unsub=null,known=new Map(),applying=false;
 const configured=()=>!!(CONFIG.firebase&&CONFIG.firebase.apiKey&&CONFIG.firebase.projectId);

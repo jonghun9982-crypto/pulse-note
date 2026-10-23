@@ -61,7 +61,7 @@ footer{text-align:center;font-size:13px;color:var(--sub);margin:18px 0 6px}foote
 .ref summary{min-height:44px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-size:16px;font-weight:600;color:var(--sub);list-style:none}
 .ref summary::-webkit-details-marker{display:none}
 .ref summary::after{content:"열기";color:var(--accent);font-size:15px;padding-left:12px}
-.ref[open] summary::after{content:"닫기"}
+.ref[open] > summary::after{content:"닫기"}
 .reft{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums;table-layout:fixed}
 .reft caption{caption-side:bottom;text-align:left;font-size:13px;color:var(--sub);padding-top:6px}
 .reft th,.reft td{padding:8px 4px;border-top:1px solid var(--border);text-align:left}
@@ -71,11 +71,11 @@ footer{text-align:center;font-size:13px;color:var(--sub);margin:18px 0 6px}foote
 .srcs a{color:var(--accent);display:inline-block;min-height:24px}
 .reft.wide{table-layout:auto}.reft.wide td:first-child{width:auto;white-space:nowrap;padding-right:10px}.reft.wide td:nth-child(2),.reft.wide th:nth-child(2){width:auto}
 .srcs.plain{list-style:disc}.srcs.plain li{color:var(--text)}
-.fold summary .sm{display:flex;flex-direction:column;gap:1px;min-width:0}
-.fold summary .st{color:var(--text,inherit);font-size:14px}
-.fold summary .hint{font-size:12px;font-weight:400;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.fold summary{padding:2px 0;min-height:36px;font-size:14px}.fold[open] summary{margin-bottom:6px}
-.fold summary::after{font-size:13px}
+.fold summary .sm{display:flex;flex-direction:column;gap:0;min-width:0}
+.fold summary .st{color:var(--text,inherit);font-size:13px}
+.fold summary .hint{font-size:11px;font-weight:400;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fold summary{padding:0;min-height:30px;font-size:13px}.fold[open] > summary{margin-bottom:4px}
+.fold summary::after{font-size:12px}
 .sum{color:var(--text);font-size:17px;margin-left:6px}
 .stats{display:flex;gap:8px;margin-bottom:12px}.stats div{flex:1;background:var(--chip);border:1px solid var(--border);border-radius:12px;padding:6px 8px}
 .stats span{display:block;font-size:12px;color:var(--sub)}.stats b{font-size:15px;font-variant-numeric:tabular-nums}
@@ -154,7 +154,7 @@ input[type=text],input[type=date]{width:100%;box-sizing:border-box;font:inherit;
 .qchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .qchips button{min-height:36px;padding:6px 12px;border-radius:18px;border:1px solid var(--border);background:var(--chip);color:var(--text);font:inherit;font-size:14px}
 .qchips button[aria-pressed=true]{border-color:var(--accent);color:var(--accent)}
-#exaS{margin-top:4px}#exaC{border-top:1px solid var(--border);margin-top:6px;padding-top:4px}
+#exaCard #exaS{margin-top:2px}#exaCard #exaC{border-top:1px solid var(--border);margin-top:2px;padding-top:2px}
 .tag{display:inline-block;font-size:12px!important;font-weight:600;padding:1px 7px;border-radius:9px;border:1px solid var(--border);margin-right:6px;vertical-align:2px}
 .tag.tg-s{color:var(--orange)!important}.tag.tg-c{color:var(--accent)!important}.tag.tg-r{color:var(--sub)!important}
 .list li>div{min-width:0;padding:6px 0}
@@ -255,4 +255,10 @@ html[lang=en] [data-only=ko],html[lang=ko] [data-only=en]{display:none!important
 .wrap>div>header:first-child{padding-right:0}
 main.wrap>div>header h1{padding-right:176px;min-height:44px;display:flex;align-items:center;box-sizing:border-box}
 @media (max-width:359px){#thLbl{display:none}.hbtns .thbtn{padding:6px 11px}main.wrap>div>header h1{padding-right:122px}}
-html[lang=en] .ref summary::after{content:"Show"}html[lang=en] .ref[open] summary::after{content:"Hide"}
+html[lang=en] .ref summary::after{content:"Show"}html[lang=en] .ref[open] > summary::after{content:"Hide"}
+
+/* ---- v24 denser secondary/addon slots ---- */
+.card:has(>details.ref),.card:has(>details.fold){padding:10px 14px;margin-bottom:10px;border-radius:16px}
+.card:has(>details.ref:not(.fold)) > details.ref > summary{min-height:32px;font-size:14px;padding:0}
+.card:has(>details.ref:not(.fold)) > details.ref > summary::after{font-size:12px}
+#exaCard[open] > summary{margin-bottom:6px}
