@@ -71,10 +71,14 @@ footer{text-align:center;font-size:13px;color:var(--sub);margin:18px 0 6px}foote
 .srcs a{color:var(--accent);display:inline-block;min-height:24px}
 .reft.wide{table-layout:auto}.reft.wide td:first-child{width:auto;white-space:nowrap;padding-right:10px}.reft.wide td:nth-child(2),.reft.wide th:nth-child(2){width:auto}
 .srcs.plain{list-style:disc}.srcs.plain li{color:var(--text)}
-.fold summary .sm{display:flex;flex-direction:column;gap:2px;min-width:0}
-.fold summary .st{color:var(--text,inherit)}
-.fold summary .hint{font-size:13px;font-weight:400;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.fold summary{padding:4px 0}.fold[open] summary{margin-bottom:8px}
+.fold summary .sm{display:flex;flex-direction:column;gap:1px;min-width:0}
+.fold summary .st{color:var(--text,inherit);font-size:14px}
+.fold summary .hint{font-size:12px;font-weight:400;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fold summary{padding:2px 0;min-height:36px;font-size:14px}.fold[open] summary{margin-bottom:6px}
+.fold summary::after{font-size:13px}
+.sum{color:var(--text);font-size:17px;margin-left:6px}
+.stats{display:flex;gap:8px;margin-bottom:12px}.stats div{flex:1;background:var(--chip);border:1px solid var(--border);border-radius:12px;padding:6px 8px}
+.stats span{display:block;font-size:12px;color:var(--sub)}.stats b{font-size:15px;font-variant-numeric:tabular-nums}
 
 .notice{margin:22px 4px 8px}.notice p{font-size:13px;line-height:1.5}
 /* v11 reference visual */

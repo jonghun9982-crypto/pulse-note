@@ -59,7 +59,7 @@ function exRender(){const a=load(EK).filter(r=>r&&isFinite(r.ts)).sort((x,y)=>y.
  if(wm.length)g+=`<div class="fill" style="width:${P(tot,max)}"></div><div class="rdot" style="left:${P(tot,max)}"></div>`;
  g+=[0,150,300,max].filter((v,i,x)=>x.indexOf(v)===i).map(v=>`<span class="ax" style="left:${P(v,max)}">${v}${v===max?(I18.lang==='en'?' ':'')+t('min'):''}</span>`).join('');
  bar.innerHTML=g;
- $('exvMine').innerHTML=(wm.length?`<span class="dotk"></span>`+t('exvMine',{n:tot}):`<span class="rempty">${t('exvEmpty')}</span>`)+`<br><span class="sub">${t('sHint',{n:sd})}</span>`}
+ $('exvMine').innerHTML=(wm.length?`<span class="dotk"></span>`+t('exvMine',{n:tot}):`<span class="rempty">${t('exvEmpty')}</span>`)+`<br><span class="sub">${t('sHint',{n:sd})}</span>`};try{dispatchEvent(new Event('hc:exercise'))}catch(e){}
 const qsync=[];document.querySelectorAll('.qchips').forEach(q=>{const inp=$(q.dataset.for),sync=()=>q.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.textContent===inp.value.trim())));qsync.push(sync);
  q.querySelectorAll('button').forEach(b=>b.onclick=()=>{inp.value=b.textContent;sync()});inp.addEventListener('input',sync);sync()});
 ['sDate','cDate'].forEach(id=>{$(id).value=today();$(id).max=today()});
@@ -98,7 +98,7 @@ function slRender(){const a=load(SK).filter(r=>r&&isFinite(r.start)).sort((x,y)=
   li.innerHTML=r.end?`<div><b>${dur(r.end-r.start)}</b> <span>${fmt(r.start)} ~ ${fmt(r.end)}</span></div>`:`<div><b>${t('asleep')}</b> <span>${t('sinceS',{d:fmt(r.start)})}</span></div>`;
   li.appendChild(delBtn(t('slLog',{d:fmt(r.start)}),()=>{save(SK,load(SK).filter(x=>x.id!==r.id));slRender()}));ul.appendChild(li)});
  window.hcSleep&&window.hcSleep(!!op);
- slCard(a);clearInterval(tick);if(op)tick=setInterval(slRender,60000)}
+ slCard(a);try{dispatchEvent(new Event('hc:sleep'))}catch(e){}clearInterval(tick);if(op)tick=setInterval(slRender,60000)}
 $('slToggle').onclick=()=>{const a=load(SK),op=a.find(r=>!r.end),now=Date.now();
  if(op)op.end=Math.max(now,op.start);else a.push({id:uid(),start:now,end:null});save(SK,a);slRender()};
 slRender();
