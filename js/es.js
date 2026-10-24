@@ -101,6 +101,22 @@ function slRender(){const a=load(SK).filter(r=>r&&isFinite(r.start)).sort((x,y)=
  slCard(a);try{dispatchEvent(new Event('hc:sleep'))}catch(e){}clearInterval(tick);if(op)tick=setInterval(slRender,60000)}
 $('slToggle').onclick=()=>{const a=load(SK),op=a.find(r=>!r.end),now=Date.now();
  if(op)op.end=Math.max(now,op.start);else a.push({id:uid(),start:now,end:null});save(SK,a);slRender()};
+/* 수동 수면 기록 (v25): 버튼과 같은 형태 {id,start,end} */
+(()=>{const p2=n=>String(n).padStart(2,'0'),ymd=d=>d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate());
+ const def=()=>{const d=new Date();d.setDate(d.getDate()-1);$('slaDate').value=ymd(d);$('slaBed').value='23:00';$('slaWake').value='07:00'};def();
+ let last=null;const msg=(x,u)=>{$('slaTxt').textContent=x;$('slaUndo').classList.toggle('hide',!u);$('slaMsg').classList.toggle('hide',!x)};
+ $('slaSave').onclick=()=>{const dv=$('slaDate').value,b=$('slaBed').value,w=$('slaWake').value;
+  if(!dv||!b||!w){msg(t('slaNeed'));return}
+  const [Y,M,D]=dv.split('-').map(Number),[bh,bm]=b.split(':').map(Number),[wh,wm]=w.split(':').map(Number);
+  const st=new Date(Y,M-1,D,bh,bm).getTime();let en=new Date(Y,M-1,D,wh,wm).getTime();
+  if(en===st){msg(t('slaSame'));return}if(en<st)en=new Date(Y,M-1,D+1,wh,wm).getTime();
+  if(en-st>=864e5){msg(t('slaSame'));return}
+  if(en>Date.now()+6e4){msg(t('slaFuture'));return}
+  const a=load(SK);if(a.some(r=>r&&isFinite(r.start)&&st<(r.end||Date.now())&&en>r.start)){msg(t('slaOver'));return}
+  const r={id:uid(),start:st,end:en};a.push(r);save(SK,a);last=r.id;slRender();
+  msg(t('slaDone',{v:dur(en-st)}),1);$('slaCard').open=false;def()};
+ $('slaUndo').onclick=()=>{if(last){save(SK,load(SK).filter(x=>x.id!==last));last=null;slRender();msg(t('slaUndone'))}};
+ addEventListener('hc:lang',()=>msg(''))})();
 slRender();
 const all=()=>{exRender();slRender()};addEventListener('storage',all);
 addEventListener('hc:lang',()=>{chips();all();qsync.forEach(f=>f());if(!$('sheet').classList.contains('hide'))sheetText();['sMsg','cMsg'].forEach(id=>{$(id).textContent=''})});

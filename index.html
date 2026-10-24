@@ -7,10 +7,10 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="맥박 노트">
 <title>맥박 노트</title>
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=24">
-<link rel="icon" href="favicon.svg?v=24" type="image/svg+xml">
-<link rel="icon" href="favicon-32.png?v=24" sizes="32x32" type="image/png">
-<link rel="manifest" href="manifest.webmanifest?v=24">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=26">
+<link rel="icon" href="favicon.svg?v=26" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png?v=26" sizes="32x32" type="image/png">
+<link rel="manifest" href="manifest.webmanifest?v=26">
 <script>/* 화면 테마: 페인트 전에 html[data-theme] 적용 (hc.ui.v1.theme: auto|light|dark) */
 (function(){var d=document.documentElement,p='auto',sl=false,ov=false;try{var u=JSON.parse(localStorage.getItem('hc.ui.v1'));if(u&&/^(light|dark)$/.test(u.theme))p=u.theme}catch(e){}
 /* 자는 중(hc.sleep.v1에 end 없는 기록)이면 다크 강제 — 저장된 선택은 그대로, 헤더 버튼을 누르면 해제 */
@@ -20,8 +20,8 @@ window.hcTheme=function(pref){if(pref){p=pref;ov=false}var t=ov?'dark':p==='auto
  var tc=document.querySelectorAll('meta[name=theme-color]');for(var i=0;i<tc.length;i++){tc[i].removeAttribute('media');tc[i].setAttribute('content',t==='light'?'#e9eef0':'#0f1417')}return t};
 window.hcSleep=function(on){on=!!on;if(on===sl)return;sl=ov=on;window.hcTheme()};
 window.hcTheme();if(m){var f=function(){if(p==='auto'&&!ov)window.hcTheme()};m.addEventListener?m.addEventListener('change',f):m.addListener&&m.addListener(f)}})();</script>
-<script src="js/i18n.js?v=24"></script>
-<link rel="stylesheet" href="css/app.css?v=24">
+<script src="js/i18n.js?v=26"></script>
+<link rel="stylesheet" href="css/app.css?v=26">
 </head><body>
 <script>/* 첫 화면: 로그인 선택 전이면 로그인 화면 (hc.login.v1)
    유효 세션: mode가 guest|google 이고 b(빌드)가 현재와 같을 때만 스킵.
@@ -255,6 +255,16 @@ if(!ok(c))document.documentElement.classList.add('gate')})();</script>
  <button class="bigtoggle" id="slToggle" data-gc="sleep-toggle">수면</button>
  <p class="meta">잠들 때 수면, 일어나면 기상을 눌러 주세요.</p>
 </section>
+<section class="card" aria-labelledby="h-sla">
+ <details class="ref fold" id="slaCard" data-k="sla">
+  <summary id="h-sla"><span class="sm"><span class="st">내 수면 기록 직접 추가</span></span></summary>
+  <div class="field"><label for="slaDate">날짜 (잠든 밤)</label><input id="slaDate" type="date"></div>
+  <div class="frow"><div class="field"><label for="slaBed">잠든 시간</label><input id="slaBed" type="time" value="23:00"></div>
+   <div class="field"><label for="slaWake">깬 시간</label><input id="slaWake" type="time" value="07:00"></div></div>
+  <button class="tbtn big" id="slaSave" data-gc="sleep-add-manual">저장</button>
+ </details>
+ <p class="meta hide" id="slaMsg" aria-live="polite"><span id="slaTxt"></span> <button type="button" class="tbtn" id="slaUndo" data-gc="sleep-add-undo">되돌리기</button></p>
+</section>
 <section class="card" aria-labelledby="h-slv">
  <details class="ref" id="slvCard" open>
   <summary id="h-slv">수면시간 참고 자료</summary>
@@ -330,6 +340,12 @@ if(!ok(c))document.documentElement.classList.add('gate')})();</script>
  <input type="file" id="impFile" accept="application/json,.json" class="hide">
  <p class="meta" id="dmMsg" aria-live="polite"></p>
  <p class="meta">불러오면 지금 이 기기에 있는 기록이 파일 내용으로 바뀌어요.</p>
+ <div class="mslp">
+  <button type="button" class="obtn" id="msImpBtn" data-gc="mysleep-import">My Sleep 파일 불러오기</button>
+  <p class="meta">My Sleep에서 파일로 백업(JSON) 또는 CSV 내보내기 한 파일을 골라 주세요. My Sleep 기록은 그대로 남아요.</p>
+  <input type="file" id="msFile" accept=".json,.csv,application/json,text/csv,text/plain" class="hide">
+  <p class="meta" id="msMsg" aria-live="polite"></p>
+ </div>
 </section>
 <button type="button" class="fb-row" id="fbBtn" data-gc="feedback"><span class="fb-icw" aria-hidden="true"><svg class="fb-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.6A8 8 0 1 1 21 12z"/></svg></span><span class="fb-t"><b>앱 의견 보내기</b><small id="fbSub">불편한 점이나 아이디어를 알려 주세요</small></span><span class="fb-ext" id="fbExt" role="img" aria-label="새 탭에서 열림"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg></span></button>
 <p class="meta fbnote" id="fbMsg" aria-live="polite"></p>
@@ -360,15 +376,15 @@ if(!ok(c))document.documentElement.classList.add('gate')})();</script>
 </div>
 
 <script>hcI18n.init()</script>
-<script src="js/app.js?v=24"></script>
-<script src="js/profile.js?v=24"></script>
-<script src="js/es.js?v=24"></script>
-<script src="js/charts.js?v=24"></script>
-<script src="js/ui.js?v=24"></script>
-<script src="js/ref.js?v=24"></script>
-<script src="js/data.js?v=24"></script>
-<script src="js/account.js?v=24"></script>
-<script src="js/videos.js?v=24"></script>
-<script src="js/gc.js?v=24"></script>
+<script src="js/app.js?v=26"></script>
+<script src="js/profile.js?v=26"></script>
+<script src="js/es.js?v=26"></script>
+<script src="js/charts.js?v=26"></script>
+<script src="js/ui.js?v=26"></script>
+<script src="js/ref.js?v=26"></script>
+<script src="js/data.js?v=26"></script>
+<script src="js/account.js?v=26"></script>
+<script src="js/videos.js?v=26"></script>
+<script src="js/gc.js?v=26"></script>
 <script data-goatcounter="https://jonghun-apps.goatcounter.com/count" data-goatcounter-settings='{"no_onload":true}' async src="//gc.zgo.at/count.js"></script>
 </body></html>

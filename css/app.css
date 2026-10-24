@@ -262,3 +262,8 @@ html[lang=en] .ref summary::after{content:"Show"}html[lang=en] .ref[open] > summ
 .card:has(>details.ref:not(.fold)) > details.ref > summary{min-height:32px;font-size:14px;padding:0}
 .card:has(>details.ref:not(.fold)) > details.ref > summary::after{font-size:12px}
 #exaCard[open] > summary{margin-bottom:6px}
+#slaMsg{display:flex;align-items:center;gap:8px;margin:6px 0 0}#slaMsg.hide{display:none}#slaMsg .tbtn{color:#4cc3b8;border-color:#4cc3b8;padding:4px 10px;min-height:30px}#slaMsg .tbtn.hide{display:none}#slaCard[open] > summary{margin-bottom:6px}
+#slaCard .field input{width:100%;box-sizing:border-box;min-height:40px;font-size:16px}#slaCard .frow .field{flex:1;min-width:0}
+
+.dm .mslp{margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
+.dm .mslp .obtn{width:100%;color:#4cc3b8;border-color:#4cc3b8}

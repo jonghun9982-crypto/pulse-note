@@ -45,4 +45,31 @@ $('impFile').onchange=async()=>{const f=$('impFile').files[0];if(!f)return;let d
   sessionStorage.setItem('hc.dm.msg',t('impOk',{n:count(d)}))}catch(e){msg(t('saveFail'));return}
  location.reload()};
 const pm=sessionStorage.getItem('hc.dm.msg');if(pm){sessionStorage.removeItem('hc.dm.msg');document.querySelector('.tabbar [data-t=tabSet]')?.click();msg(pm)}
+
+/* ---- My Sleep 파일 불러오기 (병합, hc.sleep.v1에 추가만) ---- */
+const msMsg=x=>{$('msMsg').textContent=x};
+function msParse(text){text=text.replace(/^\ufeff/,'').trim();let raw=[];
+ if(/^[\[{]/.test(text)){const j=JSON.parse(text);const a=Array.isArray(j)?j:(j&&j.app==='MySleep'&&Array.isArray(j.sleep)?j.sleep:null);
+  if(!a)throw 0;raw=a.map(r=>[r&&r.sleep,r&&r.wake])}
+ else{const P=s=>{const m=String(s||'').trim().replace(/^"|"$/g,'').match(/^(\d{4})-(\d{2})-(\d{2})[ T](\d{1,2}):(\d{2})/);return m?new Date(+m[1],m[2]-1,+m[3],+m[4],+m[5]).getTime():NaN};
+  const L=text.split(/\r?\n/).filter(x=>x.trim());let ok=0;
+  for(const l of L){const c=l.split(',');const a=P(c[0]);if(isNaN(a))continue;ok++;raw.push([a,c[1]&&c[1].trim()?P(c[1]):null])}
+  if(!ok)throw 0}
+ const ms=v=>v==null||v===''?NaN:(typeof v==='number'?v:Date.parse(v));
+ return raw.map(([a,b])=>({start:ms(a),end:ms(b)})).filter(r=>!isNaN(r.start)&&!isNaN(r.end)&&r.end>r.start&&r.end-r.start<=864e5)}
+function msMerge(list){let cur=[];try{cur=JSON.parse(localStorage.getItem('hc.sleep.v1'))||[]}catch(e){}if(!Array.isArray(cur))cur=[];
+ const add=[];let skip=0;const all=cur.slice();
+ for(const r of list){const dup=all.some(x=>x&&x.start&&(Math.floor(x.start/6e4)===Math.floor(r.start/6e4)||(x.end&&Math.min(x.end,r.end)-Math.max(x.start,r.start)>0.5*Math.min(x.end-x.start,r.end-r.start))));
+  if(dup){skip++;continue}const n={id:'ms-'+r.start.toString(36)+'-'+Math.random().toString(36).slice(2,6),start:r.start,end:r.end};add.push(n);all.push(n)}
+ return {cur,add,skip}}
+window.hcMySleep={parse:msParse,merge:msMerge};
+$('msImpBtn').onclick=()=>{$('msFile').value='';$('msFile').click()};
+$('msFile').onchange=async()=>{const f=$('msFile').files[0];if(!f)return;let list;
+ try{list=msParse(await f.text())}catch(e){msMsg(t('msBad'));return}
+ const {cur,add,skip}=msMerge(list);
+ if(!add.length){msMsg(t('msNone',{m:skip}));return}
+ if(!confirm(t('msAsk',{n:add.length}))){msMsg(t('impCancel'));return}
+ try{localStorage.setItem('hc.sleep.v1',JSON.stringify(cur.concat(add).sort((a,b)=>b.start-a.start)));sessionStorage.setItem('hc.ms.msg',t('msOk',{n:add.length,m:skip}))}catch(e){msMsg(t('saveFail'));return}
+ location.reload()};
+const mm=sessionStorage.getItem('hc.ms.msg');if(mm){sessionStorage.removeItem('hc.ms.msg');document.querySelector('.tabbar [data-t=tabSet]')?.click();msMsg(mm)}
 })();
