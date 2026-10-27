@@ -43,6 +43,19 @@ $('cnt').addEventListener('input',calc);$('startBtn').onclick=start;
 $('cancelBtn').onclick=()=>{clearInterval(iv);show('view')};$('discardBtn').onclick=()=>show('view');
 $('saveBtn').onclick=()=>{const n=parseInt($('cnt').value,10);if(!(n>=1&&n<=60))return;
  const a=load(PK);a.push({id:uid(),ts:Date.now(),bpm:n*4});save(PK,a);render();show('view')};
+/* 수동 맥박 기록 (v27): 같은 형태 {id,ts,bpm} */
+(()=>{const ymd=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+ const def=()=>{const d=new Date();$('plaDate').value=ymd(d);$('plaTime').value=pad(d.getHours())+':'+pad(d.getMinutes());$('plaBpm').value=''};def();
+ let last=null;const msg=(x,u)=>{$('plaTxt').textContent=x;$('plaUndo').classList.toggle('hide',!u);$('plaMsg').classList.toggle('hide',!x)};
+ $('plaSave').onclick=()=>{const dv=$('plaDate').value,tv=$('plaTime').value,n=parseInt($('plaBpm').value,10);
+  if(!dv||!tv||!$('plaBpm').value){msg(t('plaNeed'));return}
+  if(!(n>=30&&n<=220)){msg(t('plaRange'));return}
+  const [Y,M,D]=dv.split('-').map(Number),[h,m]=tv.split(':').map(Number),ts=new Date(Y,M-1,D,h,m).getTime();
+  if(ts>Date.now()+6e4){msg(t('plaFuture'));return}
+  const r={id:uid(),ts,bpm:n};const a=load(PK);a.push(r);save(PK,a);last=r.id;render();show('view');
+  msg(t('plaDone',{v:n}),1);$('plaCard').open=false;def()};
+ $('plaUndo').onclick=()=>{if(last){save(PK,load(PK).filter(x=>x.id!==last));last=null;render();show('view');msg(t('slaUndone'))}};
+ addEventListener('hc:lang',()=>msg(''))})();
 render();show('view');window.hcPulse=()=>{render();show(mode)};
 addEventListener('hc:lang',()=>{render();if(mode==='input')calc();if(reduce.matches)staticView()});
 

@@ -267,3 +267,6 @@ html[lang=en] .ref summary::after{content:"Show"}html[lang=en] .ref[open] > summ
 
 .dm .mslp{margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
 .dm .mslp .obtn{width:100%;color:#4cc3b8;border-color:#4cc3b8}
+#plaMsg{display:flex;align-items:center;gap:8px;margin:6px 0 0}#plaMsg.hide{display:none}#plaMsg .tbtn{color:#4cc3b8;border-color:#4cc3b8;padding:4px 10px;min-height:30px}#plaMsg .tbtn.hide{display:none}#plaCard[open] > summary{margin-bottom:6px}
+#plaCard .field input{width:100%;box-sizing:border-box;min-height:40px;font-size:16px}#plaCard .frow .field{flex:1;min-width:0}
+#plaCard input[type=time]{font:inherit;font-size:16px;padding:8px 12px;border-radius:12px;border:1px solid var(--border);background:var(--chip);color:var(--text);margin-top:4px;-webkit-appearance:none;appearance:none}
