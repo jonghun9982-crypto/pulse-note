@@ -1,7 +1,3 @@
-<div align="right">
-<a href="https://jonghun9982-crypto.github.io/pulse-note/">Live</a>
-</div>
-
 # 맥박 노트
 
 맥박·운동·수면 기록 웹앱 (아이폰 홈 화면 앱 지원)
