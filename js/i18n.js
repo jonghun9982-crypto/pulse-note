@@ -172,8 +172,12 @@ about:['앱 정보','About'],version:['버전','Version'],
 loading:['불러오는 중…','Loading…'],
 error:['문제가 생겼어요. 다시 시도해 주세요.','Something went wrong. Please try again.']
 };
+var REV={};for(var k in D){var a=D[k];if(typeof a[0]==='string')REV[a[0]]=k;if(typeof a[1]==='string')REV[a[1]]=k}
 function t(k,v){var a=D[k];if(!a)return k;var s=a[L==='en'?1:0];if(typeof s==='function')return s(v||{});if(typeof s==='string'&&v){return s.replace(/\{(\w+)\}/g,function(_,p){return v[p]!=null?v[p]:''})}return s||k}
+function set(l){if(l!=='ko'&&l!=='en')return;L=l;try{var u=ui();u.lang=l;localStorage.setItem(UK,JSON.stringify(u))}catch(e){}apply(document.body);paintBtn();dispatchEvent(new CustomEvent('hc:lang'))}
+function apply(root){var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);var n;while(n=w.nextNode()){var p=n.parentNode;if(p&&(p.tagName==='SCRIPT'||p.tagName==='STYLE'))continue;var s=n.nodeValue;if(s&&REV[s.trim()])n.nodeValue=s.replace(s.trim(),t(REV[s.trim()]))}}
+function paintBtn(){var b=document.getElementById('lgBtn');if(!b)return;b.textContent=L==='ko'?'EN':'KO';b.setAttribute('aria-label',t('lgAria'));b.setAttribute('lang',L)}
 var F={dt:function(ts){var d=new Date(ts);return L==='en'?d.toLocaleDateString('en',{month:'short',day:'numeric'}):d.getMonth()+1+'/'+d.getDate()},wd:function(d){return L==='en'?['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()]:['일','월','화','수','목','금','토'][d.getDay()]},md:function(d){return L==='en'?d.toLocaleDateString('en',{month:'short',day:'numeric'}):d.getMonth()+1+'/'+d.getDate()}};
-window.hcI18n={t:t,F:F,lang:L,D:D};
-addEventListener('storage',function(e){if(e.key===UK)location.reload()});
+window.hcI18n={get lang(){return L},t:t,set:set,apply:apply,F:F,D:D,key:function(s){return REV[s]},init:function(){apply(document.body);paintBtn();var b=document.getElementById('lgBtn');if(b)b.onclick=function(){set(L==='ko'?'en':'ko')}}};
+window.t=t;
 })();
