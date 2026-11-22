@@ -60,27 +60,24 @@ render();show('view');window.hcPulse=()=>{render();show(mode)};
 addEventListener('hc:lang',()=>{render();if(mode==='input')calc();if(reduce.matches)staticView()});
 
 /* ---- 2. animation ---- */
-const pB=$('pBelly'),pA=$('pArm'),LB=pB.getTotalLength(),LA=pA.getTotalLength();
-const DUR={soft:{b:1500,a:1250},stiff:{b:750,a:1250}};
-let am='soft',t0=0,raf=0;
-function place(el,p,L,f){const pt=p.getPointAtLength(L*Math.min(f,1));el.setAttribute('cx',pt.x);el.setAttribute('cy',pt.y)}
-function frame(t,once){const d=DUR[am],e=t-t0,cyc=Math.max(d.a,d.b)+900;const k=once?Math.min(e,cyc-1):e%cyc;
- place($('dB'),pB,LB,k/d.b);place($('dA'),pA,LA,k/d.a);
- $('endB').setAttribute('opacity',k>=d.b?1:0);$('endA').setAttribute('opacity',k>=d.a?1:0);
- const first=d.b<d.a?I18.t('aBellyS'):I18.t('aWristS');$('aStatus').textContent=k>=Math.min(d.a,d.b)?I18.t('aFirst',{x:first}):I18.t('aGo')}
-function loop(t){frame(t,false);raf=requestAnimationFrame(loop)}
-function staticView(){cancelAnimationFrame(raf);const d=DUR[am];frame(t0+Math.max(d.a,d.b)+10,true)}
-function play(){cancelAnimationFrame(raf);t0=performance.now();
- // Desktop fix: always loop animation (ignore prefers-reduced-motion for this educational demo)
- raf=requestAnimationFrame(loop);
-}
-function init(){
- // Always start the looping animation on both mobile and desktop
+function startAnim(){
+ const pB=$('pBelly'),pA=$('pArm');
+ if(!pB||!pA){setTimeout(startAnim,100);return;}
+ const LB=pB.getTotalLength(),LA=pA.getTotalLength();
+ const DUR={soft:{b:1500,a:1250},stiff:{b:750,a:1250}};
+ let am='soft',t0=0,raf=0;
+ function place(el,p,L,f){const pt=p.getPointAtLength(L*Math.min(f,1));el.setAttribute('cx',pt.x);el.setAttribute('cy',pt.y)}
+ function frame(t){const d=DUR[am],e=t-t0,cyc=Math.max(d.a,d.b)+900;const k=e%cyc;
+  place($('dB'),pB,LB,k/d.b);place($('dA'),pA,LA,k/d.a);
+  $('endB').setAttribute('opacity',k>=d.b?1:0);$('endA').setAttribute('opacity',k>=d.a?1:0);
+  const first=d.b<d.a?I18.t('aBellyS'):I18.t('aWristS');$('aStatus').textContent=k>=Math.min(d.a,d.b)?I18.t('aFirst',{x:first}):I18.t('aGo')}
+ function loop(t){frame(t);raf=requestAnimationFrame(loop)}
+ function play(){cancelAnimationFrame(raf);t0=performance.now();raf=requestAnimationFrame(loop)}
+ document.querySelectorAll('#animSeg button').forEach(b=>b.onclick=()=>{am=b.dataset.m;document.querySelectorAll('#animSeg button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));play();});
+ $('replayBtn').onclick=play;
  play();
+ window.__anim={get mode(){return am},DUR};
 }
-document.querySelectorAll('#animSeg button').forEach(b=>b.onclick=()=>{am=b.dataset.m;document.querySelectorAll('#animSeg button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));play();});
-$('replayBtn').onclick=play;
-init();
-window.__anim={get mode(){return am},DUR};
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',startAnim);else startAnim();
 
 })();
