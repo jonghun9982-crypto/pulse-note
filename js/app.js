@@ -57,9 +57,9 @@ $('saveBtn').onclick=()=>{const n=parseInt($('cnt').value,10);if(!(n>=1&&n<=60))
  $('plaUndo').onclick=()=>{if(last){save(PK,load(PK).filter(x=>x.id!==last));last=null;render();show('view');msg(t('slaUndone'))}};
  addEventListener('hc:lang',()=>msg(''))})();
 render();show('view');window.hcPulse=()=>{render();show(mode)};
-addEventListener('hc:lang',()=>{render();if(mode==='input')calc();if(reduce.matches)staticView()});
 
 /* ---- 2. animation ---- */
+let animPlay = null;
 function startAnim(){
  const pB=$('pBelly'),pA=$('pArm');
  if(!pB||!pA){setTimeout(startAnim,100);return;}
@@ -73,11 +73,18 @@ function startAnim(){
   const first=d.b<d.a?I18.t('aBellyS'):I18.t('aWristS');$('aStatus').textContent=k>=Math.min(d.a,d.b)?I18.t('aFirst',{x:first}):I18.t('aGo')}
  function loop(t){frame(t);raf=requestAnimationFrame(loop)}
  function play(){cancelAnimationFrame(raf);t0=performance.now();raf=requestAnimationFrame(loop)}
+ animPlay = play;
  document.querySelectorAll('#animSeg button').forEach(b=>b.onclick=()=>{am=b.dataset.m;document.querySelectorAll('#animSeg button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));play();});
  $('replayBtn').onclick=play;
  play();
  window.__anim={get mode(){return am},DUR};
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',startAnim);else startAnim();
+
+addEventListener('hc:lang',()=>{
+ render();
+ if(mode==='input')calc();
+ if(animPlay) animPlay();
+});
 
 })();
