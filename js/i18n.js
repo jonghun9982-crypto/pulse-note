@@ -156,7 +156,7 @@ slAdult:['성인 기준 (계정 탭에 나이를 넣으면 연령에 맞춰 보�
 /* ---- 영상 ---- */
 vidH:['건강 영상','Health videos'],vidNote:['공공기관·대학병원 채널의 교육 영상이에요.','Educational videos from official health organizations and hospitals.'],
 cprH:['119 신고 안내','Emergency call'],cprT:['주변에 쓰러진 사람이 있으면 먼저 119에 신고하세요','If someone collapses, call your local emergency number first'],
-call:['119 전화하기','Call 119'],cprK:['','(Korea: 119)'],
+call:['119 전화하기','Call 119'],cprK:['Korea 119 · North America 911 · Europe 112 · Australia 000 · Southeast Asia varies by country','Korea 119 · North America 911 · Europe 112 · Australia 000 · Southeast Asia varies by country'],
 vidFoot:['영상은 각 기관의 유튜브 채널에서 가져와요. 참고·교육용이에요.','Videos come from each organization\u2019s YouTube channel. For education only.'],
 v_cpr:['심폐소생술·AED','CPR & AED'],v_heart:['맥박·심장 건강','Pulse & heart'],v_ex:['운동·스트레칭','Exercise & stretching'],v_sl:['수면','Sleep'],
 nVid:['영상 {n}개',function(v){return v.n===1?'1 video':v.n+' videos'}],play:['{x} 재생','Play {x}'],onYt:['유튜브에서 보기','Watch on YouTube'],
