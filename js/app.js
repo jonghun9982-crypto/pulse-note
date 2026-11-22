@@ -57,7 +57,7 @@ $('saveBtn').onclick=()=>{const n=parseInt($('cnt').value,10);if(!(n>=1&&n<=60))
  $('plaUndo').onclick=()=>{if(last){save(PK,load(PK).filter(x=>x.id!==last));last=null;render();show('view');msg(t('slaUndone'))}};
  addEventListener('hc:lang',()=>msg(''))})();
 render();show('view');window.hcPulse=()=>{render();show(mode)};
-addEventListener('hc:lang',()=>{render();if(mode==='input')calc();if(reduce.matches)staticView()});
+addEventListener('hc:lang',()=>{render();if(mode==='input')calc();play()});
 
 /* ---- 2. animation ---- */
 const pB=$('pBelly'),pA=$('pArm'),LB=pB.getTotalLength(),LA=pA.getTotalLength();
@@ -70,11 +70,9 @@ function frame(t,once){const d=DUR[am],e=t-t0,cyc=Math.max(d.a,d.b)+900;const k=
  const first=d.b<d.a?I18.t('aBellyS'):I18.t('aWristS');$('aStatus').textContent=k>=Math.min(d.a,d.b)?I18.t('aFirst',{x:first}):I18.t('aGo')}
 function loop(t){frame(t,false);raf=requestAnimationFrame(loop)}
 function staticView(){cancelAnimationFrame(raf);const d=DUR[am];frame(t0+Math.max(d.a,d.b)+10,true)}
-function play(){cancelAnimationFrame(raf);t0=performance.now();
- if(reduce.matches){const step=t=>{frame(t,true);if(t-t0<Math.max(DUR[am].a,DUR[am].b)+100)raf=requestAnimationFrame(step)};raf=requestAnimationFrame(step)}
- else raf=requestAnimationFrame(loop)}
-function init(){if(reduce.matches){t0=0;staticView()}else play()}
-document.querySelectorAll('#animSeg button').forEach(b=>b.onclick=()=>{am=b.dataset.m;document.querySelectorAll('#animSeg button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));reduce.matches?staticView():play()});
+function play(){cancelAnimationFrame(raf);t0=performance.now();raf=requestAnimationFrame(loop)}
+function init(){play()}
+document.querySelectorAll('#animSeg button').forEach(b=>b.onclick=()=>{am=b.dataset.m;document.querySelectorAll('#animSeg button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));play()});
 $('replayBtn').onclick=play;reduce.addEventListener?.('change',init);init();
 window.__anim={get mode(){return am},DUR};
 
