@@ -31,7 +31,7 @@ function render(){const recs=load(PK).sort((a,b)=>b.ts-a.ts);
  const vals=days.filter(x=>x.avg).map(x=>x.avg),mx=Math.max(...vals,1),mn=Math.min(...vals,mx);
  days.forEach((x,i)=>{const h=x.avg?30+60*((x.avg-mn)/((mx-mn)||1)):2;
   const el=document.createElement('div');el.className='day';
-  el.innerHTML=`<span class=\"v\">${x.avg??''}</span><div class=\"bar${x.avg?'':' none'}\" style=\"height:${x.avg?(mx===mn?60:h):2}px\"></div><span>${i===6?t('today'):I18.F.wd(x.d)}</span>`;
+  el.innerHTML=`<span class="v">${x.avg??''}</span><div class="bar${x.avg?'':' none'}" style="height:${x.avg?(mx===mn?60:h):2}px"></div><span>${i===6?t('today'):I18.F.wd(x.d)}</span>`;
   el.setAttribute('aria-label',t('wkAria',{d:I18.F.md(x.d),v:x.avg?t('wkAvg',{v:x.avg}):t('noRec')}));wk.appendChild(el)})}
 function draw(l){$('sec').textContent=l;$('arc').style.strokeDashoffset=439.8*(1-l/15)}
 function start(){show('timer');let l=15;$('arc').style.transition='none';draw(15);$('arc').getBoundingClientRect();$('arc').style.transition='';
@@ -57,34 +57,25 @@ $('saveBtn').onclick=()=>{const n=parseInt($('cnt').value,10);if(!(n>=1&&n<=60))
  $('plaUndo').onclick=()=>{if(last){save(PK,load(PK).filter(x=>x.id!==last));last=null;render();show('view');msg(t('slaUndone'))}};
  addEventListener('hc:lang',()=>msg(''))})();
 render();show('view');window.hcPulse=()=>{render();show(mode)};
+addEventListener('hc:lang',()=>{render();if(mode==='input')calc();if(reduce.matches)staticView()});
 
 /* ---- 2. animation ---- */
-let animPlay = null;
-function startAnim(){
- const pB=$('pBelly'),pA=$('pArm');
- if(!pB||!pA){setTimeout(startAnim,100);return;}
- const LB=pB.getTotalLength(),LA=pA.getTotalLength();
- const DUR={soft:{b:1500,a:1250},stiff:{b:750,a:1250}};
- let am='soft',t0=0,raf=0;
- function place(el,p,L,f){const pt=p.getPointAtLength(L*Math.min(f,1));el.setAttribute('cx',pt.x);el.setAttribute('cy',pt.y)}
- function frame(t){const d=DUR[am],e=t-t0,cyc=Math.max(d.a,d.b)+900;const k=e%cyc;
-  place($('dB'),pB,LB,k/d.b);place($('dA'),pA,LA,k/d.a);
-  $('endB').setAttribute('opacity',k>=d.b?1:0);$('endA').setAttribute('opacity',k>=d.a?1:0);
-  const first=d.b<d.a?I18.t('aBellyS'):I18.t('aWristS');$('aStatus').textContent=k>=Math.min(d.a,d.b)?I18.t('aFirst',{x:first}):I18.t('aGo')}
- function loop(t){frame(t);raf=requestAnimationFrame(loop)}
- function play(){cancelAnimationFrame(raf);t0=performance.now();raf=requestAnimationFrame(loop)}
- animPlay = play;
- document.querySelectorAll('#animSeg button').forEach(b=>b.onclick=()=>{am=b.dataset.m;document.querySelectorAll('#animSeg button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));play();});
- $('replayBtn').onclick=play;
- play();
- window.__anim={get mode(){return am},DUR};
-}
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',startAnim);else startAnim();
-
-addEventListener('hc:lang',()=>{
- render();
- if(mode==='input')calc();
- if(animPlay) animPlay();
-});
+const pB=$('pBelly'),pA=$('pArm'),LB=pB.getTotalLength(),LA=pA.getTotalLength();
+const DUR={soft:{b:1500,a:1250},stiff:{b:750,a:1250}};
+let am='soft',t0=0,raf=0;
+function place(el,p,L,f){const pt=p.getPointAtLength(L*Math.min(f,1));el.setAttribute('cx',pt.x);el.setAttribute('cy',pt.y)}
+function frame(t,once){const d=DUR[am],e=t-t0,cyc=Math.max(d.a,d.b)+900;const k=once?Math.min(e,cyc-1):e%cyc;
+ place($('dB'),pB,LB,k/d.b);place($('dA'),pA,LA,k/d.a);
+ $('endB').setAttribute('opacity',k>=d.b?1:0);$('endA').setAttribute('opacity',k>=d.a?1:0);
+ const first=d.b<d.a?I18.t('aBellyS'):I18.t('aWristS');$('aStatus').textContent=k>=Math.min(d.a,d.b)?I18.t('aFirst',{x:first}):I18.t('aGo')}
+function loop(t){frame(t,false);raf=requestAnimationFrame(loop)}
+function staticView(){cancelAnimationFrame(raf);const d=DUR[am];frame(t0+Math.max(d.a,d.b)+10,true)}
+function play(){cancelAnimationFrame(raf);t0=performance.now();
+ if(reduce.matches){const step=t=>{frame(t,true);if(t-t0<Math.max(DUR[am].a,DUR[am].b)+100)raf=requestAnimationFrame(step)};raf=requestAnimationFrame(step)}
+ else raf=requestAnimationFrame(loop)}
+function init(){if(reduce.matches){t0=0;staticView()}else play()}
+document.querySelectorAll('#animSeg button').forEach(b=>b.onclick=()=>{am=b.dataset.m;document.querySelectorAll('#animSeg button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));reduce.matches?staticView():play()});
+$('replayBtn').onclick=play;reduce.addEventListener?.('change',init);init();
+window.__anim={get mode(){return am},DUR};
 
 })();

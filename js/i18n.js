@@ -110,7 +110,7 @@ exwHint:['최근 7일 · 합계 {v}','Last 7 days · total {v}'],
 exwNone:['최근 7일 · 기록 없음','Last 7 days · no records'],
 
 r_stretch:['자리에서 스트레칭','Seated stretches'],r_stairs:['계단 걷기','Stair walking'],r_walk:['점심 산책','Lunchtime walk'],
-rs_stretch:[['목을 천천히 좌우로 돌려요','어깨를 위로 올렸다 툭 내려요','각지 끼고 팔을 위로 쫙 펴요','앉아서 상체를 좌우로 비틀어요','발목을 돌리고 크게 숨 쉬어요'],
+rs_stretch:[['목을 천천히 좌우로 돌려요','어깨를 위로 올렸다 툭 내려요','깍지 끼고 팔을 위로 쭉 펴요','앉아서 상체를 좌우로 비틀어요','발목을 돌리고 크게 숨 쉬어요'],
  ['Slowly turn your head left and right','Lift your shoulders, then let them drop','Interlace your fingers and stretch your arms up','While seated, twist your upper body side to side','Roll your ankles and take deep breaths']],
 rs_stairs:[['난간을 잡고 천천히 시작해요','한 층씩 편한 속도로 올라가요','숨이 차면 잠깐 쉬어요','내려올 때는 더 천천히','끝나면 종아리를 가볍게 풀어요'],
  ['Hold the handrail and start slowly','Climb one floor at a time at an easy pace','Rest briefly if you get out of breath','Go down even more slowly','Finish by gently loosening your calves']],
@@ -161,23 +161,80 @@ vidFoot:['영상은 각 기관의 유튜브 채널에서 가져와요. 참고·�
 v_cpr:['심폐소생술·AED','CPR & AED'],v_heart:['맥박·심장 건강','Pulse & heart'],v_ex:['운동·스트레칭','Exercise & stretching'],v_sl:['수면','Sleep'],
 nVid:['영상 {n}개',function(v){return v.n===1?'1 video':v.n+' videos'}],play:['{x} 재생','Play {x}'],onYt:['유튜브에서 보기','Watch on YouTube'],
 /* ---- 설정 ---- */
-setH:['설정','Settings'],
-export:['기록 내보내기','Export records'],exportDesc:['모든 기록을 JSON 파일로 저장해요.','Save all your records as a JSON file.'],
-import:['기록 가져오기','Import records'],importDesc:['이전에 내보낸 JSON 파일을 불러와요.','Load a JSON file you exported earlier.'],
-clear:['모든 기록 지우기','Clear all records'],clearDesc:['이 기기의 모든 기록을 지워요. 되돌릴 수 없어요.','Delete all records on this device. This can\u2019t be undone.'],
-clearConfirm:['정말 모든 기록을 지울까요? 되돌릴 수 없어요.','Really delete all records? This can\u2019t be undone.'],
-cleared:['모든 기록을 지웠어요.','All records cleared.'],
-about:['앱 정보','About'],version:['버전','Version'],
-/* ---- 기타 ---- */
-loading:['불러오는 중…','Loading…'],
-error:['문제가 생겼어요. 다시 시도해 주세요.','Something went wrong. Please try again.']
+gSync:['Google 동기화','Google sync'],syncPrep:['준비 중','Coming soon'],
+st_cfg:['꺼짐 · 준비 중','Off · coming soon'],st_login:['꺼짐','Off'],st_busy:['켜짐 · 동기화 중','On · syncing'],st_ok:['켜짐','On'],st_off:['오프라인','Offline'],st_err:['다시 시도해 주세요','Please try again'],
+syncAria:['동기화 상태: {s}','Sync status: {s}'],
+acctSub:['로그인하면 휴대폰을 바꿔도 기록을 이어서 볼 수 있어요.','Sign in to keep your records when you switch phones.'],
+sub_cfg:['Google 로그인을 준비하고 있어요. 지금은 기록이 이 기기에 저장돼요.','Google sign-in is coming soon. For now, records are saved on this device.'],
+sub_off:['인터넷에 다시 연결되면 이어서 동기화해요. 기록은 이 기기에 저장돼요.','Sync resumes when you\u2019re back online. Records are saved on this device.'],
+sub_err:['동기화하지 못했어요. 잠시 후 다시 시도해 주세요.','Couldn\u2019t sync. Please try again shortly.'],
+sub_busy:['기록을 맞추고 있어요.','Syncing your records\u2026'],sub_last:['마지막 동기화 {t}','Last synced {t}'],
+syncNow:['지금 동기화','Sync now'],retry:['다시 시도','Retry'],
+snote:['맥박·운동·수면 기록만 동기화돼요. 기본 정보(나이·성별·키·몸무게), 프로필 사진, 화면 설정은 이 기기에만 남아요. 로그인하지 않아도 모든 기능을 쓸 수 있어요.','Only pulse, exercise and sleep records sync. Basic info (age, sex, height, weight), your profile photo and display settings stay on this device. Every feature works without signing in.'],
+signOut:['로그아웃','Sign out'],toLogin:['로그인 화면으로 돌아가기','Back to sign-in screen'],
+outNote:['로그아웃해도 이 기기의 기록은 지워지지 않아요.','Signing out doesn\u2019t delete records on this device.'],
+outDone:['로그아웃했어요. 이 기기의 기록은 그대로예요.','Signed out. Records on this device are unchanged.'],
+lgPrep:['Google 로그인을 준비하고 있어요. 지금은 로그인 없이 그대로 쓰시면 돼요.','Google sign-in is coming soon. For now, just use the app without signing in.'],
+offline:['인터넷 연결을 확인해 주세요','Check your internet connection'],wait:['잠시 후 다시 눌러 주세요','Please tap again in a moment'],
+merged:['계정의 기록을 이 기기와 합쳤어요.','Merged your account records with this device.'],
+dmH:['데이터 내보내기·불러오기','Export & import data'],
+dmNote:['맥박·운동·수면 기록, 기본 정보, 프로필 사진을 JSON 파일 하나로 저장하거나, 저장한 파일에서 다시 불러올 수 있어요.','Save your pulse, exercise and sleep records, basic info and profile photo as one JSON file, or restore them from a saved file.'],
+exp:['내보내기 (파일 저장)','Export (save file)'],shareB:['공유로 보내기','Share'],imp:['불러오기','Import'],
+impNote:['불러오면 지금 이 기기에 있는 기록이 파일 내용으로 바뀌어요.','Importing replaces the records on this device with the file\u2019s contents.'],
+shareMsg:['공유 화면을 열었어요. "파일에 저장"을 고르면 보관할 수 있어요.','Share sheet opened. Choose \u201cSave to Files\u201d to keep a copy.'],
+expOk:['{f} 파일로 내보냈어요 (기록 {n}개).','Exported to {f} ({n} records).'],expFail:['내보내지 못했어요.','Couldn\u2019t export.'],
+expNo:['이 브라우저에서는 파일을 저장하지 못했어요.','This browser couldn\u2019t save the file.'],shareFail:['공유하지 못했어요.','Couldn\u2019t share.'],
+impBad:['파일을 읽지 못했어요. 이 앱에서 내보낸 JSON 파일인지 확인해 주세요.','Couldn\u2019t read the file. Make sure it\u2019s a JSON file exported from this app.'],
+impAsk:['이 파일로 지금 기록을 바꿀까요?\n맥박 {p}개 · 운동 {e}개 · 수면 {s}개{x}\n이 기기의 기존 기록은 파일 내용으로 바뀌어요.','Replace your current records with this file?\nPulse {p} · Exercise {e} · Sleep {s}{x}\nRecords on this device will be replaced by the file\u2019s contents.'],
+impPf:[' · 기본 정보',' · Basic info'],impAv:[' · 프로필 사진',' · Profile photo'],
+msImp:['My Sleep 파일 불러오기','Import My Sleep file'],
+msNote:['My Sleep에서 파일로 백업(JSON) 또는 CSV 내보내기 한 파일을 골라 주세요. My Sleep 기록은 그대로 남아요.','Choose a file you saved from My Sleep as a backup (JSON) or CSV export. Your My Sleep records stay as they are.'],
+msBad:['My Sleep 파일이 아닌 것 같아요. My Sleep에서 내보낸 JSON 또는 CSV 파일을 골라 주세요.','This doesn\u2019t look like a My Sleep file. Choose a JSON or CSV file exported from My Sleep.'],
+msNone:['새로 불러올 수면 기록이 없어요 ({m}건은 이미 있어서 건너뛰었어요).','No new sleep records to import ({m} already here, skipped).'],
+msAsk:['My Sleep 수면 기록 {n}건을 맥박 노트에 더할까요?\n지금 있는 기록은 그대로 남아요.','Add {n} sleep records from My Sleep to Maekbak Note?\nYour current records stay as they are.'],
+msOk:['{n}건을 불러왔어요 ({m}건은 이미 있어서 건너뛰었어요)','Imported {n} records ({m} already here, skipped)'],
+impCancel:['불러오기를 취소했어요.','Import canceled.'],impOk:['불러왔어요. 기록 {n}개를 적용했어요.','Imported. {n} records applied.'],
+fb:['앱 의견 보내기','Send feedback'],fbSub:['불편한 점이나 아이디어를 알려 주세요','Tell us about problems or ideas'],newTab:['새 탭에서 열림','Opens in a new tab'],
+fbPrep:['의견 폼을 준비하고 있어요','The feedback form is coming soon'],fbPrep2:['의견 폼을 준비하고 있어요. 조금만 기다려 주세요.','The feedback form is coming soon. Please check back later.'],
+fbNote:['의견은 Google 폼으로 받아 앱 개선에만 쓰고, 다른 곳에 공유하지 않아요.','Feedback is collected with Google Forms, used only to improve the app, and never shared.'],
+gcH:['사용 통계','Usage stats'],
+gcNote:['방문 수, 어떤 버튼을 눌렀는지, 어떤 영상을 눌렀는지(영상 번호)만 GoatCounter로 세요. 쿠키는 쓰지 않아요. 맥박·운동·수면 기록, 기본 정보, 프로필 사진은 보내지 않아요.','GoatCounter counts only visits, which buttons were tapped (including the language button) and which videos were tapped (video ID). No cookies. Pulse, exercise and sleep records, basic info and your profile photo are never sent.'],
+foot1:['이 앱은 의료 서비스가 아니에요. 일반적인 건강 관리와 교육용으로만 써 주세요.','This app doesn\u2019t give medical advice. Use it for general wellness and education only.'],
+foot2:['기록은 먼저 이 기기에 저장돼요. Google로 로그인하면 맥박·운동·수면 기록이 내 계정 공간에만 백업되고, 다른 곳에 공유되지 않아요.','Records are saved on this device first. If you sign in with Google, pulse, exercise and sleep records are backed up only to your own account space and never shared.']
 };
-var REV={};for(var k in D){var a=D[k];if(typeof a[0]==='string')REV[a[0]]=k;if(typeof a[1]==='string')REV[a[1]]=k}
-function t(k,v){var a=D[k];if(!a)return k;var s=a[L==='en'?1:0];if(typeof s==='function')return s(v||{});if(typeof s==='string'&&v){return s.replace(/\{(\w+)\}/g,function(_,p){return v[p]!=null?v[p]:''})}return s||k}
-function set(l){if(l!=='ko'&&l!=='en')return;L=l;try{var u=ui();u.lang=l;localStorage.setItem(UK,JSON.stringify(u))}catch(e){}apply(document.body);paintBtn();dispatchEvent(new CustomEvent('hc:lang'))}
-function apply(root){var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);var n;while(n=w.nextNode()){var p=n.parentNode;if(p&&(p.tagName==='SCRIPT'||p.tagName==='STYLE'))continue;var s=n.nodeValue;if(s&&REV[s.trim()])n.nodeValue=s.replace(s.trim(),t(REV[s.trim()]))}}
-function paintBtn(){var b=document.getElementById('lgBtn');if(!b)return;b.textContent=L==='ko'?'EN':'KO';b.setAttribute('aria-label',t('lgAria'));b.setAttribute('lang',L)}
-var F={dt:function(ts){var d=new Date(ts);return L==='en'?d.toLocaleDateString('en',{month:'short',day:'numeric'}):d.getMonth()+1+'/'+d.getDate()},wd:function(d){return L==='en'?['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()]:['일','월','화','수','목','금','토'][d.getDay()]},md:function(d){return L==='en'?d.toLocaleDateString('en',{month:'short',day:'numeric'}):d.getMonth()+1+'/'+d.getDate()}};
-window.hcI18n={get lang(){return L},t:t,set:set,apply:apply,F:F,D:D,key:function(s){return REV[s]},init:function(){apply(document.body);paintBtn();var b=document.getElementById('lgBtn');if(b)b.onclick=function(){set(L==='ko'?'en':'ko')}}};
+/* index.html의 고정 문구 (D 키와 겹치지 않는 것만) */
+var EXTRA={eg45:['예: 45','e.g. 45'],eg170:['예: 170','e.g. 170'],eg65:['예: 65','e.g. 65'],eg18:['예: 18','e.g. 18'],eg3:['예: 3','e.g. 3'],eg10:['예: 10','e.g. 10'],eg30:['예: 30','e.g. 30'],
+ egSq:['예: 스쿼트','e.g. Squat'],egWk:['예: 걷기','e.g. Walking'],clock:['05:00','05:00']};
+for(var k in EXTRA)D[k]=EXTRA[k];
+var I=L==='en'?1:0;
+function t(k,v){var e=D[k];if(!e)return k;var s=e[I];if(typeof s==='function')return s(v||{});if(typeof s!=='string')return s;
+ if(v)s=s.replace(/\{(\w+)\}/g,function(m,n){return v[n]!=null?v[n]:m});return s}
+/* 고정 문구 역색인: ko/en 원문 → 키 */
+var REV={};for(var k2 in D){[0,1].forEach(function(i){var s=D[k2][i];if(typeof s==='string'&&s&&s.indexOf('{')<0&&!REV[s])REV[s]=k2})}
+var ATTR=['aria-label','alt','placeholder','title'];
+function tr(s){var x=s.trim();if(!x)return null;var k=REV[x];if(!k)return null;var n=D[k][I];if(typeof n!=='string'||!n||n===x)return null;return s.replace(x,n)}
+function apply(root){root=root||document.body;if(!root)return;
+ var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:function(n){var p=n.parentNode;return p&&/^(SCRIPT|STYLE)$/.test(p.nodeName)||p.closest&&p.closest('[data-noi18n]')?2:1}}),n,r;
+ while((n=w.nextNode()))if((r=tr(n.nodeValue))!=null)n.nodeValue=r;
+ var els=root.querySelectorAll('['+ATTR.join('],[')+']');
+ for(var i=0;i<els.length;i++)for(var j=0;j<ATTR.length;j++){var a=els[i].getAttribute(ATTR[j]);if(a!=null&&(r=tr(a))!=null)els[i].setAttribute(ATTR[j],r)}
+ document.title=t('app');var m=document.querySelector('meta[name=apple-mobile-web-app-title]');if(m)m.setAttribute('content',t('app'))}
+/* 날짜·시간: Intl */
+var LOC=function(){return L==='en'?'en-US':'ko-KR'};
+function df(o){return new Intl.DateTimeFormat(LOC(),o)}
+var F={
+ dt:function(ts){return df({month:L==='en'?'short':'long',day:'numeric',weekday:'short',hour:'numeric',minute:'2-digit'}).format(new Date(ts))},
+ d:function(ts){return df({month:L==='en'?'short':'long',day:'numeric',weekday:'short'}).format(new Date(ts))},
+ md:function(ts){return df({month:L==='en'?'short':'long',day:'numeric'}).format(new Date(ts))},
+ time:function(ts){return df({hour:'numeric',minute:'2-digit'}).format(new Date(ts))},
+ wd:function(ts){return df({weekday:'short'}).format(new Date(ts))},
+ hm:function(m){m=Math.max(0,Math.round(m));var h=Math.floor(m/60),r=m%60;return L==='en'?(h?h+' h'+(r?' '+r+' min':''):r+' min'):(h?h+'시간'+(r?' '+r+'분':''):r+'분')}
+};
+function set(l){if(l!=='ko'&&l!=='en'||l===L)return;L=l;I=l==='en'?1:0;var u=ui();u.lang=l;try{localStorage.setItem(UK,JSON.stringify(u))}catch(e){}
+ d.setAttribute('lang',l);apply(document.body);paintBtn();try{dispatchEvent(new CustomEvent('hc:lang',{detail:l}))}catch(e){}}
+function paintBtn(){var b=document.getElementById('lgBtn');if(!b)return;b.innerHTML='<span'+(L==='ko'?' class="on"':'')+'>KO</span><i aria-hidden="true">/</i><span'+(L==='en'?' class="on"':'')+'>EN</span>';
+ b.setAttribute('aria-label',t('lgAria'));b.setAttribute('lang',L)}
+window.hcI18n={get lang(){return L},t:t,set:set,apply:apply,F:F,D:D,key:function(s){return REV[s]},
+ init:function(){apply(document.body);paintBtn();var b=document.getElementById('lgBtn');if(b)b.onclick=function(){set(L==='ko'?'en':'ko')}}};
 window.t=t;
 })();
