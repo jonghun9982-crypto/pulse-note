@@ -31,7 +31,7 @@ function render(){const recs=load(PK).sort((a,b)=>b.ts-a.ts);
  const vals=days.filter(x=>x.avg).map(x=>x.avg),mx=Math.max(...vals,1),mn=Math.min(...vals,mx);
  days.forEach((x,i)=>{const h=x.avg?30+60*((x.avg-mn)/((mx-mn)||1)):2;
   const el=document.createElement('div');el.className='day';
-  el.innerHTML=`<span class="v">${x.avg??''}</span><div class="bar${x.avg?'':' none'}" style="height:${x.avg?(mx===mn?60:h):2}px"></div><span>${i===6?t('today'):I18.F.wd(x.d)}</span>`;
+  el.innerHTML=`<span class=\"v\">${x.avg??''}</span><div class=\"bar${x.avg?'':' none'}\" style=\"height:${x.avg?(mx===mn?60:h):2}px\"></div><span>${i===6?t('today'):I18.F.wd(x.d)}</span>`;
   el.setAttribute('aria-label',t('wkAria',{d:I18.F.md(x.d),v:x.avg?t('wkAvg',{v:x.avg}):t('noRec')}));wk.appendChild(el)})}
 function draw(l){$('sec').textContent=l;$('arc').style.strokeDashoffset=439.8*(1-l/15)}
 function start(){show('timer');let l=15;$('arc').style.transition='none';draw(15);$('arc').getBoundingClientRect();$('arc').style.transition='';
@@ -71,11 +71,16 @@ function frame(t,once){const d=DUR[am],e=t-t0,cyc=Math.max(d.a,d.b)+900;const k=
 function loop(t){frame(t,false);raf=requestAnimationFrame(loop)}
 function staticView(){cancelAnimationFrame(raf);const d=DUR[am];frame(t0+Math.max(d.a,d.b)+10,true)}
 function play(){cancelAnimationFrame(raf);t0=performance.now();
- if(reduce.matches){const step=t=>{frame(t,true);if(t-t0<Math.max(DUR[am].a,DUR[am].b)+100)raf=requestAnimationFrame(step)};raf=requestAnimationFrame(step)}
- else raf=requestAnimationFrame(loop)}
-function init(){if(reduce.matches){t0=0;staticView()}else play()}
-document.querySelectorAll('#animSeg button').forEach(b=>b.onclick=()=>{am=b.dataset.m;document.querySelectorAll('#animSeg button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));reduce.matches?staticView():play()});
-$('replayBtn').onclick=play;reduce.addEventListener?.('change',init);init();
+ // Desktop fix: always loop animation (ignore prefers-reduced-motion for this educational demo)
+ raf=requestAnimationFrame(loop);
+}
+function init(){
+ // Always start the looping animation on both mobile and desktop
+ play();
+}
+document.querySelectorAll('#animSeg button').forEach(b=>b.onclick=()=>{am=b.dataset.m;document.querySelectorAll('#animSeg button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));play();});
+$('replayBtn').onclick=play;
+init();
 window.__anim={get mode(){return am},DUR};
 
 })();
